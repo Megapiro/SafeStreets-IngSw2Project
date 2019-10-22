@@ -1,0 +1,16 @@
+# LaTex
+*.aux
+*.bbl
+*.blg
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+
+# Temporary PDF
+rasd/rasd_MAIN.pdf
+*.synctex.gz
+
+# Mac
+.DS_Store
