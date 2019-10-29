@@ -8,6 +8,108 @@
 
 \subsection[Functional Requirements]{\hyperlink{toc}{Functional Requirements}}
 
+\subsection{Use cases description}
+	\subsubsection{User}
+	
+		\subsubsubsection{Registration}
+		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+			\toprule
+			\textbf{Name} & \textbf{Registration} \\
+			\midrule
+			\textbf{Actors} & User \\
+			\midrule
+			\textbf{Entry conditions} & The application has started \\
+			\midrule
+			\textbf{Flow of events} & 
+			\begin{enumerate}
+				\item The user chooses the sign up option
+				\item The user chooses a username
+				\item The user submits the form
+				\item The system checks the username to be unique
+				\item The system saves the user data
+			\end{enumerate} \\
+			\midrule
+			\textbf{Exit conditions} & The user is registered in the system\\
+			\midrule
+			\textbf{Exceptions} & 
+			\begin{itemize}
+				\item If the username inserted by the user is already used by another user, the system displays an error message asking the user to insert a different one
+			\end{itemize} \\
+			\bottomrule
+			\caption{\emph{Registration} use case description}
+		\end{longtable}
+	
+		\subsubsubsection{Login}
+		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+			\toprule
+			\textbf{Name} & \textbf{Login} \\
+			\midrule
+			\textbf{Actors} & User \\
+			\midrule
+			\textbf{Entry conditions} & The application has started \\
+			\midrule
+			\textbf{Flow of events} & 
+			\begin{enumerate}
+				\item The user chooses the login option
+				\item The user inserts his username
+				\item The user inserts his password
+				\item The user submits the form
+				\item The system checks the username to be existing
+				\item The system checks the password to be right for that username
+			\end{enumerate} \\
+			\midrule
+			\textbf{Exit conditions} & The user is logged in the system\\
+			\midrule
+			\textbf{Exceptions} & 
+			\begin{itemize}
+				\item If the username is not recognized by the system, that means that the user is not registered yet, or the username is incorrect. The system notifies the user and asks him to insert his username again
+				\item If the inserted password is wrong, the system notifies the user and asks him to insert his password again			
+			\end{itemize} \\
+			\bottomrule
+			\caption{\emph{Registration} use case description}
+		\end{longtable}
+	
+		\subsubsubsection{Report violation}
+		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+			\toprule
+			\textbf{Name} & \textbf{Report violation} \\
+			\midrule
+			\textbf{Actors} & User \\
+			\midrule
+			\textbf{Entry conditions} & The user is logged in \\
+			\midrule
+			\textbf{Flow of events} & 
+			\begin{enumerate}
+				\item The user selects the report violation option
+				\item The system retrieves the GPS location
+				\item The user chooses the option to take pictures
+				\item The user takes some pictures through the application
+				\item The user selects the pictures he wants to send
+				\item The user optionally inserts the license plate number
+				\item The user chooses the type of violation from a list
+				\item The user chooses the type of vehicle from a list
+				\item The user chooses the option to confirm
+				\item The application 
+				\item The system receives the sent data
+				\item The system runs an algorithm to read the license plate, with the help of the information provided by the user
+				\item The system retrieves the name of the street from the GPS location
+				\item The system stores the violation report
+			\end{enumerate} \\
+			\midrule
+			\textbf{Exit conditions} & The information about the violation is stored\\
+			\midrule
+			\textbf{Exceptions} & 
+			\begin{itemize}
+				\item If the system fails to retrieve the GPS location, the user is notified and the application shows the home page
+				\item If the system fails to read the license plate, or what it reads does not match the information provided by the user, the field will be left empty
+			\end{itemize} \\
+			\bottomrule
+			\caption{\emph{Report violation} use case description}
+		\end{longtable}
+
+	\subsubsection{Authority}
+	
+	
 \subsection[Performance Requirements]{\hyperlink{toc}{Performance Requirements}}
 
 \subsection[Design Constraints]{\hyperlink{toc}{Design Constraints}}
