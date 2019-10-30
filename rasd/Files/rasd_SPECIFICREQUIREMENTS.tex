@@ -11,7 +11,7 @@
 \subsection{Use cases description}
 	\subsubsection{User}
 	
-		\subsubsubsection{Registration}
+		\paragraph{Registration}
 		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 			\toprule
 			\textbf{Name} & \textbf{Registration} \\
@@ -39,7 +39,7 @@
 			\caption{\emph{Registration} use case description}
 		\end{longtable}
 	
-		\subsubsubsection{Login}
+		\paragraph{Login}
 		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 			\toprule
 			\textbf{Name} & \textbf{Login} \\
@@ -50,7 +50,7 @@
 			\midrule
 			\textbf{Flow of events} & 
 			\begin{enumerate}
-				\item The user chooses the login option
+				\item The user chooses the 'login as user' option
 				\item The user inserts his username
 				\item The user inserts his password
 				\item The user submits the form
@@ -69,7 +69,7 @@
 			\caption{\emph{Registration} use case description}
 		\end{longtable}
 	
-		\subsubsubsection{Report violation}
+		\paragraph{Report violation}
 		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 			\toprule
 			\textbf{Name} & \textbf{Report violation} \\
@@ -107,6 +107,61 @@
 			\caption{\emph{Report violation} use case description}
 		\end{longtable}
 
+		\paragraph{Find streets with the highest number of violations}
+		\todo{problema della diversa visibilità: differenziamo i casi? facciamo che serve il login per tutto?}
+		\todo{le evienziamo su mappa? o restituiamo una lista?}
+		
+		\todo{assumption che il programma funziona solo in Italia?}
+		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+			\toprule
+			\textbf{Name} & \textbf{Find streets with the highest number of violations} \\
+			\midrule
+			\textbf{Actors} & User \\
+			\midrule
+			\textbf{Entry conditions} & The application has started \\
+			\midrule
+			\textbf{Flow of events} & 
+			\begin{enumerate}
+				\item The user selects the 'streets with hightest number of violation' option
+				\item The user chooses the region he is looking for from a list
+				\item The user chooses the city from a list
+				\item The user chooses the type of violation from a list (it could also be 'all')
+				\item The system returns a list of the streets ordered by the highest number of violations, with the actual number next to the name of the street
+			\end{enumerate} \\
+			\midrule
+			\textbf{Exit conditions} & The list of the streets is shown to the user \\
+			\midrule
+			\textbf{Exceptions} & 
+			 \\
+			\bottomrule
+			\caption{\emph{Find streets with the highest number of violations} use case description}
+		\end{longtable}
+		
+		\paragraph{Find dangerous vehicles}
+		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+			\toprule
+			\textbf{Name} & \textbf{Find dangerous vehicles} \\
+			\midrule
+			\textbf{Actors} & User \\
+			\midrule
+			\textbf{Entry conditions} & The application has started \\
+			\midrule
+			\textbf{Flow of events} & 
+			\begin{enumerate}
+				\item 
+			\end{enumerate} \\
+			\midrule
+			\textbf{Exit conditions} & The user is logged in the system\\
+			\midrule
+			\textbf{Exceptions} & 
+			\begin{itemize}
+				\item 		
+			\end{itemize} \\
+			\bottomrule
+			\caption{\emph{Registration} use case description}
+		\end{longtable}
+		
+		
 	\subsubsection{Authority}
 	
 	
