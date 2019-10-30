@@ -23,7 +23,9 @@
 			\textbf{Flow of events} & 
 			\begin{enumerate}
 				\item The user chooses the sign up option
-				\item The user chooses a username
+				\item The user selects the 'user' registration type from a list
+				\item The user chooses a username and a password
+				%todo le authority scelgono regione e paese e il sistema genera username come nomepaese+codiceF205
 				\item The user submits the form
 				\item The system checks the username to be unique
 				\item The system saves the user data
@@ -33,7 +35,7 @@
 			\midrule
 			\textbf{Exceptions} & 
 			\begin{itemize}
-				\item If the username inserted by the user is already used by another user, the system displays an error message asking the user to insert a different one
+				\item If the username inserted by the user is already used by another user, or if the username is reserved to the authorities, the system displays an error message asking the user to insert a different one
 			\end{itemize} \\
 			\bottomrule
 			\caption{\emph{Registration} use case description}
@@ -50,15 +52,17 @@
 			\midrule
 			\textbf{Flow of events} & 
 			\begin{enumerate}
-				\item The user chooses the 'login as user' option
+				\item The user chooses the login option
+				\item The user chooses the 'user' login type from a list
 				\item The user inserts his username
 				\item The user inserts his password
 				\item The user submits the form
 				\item The system checks the username to be existing
 				\item The system checks the password to be right for that username
+				\item The system notifies the user that login is successful
 			\end{enumerate} \\
 			\midrule
-			\textbf{Exit conditions} & The user is logged in the system\\
+			\textbf{Exit conditions} & The user is logged in\\
 			\midrule
 			\textbf{Exceptions} & 
 			\begin{itemize}
@@ -89,7 +93,6 @@
 				\item The user chooses the type of violation from a list
 				\item The user chooses the type of vehicle from a list
 				\item The user chooses the option to confirm
-				\item The application 
 				\item The system receives the sent data
 				\item The system runs an algorithm to read the license plate, with the help of the information provided by the user
 				\item The system retrieves the name of the street from the GPS location
@@ -108,10 +111,9 @@
 		\end{longtable}
 
 		\paragraph{Find streets with the highest number of violations}
-		\todo{problema della diversa visibilità: differenziamo i casi? facciamo che serve il login per tutto?}
-		\todo{le evienziamo su mappa? o restituiamo una lista?}
-		
-		\todo{assumption che il programma funziona solo in Italia?}
+		%todo{problema della diversa visibilità: differenziamo i casi? facciamo che serve il login per tutto?}
+		%todo{le evienziamo su mappa? o restituiamo una lista?}
+		%todo{assumption che il programma funziona solo in Italia?}
 		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 			\toprule
 			\textbf{Name} & \textbf{Find streets with the highest number of violations} \\
@@ -125,19 +127,23 @@
 				\item The user selects the 'streets with hightest number of violation' option
 				\item The user chooses the region he is looking for from a list
 				\item The user chooses the city from a list
-				\item The user chooses the type of violation from a list (it could also be 'all')
-				\item The system returns a list of the streets ordered by the highest number of violations, with the actual number next to the name of the street
+				\item The user chooses the types of violation that he wants to include
+				%maybe a checkbox
+				\item The user confirms the query and sends it
+				\item The system returns a list of the streets ordered by the highest number of violations, with the actual number next to the name of the street, corresponding to the chosen city and the chosen types of violation
 			\end{enumerate} \\
 			\midrule
 			\textbf{Exit conditions} & The list of the streets is shown to the user \\
 			\midrule
 			\textbf{Exceptions} & 
-			 \\
+			\begin{itemize}
+				\item 	If no type of violation is selected, the system notifies the user and wait for him to insert at least one	
+			\end{itemize} \\
 			\bottomrule
 			\caption{\emph{Find streets with the highest number of violations} use case description}
 		\end{longtable}
 		
-		\paragraph{Find dangerous vehicles}
+		\paragraph{Find most dangerous vehicles}
 		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 			\toprule
 			\textbf{Name} & \textbf{Find dangerous vehicles} \\
@@ -148,19 +154,50 @@
 			\midrule
 			\textbf{Flow of events} & 
 			\begin{enumerate}
-				\item 
+				\item The user selects the 'most dangerous vehicles' option
+				\item The user selects the region and the city from a list, or selects everywhere
+				\item The user selects the types of violation he wants to include
+				\item The user confirms the query and sends it
+				\item The system returns a list of the types of vehicles, ordered by the highest number of violations they committed
 			\end{enumerate} \\
 			\midrule
-			\textbf{Exit conditions} & The user is logged in the system\\
+			\textbf{Exit conditions} & The list is shown to the user\\
 			\midrule
 			\textbf{Exceptions} & 
 			\begin{itemize}
-				\item 		
+				\item 	If no type of violation is selected, the system notifies the user and wait for him to insert at least one	
 			\end{itemize} \\
 			\bottomrule
-			\caption{\emph{Registration} use case description}
+			\caption{\emph{Find most dangerous vehicles} use case description}
 		\end{longtable}
 		
+		\paragraph{Find urgent interventions}
+		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+			\toprule
+			\textbf{Name} & \textbf{Find urgent interventions} \\
+			\midrule
+			\textbf{Actors} & User \\
+			\midrule
+			\textbf{Entry conditions} & The application has started \\
+			\midrule
+			\textbf{Flow of events} & 
+			\begin{enumerate}
+				\item The user selects the 'most dangerous vehicles' option
+				\item The user selects the region and the city from a list, or selects everywhere
+				\item The user selects the types of violation he wants to include
+				\item The user confirms the query and sends it
+				\item The system returns a list of the types of vehicles, ordered by the highest number of violations they committed
+			\end{enumerate} \\
+			\midrule
+			\textbf{Exit conditions} & The list is shown to the user\\
+			\midrule
+			\textbf{Exceptions} & 
+			\begin{itemize}
+				\item 	If no type of violation is selected, the system notifies the user and wait for him to insert at least one	
+			\end{itemize} \\
+			\bottomrule
+			\caption{\emph{Find urgent interventions} use case description}
+		\end{longtable}
 		
 	\subsubsection{Authority}
 	
