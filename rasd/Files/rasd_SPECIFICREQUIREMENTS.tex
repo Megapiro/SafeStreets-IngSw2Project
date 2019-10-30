@@ -124,13 +124,14 @@
 			\midrule
 			\textbf{Flow of events} & 
 			\begin{enumerate}
-				\item The user selects the 'streets with hightest number of violation' option
+				\item The user selects the 'streets with highest number of violation' option
 				\item The user chooses the region he is looking for from a list
 				\item The user chooses the city from a list
 				\item The user chooses the types of violation that he wants to include
 				%maybe a checkbox
+				\item The user chooses the time slot
 				\item The user confirms the query and sends it
-				\item The system returns a list of the streets ordered by the highest number of violations, with the actual number next to the name of the street, corresponding to the chosen city and the chosen types of violation
+				\item The system returns a list of the streets ordered by the highest number of violations, with the actual number next to the name of the street, corresponding to the chosen city and the chosen types of violation, in the specified time slot
 			\end{enumerate} \\
 			\midrule
 			\textbf{Exit conditions} & The list of the streets is shown to the user \\
@@ -182,21 +183,52 @@
 			\midrule
 			\textbf{Flow of events} & 
 			\begin{enumerate}
-				\item The user selects the 'most dangerous vehicles' option
-				\item The user selects the region and the city from a list, or selects everywhere
+				\item The user selects the 'urgent interventions' option
+				\item The user selects the region and the city from a list
+				%todo Magari facciamo anche filtrare per tipi di interventions
+				\item The user confirms the query and sends it
+				\item The system returns a list of the most urgent interventions in the selected city, each with their respective street
+				%todo comunque in qualche modo i tipi di intervento vanno modellati
+			\end{enumerate} \\
+			\midrule
+			\textbf{Exit conditions} & The list is shown to the user\\
+			\midrule
+			\textbf{Exceptions} &  \\
+			\bottomrule
+			\caption{\emph{Find urgent interventions} use case description}
+		\end{longtable}
+	
+		\paragraph{Find unsafe streets}
+		%todo ci vuole anche il caso in cui scelgo un percorso da fare e ss mi dice le strade pericolose in quel percorso
+		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+			\toprule
+			\textbf{Name} & \textbf{Find unsafe streets} \\
+			\midrule
+			\textbf{Actors} & User \\
+			\midrule
+			\textbf{Entry conditions} & The application has started \\
+			\midrule
+			\textbf{Flow of events} & 
+			\begin{enumerate}
+				%todo ma quanto bisogna specificare quello che fa il sistema in tutto questo?
+				\item The user selects the 'unsafe streets' option
+				\item The user selects the either the 'city' option or the 'route' option
+				\item The user chooses the region and the city from a list if 'city' option is chosen, otherwise he enters start and end points of the route
 				\item The user selects the types of violation he wants to include
 				\item The user confirms the query and sends it
-				\item The system returns a list of the types of vehicles, ordered by the highest number of violations they committed
+				\item The system returns a list with all the unsafe streets included in the query
 			\end{enumerate} \\
 			\midrule
 			\textbf{Exit conditions} & The list is shown to the user\\
 			\midrule
 			\textbf{Exceptions} & 
 			\begin{itemize}
-				\item 	If no type of violation is selected, the system notifies the user and wait for him to insert at least one	
+				\item If no city is selected when 'city' option is chosen, the system notifies the user and waits for him to insert it
+				\item If no start or end points are chosen when 'route' option is selected, the system notifies the user and waits for him to insert them
+				\item If
 			\end{itemize} \\
 			\bottomrule
-			\caption{\emph{Find urgent interventions} use case description}
+			\caption{\emph{Find unsafe streets} use case description}
 		\end{longtable}
 		
 	\subsubsection{Authority}
