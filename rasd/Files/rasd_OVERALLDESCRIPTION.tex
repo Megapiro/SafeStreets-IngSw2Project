@@ -47,29 +47,46 @@
 	The main objects in the UML diagram (\autoref{fig:classDiagram}) are:
 	\begin{itemize}
 		\item \textbf{Customer:} the system has to track two types of users. The distinction, in fact, is fundamental to recognize the municipality providing accident's data but also to give a different level of visibility to the information asked by a request.
-		\item \textbf{User:} identifies a citizen with all the data he will provide in its registration. Users are the clients of the application that report parking violations and look for \textbf{general} statistics related both to the frequency of parking violations in a street or to the safety of an area and its related suggested intervention.
-		\item \textbf{Authority:} identifies the authority/municipality with all the data related to its recognition. Authorities are the clients of the application that receive the reported violations by the users but they also: ask for \textbf{specific} statistics and provide data about accidents that will be crossed by the system.
-		\item \textbf{Registration:} is used to authenticate the customer in order to perform actions he can do only if he is recognized as a user or an authority.
-		\item \textbf{Violation:} represents a general traffic violation. This class is thought to be used in a future extension of the system in case more violations are considered.
-		\item \textbf{ParkingViolation:} is the result of a report provided by a user. In this way the application considers all the possible information that is filled whenever an infraction is going to be reported. As we see in the diagram the class contains: multiple images for a better help to both the image recognition algorithm and the authorities; the position retrieved by the GPS that will be used to find the name of the street; the plate's number and all other metadata.
+		
+		\item \textbf{User:} identifies a citizen with all the data he provides in its registration. Users are the clients of the application that report parking violations and look for \textbf{general} statistics related both to the frequency of parking violations in a street or to the safety of an area and its related suggested intervention.
+		
+		\item \textbf{Authority:} identifies the authority/municipality with all the data related to its recognition. Authorities are the clients of the application that receive the reported violations by the users but they also: ask for \textbf{specific} statistics and provide data about the accidents (crossed by the system).
+		
+		\item \textbf{Registration:} is used to authenticate the customer in order to perform actions he can only do recognized as a user or an authority.
+		
+		\item \textbf{Violation:} represents a general traffic violation. This class is thought to be used in a future extension of the system in case more violations are going to be considered.
+		
+		\item \textbf{ParkingViolation:} is the result of a notification provided by a user. In this way the application considers all the possible information that is filled whenever an infraction is reported. As we see in the UML diagram the class contains: multiple images for an  improved help to both the image recognition algorithm and the authorities; the position retrieved by the GPS (used to find the name of the street); the plate's number and all other metadata.
+		
 		\item \textbf{Accident:} will be used to store the data received by the municipality. No more specific description can be given here because only when interfacing with the municipality we will be able to know how the data has to be managed.
-		\item \textbf{Position:} stores the coordinates of where the parking violation occurred. Positions of each accident will be used to retrieve the street thanks to the functionalities provided by the MI and thus obtain statistics of each street and area.
-		\item \textbf{Street:} is one of the most important object to be managed. Each recognized street will be added to the system to perform its basic and advanced functionalities. A street considers also how many infractions happened in it; this is thought to simplify the very computing mining and crossing algorithms.
-		\item \textbf{Area:} is another important object, in particular for the advanced functionality. An area contains the streets relative to its limits and is managed by the municipality that will receive all the violations reported in it. Areas are also critical for the safety they will encounter, to underline this we can see the only method of the diagram (getSafety) that will be used later to define the related \textbf{state diagram}.
-		\item \textbf{Vehicle:} vehicles are recognized by the image recognition algorithm in order to provide additional information to the filter. 
-		\item \textbf{Car:} are expected to be the most reported type of vehicles because the biggest in the ones considered.
-		\item \textbf{Motorcycle:} should be also considered as "critical" vehicles, in fact there are more motorcycles parked in the wrong place than in the right one.
-		\item \textbf{Bicycle:} our system is supposed to deal also with bicycles. Obviously it will be much more difficult for the authorities to retrieve their owners but they can be used by the application to suggest possible interventions in the areas where they happen to be cumbersome.
-		\item \textbf{Request:} is the general class representing the interaction of a user with the system whenever statistics about the frequency, safety or suggestion is asked by the user. In order to answer with the correct data it will be important to retrieve the user who sends the request to provide him the right visibility.
+		
+		\item \textbf{Position:} stores the coordinates of where the parking violation occurred. The position of each accident will be used to retrieve the street thanks to the functionalities provided by the MI and thus obtain statistics of each street and area.
+		
+		\item \textbf{Street:} is one of the most important object to be managed. Each recognized street will be added to the system to achieve its basic and advanced functionalities. A street considers also how many infractions happened in it; this is thought to simplify the very computing mining and crossing algorithms.
+		
+		\item \textbf{Area:} is another important object, in particular for the advanced functionality. An area contains the streets relative to its limits and is managed by the municipality that will receive all the violations reported in it. Areas are also critical for the safety they will encounter; to underline this we have defined an only method in the diagram (getSafety) that will be used later to define the related \textbf{state diagram}.
+		
+		\item \textbf{Vehicle:} vehicles are identified by the image recognition algorithm in order to provide additional information to the filter.
+		 
+		\item \textbf{Car:} are expected to be the most reported type of vehicles because of their dimensions and utilization (typically identified by the plate).
+		
+		\item \textbf{Motorcycle:} should be also considered as "critical" vehicles. The system has to care of particular areas where lots of motorcycles happen to be all parked in the wrong way and in uncomfortable spots.
+		
+		\item \textbf{Bicycle:} our system is supposed to deal also with bicycles. Obviously it will be much more difficult for the authorities to retrieve their owners but they can be used by the application to suggest possible interventions in the areas where they happen to be definitely cumbersome.
+		
+		\item \textbf{Request:} is the general class representing the interaction of a user with the system whenever statistics about the frequency, safety or suggestion is asked by the customer. In order to answer with the correct data it will be important to retrieve the user who sends the request to provide him the right visibility.
+		
 		\item \textbf{BasicRequest:} is the request that deals with the basic functionality. Thanks to it the application will be able to capture the filters selected by the user and answer correctly.
-		\item \textbf{AdvancedRequest:} is the request that deals with the advanced functionality. Thanks to it the application will be able to capture the requirements of the user, that in this case can be: the safety of a municipality's area or the suggestion for a possible intervention.
+		
+		\item \textbf{AdvancedRequest:} is the request that deals with the advanced functionality. Thanks to it the application will be able to capture the requirements of the customer, that in this case can be: the safety of a municipality's area or the suggestion for a possible intervention.
 	\end{itemize}
 	
 	\begin{figure}[h!]
-		\centering
-		\includegraphics[width=\paperwidth - 4cm, angle=90]{/diagrams/classDiagramModel.png}
+		\includegraphics[width=\paperwidth - 1cm, angle=90]{/diagrams/classDiagramModel.png}
 		\caption{\label{fig:classDiagram}High-level model structure}
 	\end{figure}
+
+	\FloatBarrier
 
 \subsection[Product Functions]{\hyperlink{toc}{Product Functions}}
 
