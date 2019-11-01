@@ -41,7 +41,7 @@
 			\end{itemize}
 		\end{itemize}
 	
-	\subsubsection{Model Structure}
+	\subsubsection[Model Structure]{\hyperlink{toc}{Model Structure}}
 	The static analysis now continues to define the internal structure of the system, in particular with a high-level class diagram that shows the most important objects and their relations in order to achieve the \hyperref[sec:goals]{\textcolor{blue}{goals}}.\\
 	
 	The main objects in the UML diagram (\autoref{fig:classDiagram}) are:
@@ -82,12 +82,47 @@
 	\end{itemize}
 	
 	\begin{figure}[h!]
+		\centering
 		\includegraphics[width=\paperwidth - 1cm, angle=90]{/diagrams/classDiagramModel.png}
 		\caption{\label{fig:classDiagram}High-level model structure}
 	\end{figure}
 
 	\FloatBarrier
+	
+	\subsubsection[State Diagrams]{\hyperlink{toc}{State Diagrams}}
+	Considering now the main functionalities of the system, it is important to highlight the main events that take its objects to move from one state to another. State diagrams are used to describe the most critical aspects of the objects previously described in the UML diagram (\autoref{fig:classDiagram}).
+	
+	\paragraph{Notification}
+		First we have to deal with the notification of a parking violation. It is important to remember that each infraction will be refused by the system i.i.f inconsistency is found; for example multiple images representing different types of vehicles.
+		The diagram (\autoref{fig:notifyState}) starts with the received violation by a user that reaches the \textit{unprocessed} state. First the system needs to check the consistency of the data received in order to accept or reject the violation. If the message is \textit{rejected} the notification diagram ends, otherwise the \textit{accepted} violation needs some more checks before it can be stored in the system. Second a check is used to understand if the infraction lacks of some important fields that the application should be able to retrieve thanks to the functionalities provided by the external interfaces. Then, if the message is \textit{complete} it is ready to be enriched with other metadata (the name of the street retrieved by the GPS position), instead it is completed with missing information and then the \textit{ready} state is reached too. In the end the information about the parking violation is stored in the system and the notification diagram ends.
+		
+		\begin{figure}[h]
+			\centering
+			\includegraphics[scale=0.18]{/diagrams/notifyStateDiagram.png}
+			\caption{\label{fig:notifyState}Notification state diagram}
+		\end{figure}
+	
+	\paragraph{Request}
+		Statistics retrieval is another critical functionality that can be described with a state diagram in order to define how the information asked is provided with different levels of visibility depending on the role of the customer.
+		The diagram (\autoref{fig:requestState}) represents both different kinds of requests a customer can do, in fact it is used to highlight the different visibility of the answered information rather than this aspect. Whenever a query is received, the system has first to retrieve the data that is required thanks to the filters provided by the customer. After the information is found in the \textit{processed} state, the application needs to recognize the user in order to provide him the data with the correct level of visibility devoted to him. If the request comes from a user its data is filtered and then, once ready in \textit{user data} state, sent back to the user; symmetrically happens for the authority who will receive the least aggregate information possible. 
+		
+		\begin{figure}[h]
+			\centering
+			\includegraphics[scale=0.18]{/diagrams/requestStateDiagram.png}
+			\caption{\label{fig:requestState}Request for data state diagram}
+		\end{figure}
+	
+	\paragraph{Safety}
+	In the end the last state diagram is used to highlight how the system is able to determine the safety of a street and update its state whenever new violations occur or new accidents data is provided by the municipality. 
+	The diagram (\autoref{fig:safetyState}) shows how the safety of a street evolves in the time. The system is able to cross its own data with the one provided by the municipality to establish the safety of an area that will be evaluated thanks to some tresholds. At the beginning an area is considered \textit{safe} (and highlighted with the GREEN color) because no parking violation are stored and no cross can be performed. Once parking violations start to occur the application is able to keep track of their frequency and, thanks to the accidents information, will determine if the area has to be considered less safe than the one before or not. In this way once exceeded the safe treshold the area will be considered \textit{half safe} (highlighted in YELLOW) and the same for the last state that represents an \textit{unsafe} area (highlighted in RED). Obviously the system has also to consider when an area enhances its safety; this will happen whenever one of the tresholds is not reached anymore. 
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.23]{/diagrams/safetyStateDiagram.png}
+		\caption{\label{fig:safetyState}Area safety state diagram}
+	\end{figure}   
 
+	
 \subsection[Product Functions]{\hyperlink{toc}{Product Functions}}
 
 \subsection[User Characteristics]{\hyperlink{toc}{User Characteristics}}
