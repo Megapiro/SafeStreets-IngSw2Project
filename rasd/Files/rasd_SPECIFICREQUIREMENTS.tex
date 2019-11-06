@@ -129,9 +129,10 @@
 				\item The user selects the 'streets with highest number of violation' option
 				\item The user chooses the region he is looking for from a list
 				\item The user chooses the city from a list
-				\item The user chooses the types of violation that he wants to include
+				\item The user chooses the types of violation to be included
 				%maybe a checkbox
 				\item The user chooses the time slot
+				\item The user chooses the type of vehicles to be included
 				\item The user confirms the query and sends it
 				\item The system returns a list of the streets ordered by the highest number of violations, with the actual number next to the name of the street, corresponding to the chosen city and the chosen types of violation, in the specified time slot
 			\end{enumerate} \\
@@ -158,10 +159,10 @@
 			\textbf{Flow of events} & 
 			\begin{enumerate}
 				\item The user selects the 'most dangerous vehicles' option
-				\item The user selects the region and the city from a list, or selects everywhere
+				\item The user selects the region and the city from a list, or selects a street, or selects everywhere
 				\item The user selects the types of violation he wants to include
 				\item The user confirms the query and sends it
-				\item The system returns a list of the types of vehicles, ordered by the highest number of violations they committed
+				\item The system returns a list of the types of vehicles, ordered by the highest number of violations they committed, according to the filters
 			\end{enumerate} \\
 			\midrule
 			\textbf{Exit conditions} & The list is shown to the user\\
@@ -261,8 +262,9 @@
 				\midrule
 				\textbf{Exceptions} & 
 				\begin{itemize}
-					\item If the PEC address doesn't match the chosen city, an error message will be shown and the procedure will be aborted
-					\item If the entered code doesn't match the sent one, an error message will be shown and the procedure will be aborted
+					\item If the selected city already has an authority registered, an error message is shown and the procedure is aborted
+					\item If the PEC address doesn't match the chosen city, an error message is shown and the procedure is aborted
+					\item If the entered code doesn't match the sent one, an error message is shown and the procedure is aborted
 				\end{itemize} \\
 				\bottomrule
 				\caption{\emph{Authority Registration} use case description}
@@ -317,15 +319,12 @@
 			\midrule
 			\textbf{Exit conditions} & The list is shown to the authority\\
 			\midrule
-			\textbf{Exceptions} & 
-			\begin{itemize}
-				\item If no unread violation report exists a message is shown to the authority and the procedure aborts
-			\end{itemize} \\
+			\textbf{Exceptions} &  \\
 			\bottomrule
 			\caption{\emph{Check unread reports} use case description}
 		\end{longtable}
 	
-	\paragraph{Find reports}
+		\paragraph{Find reports}
 	\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 		\toprule
 		\textbf{Name} & \textbf{Find reports} \\
@@ -338,7 +337,7 @@
 		\begin{enumerate}
 			\item The authority chooses the 'find reports' option
 			\item The authority selects the types of violation to be included
-			\item The authority selects date and time slot
+			\item The authority selects date interval and time slot
 			\item The authority selects the types of vehicles to be included
 			\item The authority optionally selects the street to include, otherwise 'city' will be selected
 			\item The system provides a list with all the violation reports that match the filter. In case 'city' option is selected, the considered city is that of competence of the authority
@@ -346,10 +345,7 @@
 		\midrule
 		\textbf{Exit conditions} & The list is shown to the authority\\
 		\midrule
-		\textbf{Exceptions} & 
-		\begin{itemize}
-			\item If no violation report matches the filter, a message is shown to the authority and the procedure aborts
-		\end{itemize} \\
+		\textbf{Exceptions} &  \\
 		\bottomrule
 		\caption{\emph{Find reports} use case description}
 	\end{longtable}
