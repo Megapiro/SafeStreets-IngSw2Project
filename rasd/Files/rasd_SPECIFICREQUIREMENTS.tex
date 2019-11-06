@@ -12,10 +12,10 @@
 \subsection{Use cases description}
 	\subsubsection{User}
 	
-		\paragraph{Registration}
+		\paragraph{User Registration}
 		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 			\toprule
-			\textbf{Name} & \textbf{Registration} \\
+			\textbf{Name} & \textbf{User Registration} \\
 			\midrule
 			\textbf{Actors} & User \\
 			\midrule
@@ -24,9 +24,9 @@
 			\textbf{Flow of events} & 
 			\begin{enumerate}
 				\item The user chooses the sign up option
-				\item The user selects the 'user' registration type from a list
+				\item The user selects the 'user' registration type
 				\item The user chooses a username and a password
-				%todo le authority scelgono regione e paese e il sistema genera username come nomepaese+codiceF205
+				\item The user inserts his name, surname and address
 				\item The user submits the form
 				\item The system checks the username to be unique
 				\item The system saves the user data
@@ -36,16 +36,16 @@
 			\midrule
 			\textbf{Exceptions} & 
 			\begin{itemize}
-				\item If the username inserted by the user is already used by another user, or if the username is reserved to the authorities, the system displays an error message asking the user to insert a different one
+				\item If the username inserted by the user is already used by another user, or if the username contains any special character, the system displays an error message asking the user to insert a different one
 			\end{itemize} \\
 			\bottomrule
-			\caption{\emph{Registration} use case description}
+			\caption{\emph{User Registration} use case description}
 		\end{longtable}
 	
-		\paragraph{Login}
+		\paragraph{User Login}
 		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 			\toprule
-			\textbf{Name} & \textbf{Login} \\
+			\textbf{Name} & \textbf{User Login} \\
 			\midrule
 			\textbf{Actors} & User \\
 			\midrule
@@ -54,7 +54,7 @@
 			\textbf{Flow of events} & 
 			\begin{enumerate}
 				\item The user chooses the login option
-				\item The user chooses the 'user' login type from a list
+				\item The user chooses the 'user' login type
 				\item The user inserts his username
 				\item The user inserts his password
 				\item The user submits the form
@@ -67,11 +67,11 @@
 			\midrule
 			\textbf{Exceptions} & 
 			\begin{itemize}
-				\item If the username is not recognized by the system, that means that the user is not registered yet, or the username is incorrect. The system notifies the user and asks him to insert his username again
-				\item If the inserted password is wrong, the system notifies the user and asks him to insert his password again			
+				\item If the username is not recognized by the system, that means that the user is not registered yet, or the username is incorrect. The system notifies the user and the procedure is aborted
+				\item If the inserted password is wrong, the system notifies the user and the procedure is aborted			
 			\end{itemize} \\
 			\bottomrule
-			\caption{\emph{Registration} use case description}
+			\caption{\emph{User Login} use case description}
 		\end{longtable}
 	
 		\paragraph{Report violation}
@@ -233,6 +233,127 @@
 		\end{longtable}
 		
 	\subsubsection{Authority}
+		\paragraph{Authority Registration}
+			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\toprule
+				\textbf{Name} & \textbf{Registration} \\
+				\midrule
+				\textbf{Actors} & Authority \\
+				\midrule
+				\textbf{Entry conditions} & The application has started \\
+				\midrule
+				\textbf{Flow of events} & 
+				\begin{enumerate}
+					\item The authority chooses the sign up option
+					\item The authority selects the 'authority' registration type
+					\item The authority chooses the region and the city of competence
+					\item The authority inserts its PEC address
+					\item The system checks that PEC address matches the chosen city
+					\item The system sends a confirmation code to the PEC address
+					\item The authority enters the confirmation code in a text box
+					\item The authority submits the form
+					\item The system checks the entered code to match the sent one
+					\item The system saves the authority's data
+				\end{enumerate} \\
+				\midrule
+				\textbf{Exit conditions} & The authority is registered in the system\\
+				\midrule
+				\textbf{Exceptions} & 
+				\begin{itemize}
+					\item If the PEC address doesn't match the chosen city, an error message will be shown and the procedure will be aborted
+					\item If the entered code doesn't match the sent one, an error message will be shown and the procedure will be aborted
+				\end{itemize} \\
+				\bottomrule
+				\caption{\emph{Authority Registration} use case description}
+			\end{longtable}
+		
+		\paragraph{Authority Login}
+			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\toprule
+				\textbf{Name} & \textbf{Authority Login} \\
+				\midrule
+				\textbf{Actors} & Authority\\
+				\midrule
+				\textbf{Entry conditions} & The application has started \\
+				\midrule
+				\textbf{Flow of events} & 
+				\begin{enumerate}
+					\item The authority chooses the login option
+					\item The authority chooses the 'authority' login type
+					\item The authority inserts its PEC address as username
+					\item The authority inserts its password
+					\item The authority submits the form
+					\item The system checks the username to be registered
+					\item The system checks the password to be right for that username
+					\item The system notifies the authority that login is successful
+				\end{enumerate} \\
+				\midrule
+				\textbf{Exit conditions} & The authority is logged in\\
+				\midrule
+				\textbf{Exceptions} & 
+				\begin{itemize}
+					\item If the username is not recognized by the system, that means that the authority is not registered yet, or the username is incorrect. The system notifies the authority and the procedure is aborted
+					\item If the inserted password is wrong, the system notifies the authority and the procedure is aborted			
+				\end{itemize} \\
+				\bottomrule
+				\caption{\emph{Authority Login} use case description}
+			\end{longtable}
+		
+		\paragraph{Check unread reports}
+		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+			\toprule
+			\textbf{Name} & \textbf{Check unread reports} \\
+			\midrule
+			\textbf{Actors} & Authority\\
+			\midrule
+			\textbf{Entry conditions} & The authority is logged in \\
+			\midrule
+			\textbf{Flow of events} & 
+			\begin{enumerate}
+				\item The authority chooses the 'unread reports' option
+				\item The system provides a list with all the unread violation reports that match the city of competence of the authority
+			\end{enumerate} \\
+			\midrule
+			\textbf{Exit conditions} & The list is shown to the authority\\
+			\midrule
+			\textbf{Exceptions} & 
+			\begin{itemize}
+				\item If no unread violation report exists a message is shown to the authority and the procedure aborts
+			\end{itemize} \\
+			\bottomrule
+			\caption{\emph{Check unread reports} use case description}
+		\end{longtable}
+	
+	\paragraph{Find reports}
+	\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+		\toprule
+		\textbf{Name} & \textbf{Find reports} \\
+		\midrule
+		\textbf{Actors} & Authority\\
+		\midrule
+		\textbf{Entry conditions} & The authority is logged in \\
+		\midrule
+		\textbf{Flow of events} & 
+		\begin{enumerate}
+			\item The authority chooses the 'find reports' option
+			\item The authority selects the types of violation to be included
+			\item The authority selects date and time slot
+			\item The authority selects the types of vehicles to be included
+			\item The authority optionally selects the street to include, otherwise 'city' will be selected
+			\item The system provides a list with all the violation reports that match the filter. In case 'city' option is selected, the considered city is that of competence of the authority
+		\end{enumerate} \\
+		\midrule
+		\textbf{Exit conditions} & The list is shown to the authority\\
+		\midrule
+		\textbf{Exceptions} & 
+		\begin{itemize}
+			\item If no violation report matches the filter, a message is shown to the authority and the procedure aborts
+		\end{itemize} \\
+		\bottomrule
+		\caption{\emph{Find reports} use case description}
+	\end{longtable}
+	
+		
 	
 	
 \subsection[Performance Requirements]{\hyperlink{toc}{Performance Requirements}}
