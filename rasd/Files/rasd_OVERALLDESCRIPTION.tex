@@ -1,12 +1,12 @@
 \section[Overall Description]{\hyperlink{toc}{Overall Description}}
 
 \subsection[Product Perspective]{\hyperlink{toc}{Product Perspective}}
-	Thanks to the general introduction and the scope definition of the system from the previous sections, we are now able to look at our system first from the outside and then from the inside. To deal with this description we are going to see the external interfaces of the system and then the definition of the model's structure in order to interact with them; at the end of the section \textbf{state diagrams} are used to emphasize the dynamic behavior of the most critical classes.
+	Thanks to the general introduction and the scope definition from the previous sections, we are now able to look at our system first from the outside and then from the inside. To deal with this description we are going to see the external interfaces the system has to interact with and then the definition of the model in order to have a feasible structure with them; at the end of the section \textbf{state diagrams} are used to emphasize the dynamic behavior of the most critical classes defined in the model.
 	\subsubsection[System Interfaces]{\hyperlink{toc}{System Interfaces}}
 		\label{sec:systemInterfaces}
-		SafeStreets offers an interface to its customers to provide them its basic and advanced functionalities. All the data needed to authenticate the users will be managed inside the system as well as the information related to the violations in order to be mined and crossed whenever needed.\\
-		
-		To accomplish the \hyperref[sec:goals]{\textcolor{blue}{goals}} stated in the \hyperref[sec:introduction]{\textcolor{blue}{introduction}} the application needs also to interact with three main external interfaces as reported in the following picture (\autoref{fig:systemInterfaces}).  
+		In this section we are going to deal with the interfaces that SafeStreets needs to \emph{use} in order to provide its functionalities. The definition of SafeStreet's interfaces to the external world, instead, will be described in the further related section (\ref{sec:externalInterfaceRequirements}).\\
+	
+		To accomplish the \hyperref[sec:goals]{\textcolor{blue}{goals}} stated in the introduction the application interfaces with three main external systems as reported in the following picture (\autoref{fig:systemInterfaces}).  
 		\vspace{0,3cm}
 		
 		\begin{figure}[h]
@@ -17,68 +17,53 @@
 		
 		Two different kinds of interfaces are distinguished in the picture above:
 		\begin{itemize}
-			\item \textbf{Left hand side:} interfaces that provide functions (by means of APIs) for the system to perform internal operations. 
-			
-			In particular:
+			\item \textbf{Left hand side:} interfaces that provide functions for the system to perform internal algorithmic operations. In particular:
 			\begin{itemize}
-				\item \textsc{IRI} is used to process the image received from a violation. Whenever a violation is reported the system tries to recognize two distinct things from the picture helped by the additional data provided:
-				\begin{itemize}
-					\item \textbf{Plate:} the recognition of the plate's number is important to identify the vehicle by checking if it coincides with the one inserted or to add this information when missing. In both the cases when the number can not be identified the violation will be processed without it.
-					\item \textbf{Type of vehicle:} is also very important to be recognized as the statistics can also be integrated with this filter. The vehicle will be reported without any type in case the process fails to find one, but we can assume that a shape recognition will be easily carried out by today's functionalities.
-				\end{itemize} 
-				\item \textsc{MI} is used to handle the geographical issues. The system needs to:
-				\begin{itemize}
-					\item \textbf{Retrieve} the name of the street where the violation occurred by using the provided position
-					\item \textbf{Highlight} the safety of the streets and of municipality's areas
-				\end{itemize}
-			\end{itemize}
-			\item \textbf{Right hand side:} interfaces that enable the system to send and receive data to the authorities. 
+				\item \textsc{IRI} is used to process the pictures received from a violation. Whenever an infraction is reported, the application needs to retrieve the plate's number of the violation in order to be stored and notified to the authority. The image recognition algorithm "has always the last word": it uses the information provided by the user to help the recognition and, in all the cases a plate number will be found, it will be considered in the stored information and thus notifiable. Hence, whenever the algorithm does not recognize any plate the entire notification will be discarded.
 			
-			In particular when:
-			\begin{itemize}
-				\item The reported violation has been accepted by the system and enriched with the metadata that can be useful for the authority. In this case the correct information is sent to the authority interested in the area that contains the related position.
-				\item The municipality provides information about the accidents that occur in its area. Received data is crossed by the system to determine the safety of its streets. Thanks to this additional operation the application is also able to determine the best interventions for unsafe areas and suggest them to its users.
+				\item \textsc{MI} is used to process the map issues. This interface provides two services fundamental for the application: the first is used to retrieve the exact street where a reported violation has occurred using its GPS position, the second offers the system a way to highlight a map with different colors when it provides the functions a list of streets and their related colors. We will describe precisely in further sections how the street retrieval is used in the notification process while the map highlight in the safety one.
 			\end{itemize}
+			
+			\item \textbf{Right hand side:} interfaces that enable the system to receive from the authority the information about the accidents in its territory. This interaction is fundamental to obtain the data further crossed with the one of the violations in the system in order to determine the safety of an area together with its possible suggestions for interventions.
+			
 		\end{itemize}
 	
 	\subsubsection[Model Structure]{\hyperlink{toc}{Model Structure}}
-	The static analysis now continues to define the internal structure of the system, in particular with a high-level class diagram that shows the most important objects and their relations in order to achieve the \hyperref[sec:goals]{\textcolor{blue}{goals}}.\\
+	The static analysis now continues to define the internal structure of the system, in particular a high-level class diagram that considers the most important objects and their relations in order to achieve the \hyperref[sec:goals]{\textcolor{blue}{goals}} is shown in \autoref{fig:classDiagram}.\\
 	
-	The main objects in the UML diagram (\autoref{fig:classDiagram}) are:
+	The main objects in the UML class diagram are:
 	\begin{itemize}
-		\item \textbf{Customer:} the system has to track two types of users. The distinction, in fact, is fundamental to recognize the municipality providing accident's data but also to give a different level of visibility to the information asked by a request.
+		\item \textbf{Customer:} the system has to track two types of users. The distinction, in fact, is fundamental to recognize the municipality providing accident's data but also to give a different level of visibility to the information asked by a request. This class keeps track of the information related to the login (username, password).
 		
-		\item \textbf{User:} identifies a citizen with all the data he provides in its registration. Users are the clients of the application that report parking violations and look for \textbf{general} statistics related both to the frequency of parking violations in a street or to the safety of an area and its related suggested intervention.
+		\item \textbf{User:} identifies a citizen with all the data he provides in its registration. Users are the clients of the application that report parking violations and mine the data related both to the frequency of parking violations and the most dangerous vehicles or to the safety of an area and its related suggested intervention.
 		
-		\item \textbf{Authority:} identifies the authority/municipality with all the data related to its recognition. Authorities are the clients of the application that receive the reported violations by the users but they also: ask for \textbf{specific} statistics and provide data about the accidents (crossed by the system).
-		
-		\item \textbf{Registration:} is used to authenticate the customer in order to perform actions he can only do recognized as a user or an authority.
+		\item \textbf{Authority:} identifies both the authority/municipality with all the data related to its recognition. Authorities are the clients of the application that gets notified of the reported violations, but they also: mine for infractions and safety information and provide data about the accidents (crossed by the system).
 		
 		\item \textbf{Violation:} represents a general traffic violation. This class is thought to be used in a future extension of the system in case more violations are going to be considered.
 		
-		\item \textbf{ParkingViolation:} is the result of a notification provided by a user. In this way the application considers all the possible information that is filled whenever an infraction is reported. As we see in the UML diagram the class contains: multiple images for an  improved help to both the image recognition algorithm and the authorities; the position retrieved by the GPS (used to find the name of the street); the plate's number and all other metadata.
+		\item \textbf{ParkingViolation:} is the result of a notification provided by a user. In this way the application considers all the possible information that is filled whenever an infraction is reported. As we see in the UML diagram the class contains: multiple images for an improved help to both the image recognition algorithm and the authorities; the position retrieved by the GPS (used to find the name of the street); the type of the vehicle; the plate's number, date and time. The type of the violation, selected by the users will be determined considering one of the possible extending classes: \textbf{DoubleParking, DisabledParking, NoParkingZone, BikeLaneParking...} The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \ref{sec:stateDiagrams} and \ref{sec:safetyFunction}.
 		
-		\item \textbf{Accident:} will be used to store the data received by the municipality. No more specific description can be given here because only when interfacing with the municipality we will be able to know how the data has to be managed.
+		\item \textbf{Accident:} will be used to store the data received by the municipality by characterizing each accident as: \textbf{BikeCrash, MotorcycleCrash, CarCrash, ParkingHit...} The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \ref{sec:stateDiagrams} and \ref{sec:safetyFunction}.
 		
-		\item \textbf{Position:} stores the coordinates of where the parking violation occurred. The position of each accident will be used to retrieve the street thanks to the functionalities provided by the MI and thus obtain statistics of each street and area.
+		\item \textbf{Position:} stores the coordinates of where the parking violation occurred retrieved by the GPS. The position of each infraction will be used to retrieve the street thanks to the functionalities provided by the MI. This information is used to filter the mined data in the basic functionality.
 		
-		\item \textbf{Street:} is one of the most important object to be managed. Each recognized street will be added to the system to achieve its basic and advanced functionalities. A street considers also how many infractions happened in it; this is thought to simplify the very computing mining and crossing algorithms.
+		\item \textbf{Street:} is one of the most important object to be managed. Each recognized street will be added to the system to achieve its basic and advanced functionalities. As we see is one of the classes with the most relations, in fact: it defines the city and the path, it is queried by the mining and safety requests and has a possible suggestion associated in case it is considered unsafe.
 		
-		\item \textbf{Area:} is another important object, in particular for the advanced functionality. An area contains the streets relative to its limits and is managed by the municipality that will receive all the violations reported in it. Areas are also critical for the safety they will encounter; to underline this we have defined an only method in the diagram (getSafety) that will be used later to define the related \textbf{state diagram}.
+		\item \textbf{City:} represents the entire area that is governed by a municipality. Also this class is important to be considered as a filter in the functionalities of the system but also for the requests.
 		
-		\item \textbf{Vehicle:} vehicles are identified by the image recognition algorithm in order to provide additional information to the filter.
-		 
-		\item \textbf{Car:} are expected to be the most reported type of vehicles because of their dimensions and utilization (typically identified by the plate).
+		\item \textbf{Path:} represents the last way in which a filter about an area can be performed. This option is mainly thought for the advanced function about retrieving the most unsafe streets in the selected path.
 		
-		\item \textbf{Motorcycle:} should be also considered as "critical" vehicles. The system has to care of particular areas where lots of motorcycles happen to be all parked in the wrong way and in uncomfortable spots.
+		\item \textbf{Vehicle:} vehicles are considered in order to define the types which have plates and thus that can be reported in a violation. Some examples of classes are: \textbf{Truck, Car, Motorcycle...}
 		
-		\item \textbf{Bicycle:} our system is supposed to deal also with bicycles. Obviously it will be much more difficult for the authorities to retrieve their owners but they can be used by the application to suggest possible interventions in the areas where they happen to be definitely cumbersome.
-		
-		\item \textbf{Request:} is the general class representing the interaction of a user with the system whenever statistics about the frequency, safety or suggestion is asked by the customer. In order to answer with the correct data it will be important to retrieve the user who sends the request to provide him the right visibility.
+		\item \textbf{Request:} is the general class representing the interaction of a user with the system whenever mining, safety or suggestion is asked by the customer. In order to answer with the correct data it will be important to retrieve the user who sends the request and provide it to him with the correct visibility.
 		
 		\item \textbf{BasicRequest:} is the request that deals with the basic functionality. Thanks to it the application will be able to capture the filters selected by the user and answer correctly.
 		
-		\item \textbf{AdvancedRequest:} is the request that deals with the advanced functionality. Thanks to it the application will be able to capture the requirements of the customer, that in this case can be: the safety of a municipality's area or the suggestion for a possible intervention.
+		\item \textbf{AdvancedRequest:} is the request that deals with the advanced functionality. Thanks to it the application will be able to capture the requirements of the customer and provide data about safety or possible interventions. These different requests are in fact defined by the classes: \textbf{SafetyRequest, InterventionRequest.}
+		
+		\item \textbf{PossibleIntervention:} represents a possible intervention suggested for a precise street. The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \ref{sec:stateDiagrams} and \ref{sec:safetyFunction}.
+		
+		\item \textbf{Safety:} is a support class used to highlight the relations between the objects that determine whether a street is \textbf{safe} or \textbf{unsafe}.
 	\end{itemize}
 	
 	\begin{figure}[h!]
@@ -90,110 +75,112 @@
 	\FloatBarrier
 	
 	\subsubsection[State Diagrams]{\hyperlink{toc}{State Diagrams}}
-	Considering now the main functionalities of the system, it is important to highlight the events that make its objects move from one state to another. State diagrams are used to describe the most critical aspects of the objects previously described in the UML class diagram (\autoref{fig:classDiagram}).
-	
-	\paragraph{Notification}
-		Beginning with the notification of a parking violation it is important to remember that each infraction will be refused by the system i.i.f inconsistency is found; for example multiple images representing different types of vehicles.
-		The diagram (\autoref{fig:notifyState}) starts when a violation is received in the \textit{unprocessed} state. First the system needs to check the consistency of the data received in order to accept or reject the violation. If the message is \textit{rejected} the notification diagram ends, otherwise the \textit{accepted} violation needs some more checks before it can be stored in the system. Second another check is used to understand if the infraction lacks of some important fields to be stored that however the application should be able to retrieve easily thanks to the functionalities provided by the external interfaces. Then, if the message is \textit{complete} it is ready to be enriched with other metadata (the name of the street retrieved by the GPS position), otherwise it is completed with missing information and then the \textit{ready} state is reached too. Lastly the information about the parking violation is \textit{stored}in the system, \textit{sent}to the authority and the notification diagram ends.
+	\label{sec:stateDiagrams}
+		Considering now the main functionalities of the system, it is important to highlight the events that make its objects change their state. State diagrams are used to describe the most critical aspects of the objects previously described in the UML class diagram (\autoref{fig:classDiagram}).
 		
-		\vspace{0.3cm}
-		\begin{figure}[h]
-			\centering
-			\includegraphics[scale=0.18]{/diagrams/state/notify.png}
-			\caption{\label{fig:notifyState}Notification state diagram}
-		\end{figure}
-	
-	\paragraph{Request}
-		Statistics retrieval is another critical functionality that needs a state diagram in order to define how the information asked is provided with different levels of visibility depending on the role of the customer.
-		The diagram (\autoref{fig:requestState}) represents both different kinds of requests a customer can do, in fact it is used to highlight the different visibility of the answered information rather than the difference between the requests. Whenever a query is received, the system has first to retrieve the data that is required thanks to the filters provided by the customer. After the information is found in the \textit{processed} state, the application needs to recognize the user in order to provide him the data with the level of visibility devoted to him. If the request comes from a user its data is filtered and once ready (\textit{user data} state), sent back to the user; symmetrically happens for the authority who will receive the least aggregate information possible. 
+		\paragraph{Notification}
+			Starting with the report of a violation it is important to remember that each infraction will be refused by the system i.i.f no plate is found by the image recognition algorithm. The diagram (\autoref{fig:notifyState}) starts when a notification is received in the \textit{unprocessed} state. First the system needs to use the functionalities provided by the IRI in order to find the plate of the vehicle. If no plate number is found, the notification is \textit{rejected} and the diagram ends, otherwise the \textit{accepted} violation needs now to use the MI functionalities in order to retrieve the street where the infraction occurred. All the information about the violation are now known in the \textit{accepted} state, before storing and notifying it, the application has to look for duplicates checking for all the data it has: plate's number, date and time, street, type of vehicle and type of violation. If a \textit{duplicate is found} the notification is still rejected by the system, otherwise it is stored and then notified to the related authority. The notification diagrams ends with the violation marked as \textbf{unread} for the authority that will be able, once logged in the system to retrieve all the violations on its territory.
+			
+			\vspace{0.3cm}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[scale=0.19]{/diagrams/state/notify.png}
+				\caption{\label{fig:notifyState}Notification state diagram}
+			\end{figure}
 		
-		\vspace{0.3cm}
-		\begin{figure}[h]
-			\centering
-			\includegraphics[scale=0.18]{/diagrams/state/request.png}
-			\caption{\label{fig:requestState}Request for data state diagram}
-		\end{figure}
-	
-	\paragraph{Safety}
-		The last state diagram is used to highlight how the system is able to determine the safety of a street and update its state whenever new violations occur or new accidents data is provided by the municipality. 
-		The diagram (\autoref{fig:safetyState}) shows how the safety of a street evolves in the time. The system is able to cross its own data with the one provided by the municipality to establish the safety of an area that will be evaluated thanks to some tresholds. At the beginning an area is considered \textit{safe} (and highlighted with the GREEN color) because no parking violation are stored and no cross can be performed. Once parking violations start to occur the application is able to keep track of their frequency and, thanks to the accidents information, will determine if the area has to be considered less safe than before or not. In this way once exceeded the safe treshold it will be considered \textit{half safe} (highlighted in YELLOW) and the same for the last state that represents an \textit{unsafe} area (highlighted in RED). Obviously the system has also to consider when an area enhances its safety; this will happen whenever one of the tresholds is not reached anymore. 
+		\paragraph{Request}
+			Information retrieval is another critical functionality that needs a state diagram to define how the information to be mined is provided with different levels of visibility depending on the role of the customer. The diagram (\autoref{fig:requestState}) coincides for both different kinds of requests a customer can do, in fact it is used to highlight the different visibility of the answered information rather than the difference between these requests. Whenever a query is received, the system has first to retrieve the data that is required thanks to the filters provided by the customer. After the information is found in the \textit{processed} state, the application needs to recognize the user in order to choose if answer with the retrieved data or not. If the query comes from a customer who could perform it the data is \textit{accepted} and then sent back reaching the \textit{data sent} state, otherwise it is \textit{rejected} and the answer will never reach its inquiring. 
+			
+			\vspace{0.3cm}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[scale=0.21]{/diagrams/state/request.png}
+				\caption{\label{fig:requestState}Request for data state diagram}
+			\end{figure}
 		
-		\vspace{0.3cm}
-		\begin{figure}[h]
-			\centering
-			\includegraphics[scale=0.23]{/diagrams/state/safety.png}
-			\caption{\label{fig:safetyState}Area safety state diagram}
-		\end{figure}   
+		\paragraph{Safety}
+			The last state diagram is used to highlight how the system is able to determine the safety of a street and update its state whenever new violations occur or new accidents data is provided by the municipality. The diagram (\autoref{fig:safetyState}) shows how the safety of a street evolves in the time. The system, each day, does two checks related to all the parking violations and accidents that occurred in a certain street in the previous 30 days. Two tresholds are defined to make the \textit{safe} state trigger: one is related to each \textbf{Possible Intervention} the other to the sum of all \textbf{Violations} and \textbf{Accidents}. It is enough that one treshold for a possible intervention \textbf{or} that the sum treshold is exceeded in order to reach the \textit{unsafe[RED]} state; the opposite happens for reaching the \textit{safe[GREEN]} one. In the section \ref{sec:safetyFunction} all details are provided to understand how this counting works, for now it is important to understand that thanks to it the safety of each street is updated daily.
+			
+			\vspace{0.3cm}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[scale=0.23]{/diagrams/state/safety.png}
+				\caption{\label{fig:safetyState}Area safety state diagram}
+			\end{figure}   
 
 \subsection[Product Functions]{\hyperlink{toc}{Product Functions}}
 	\label{sec:productFunctions}
-	SafeStreet is a crowd-sourced application that intends to provide users with the possibility to notify authorities when parking violations occur. This has to be considered the main product function of the system because of its importance to obtain \textbf{crowdsourcing}. The information provided by users is what SafeStreet focuses on and what makes it able to provide services about the violations in a particular area. Thanks to mining and crossing processes, the system can find \textbf{statistics} and suggestions for interventions in unsafe areas. As the subsection is structured, the product functions will be precisely described following the same order of how we have just shallowly presented: first the \textbf{notification} function then the \textbf{statistics} one and in the end \textbf{safety}.
+	SafeStreet is a crowd-sourced application that intends to provide users with the possibility to notify authorities when parking violations occur. This has to be considered the main product function of the system because of its importance to obtain \textbf{crowdsourcing}. The information provided by users is what SafeStreet focuses on and what makes it able to provide services about the violations in a particular area. Thanks to mining and crossing processes, the system can retrieve filtered data about frequency and safety and suggestions for interventions in unsafe areas. As the subsection is structured, the product functions will be precisely described following the same order of how we have just shallowly presented: first the \textbf{notification} function then the \textbf{statistics} one and in the end \textbf{safety}. Before starting with the description it is important to highlight that in order to benefit of SafeStreets functionalities the customer \textbf{must} be logged in the system as it can be recognized.
 	
 	\subsubsection[Notification Function]{\hyperlink{toc}{Notification Function}}
 		\label{sec:notificationFunction}
-		Users are allowed to notify authorities thanks to SafeStreets. First it is important to highlight that this functionality is allowed only to users that are logged-in to the system and thus recognized. Second, to improve the possibility of reporting a parking violation, the application provides a way to complete the notification not mandatory when the user takes the pictures of the infraction. In this way it is possible to report infractions even by users that are in a hurry or without enough battery to fill all the fields. This possibility allows also to consult the street law in order to decide if the violation is against the rules or to take every further consideration before reporting.\\
+		Users are allowed to notify authorities thanks to SafeStreets: this notification process takes place entirely inside of the application. It starts when the user reports a violation and ends when the authority has the notification marked as unread in his interface (hence in the system too). Each user can report a violation as soon as he spots it, this means he is not allowed to notify it later; in this way we reduce the number of possibly incorrect notifications as we have assumed that the \emph{date} and \emph{time} are automatically added by the application as well as the position, always retrieved because a user \textbf{must} enable his GPS before reporting any violation.\\
 		
-		The notification functionality is provided to the user by an interface that allows him to insert all the information needed to report a parking violation. The fields a user fills are reported here with a label that describes if they are mandatory or not.
+		The notification functionality is provided to the user by an interface that allows him to insert all the information needed to report a violation. The fields a user fills are reported here with a label that describes if they are mandatory or not.
 		
 		\begin{itemize}
-			\item \textbf{Pictures}\texttt{[MANDATORY]:} users must provide at least one picture of the parking violation in order to report it. In this way it is possible to reduce the number of irregular notifications as the recognition functions will immediately discard pictures that do not contain any vehicle. Thanks to the possibility of inserting multiple images the application will be able to find easily the number of the plates and the type of the vehicles, obviously discarding all the notifications that contain inconsistent pictures.
+			\item \textbf{Pictures}\texttt{[MANDATORY]:} users must provide at least one picture of the violation in order to report it. The pictures are taken \textbf{inside} the application where a functionalities allows to select one or more of them; in this way we are sure that every image that has been received is authentic. Having always a picture it is possible to run the image recognition algorithm to understand the plate's number, in fact it is important to remark that whenever a number is not retrieved the entire violation will be discarded. Thanks to the option of inserting multiple images we provide a larger number of possibilities to recognize the plate; these pictures can be also very useful for the authorities that may decide in this way on which of the violations to take action first.
 			
-			\item \textbf{Date}\texttt{[OPTIONAL]:} this field is considered optional because not fundamental for the functionalities of the system. Moreover it can be very useful crossed with the time to understand if the user has reported the violation as soon as the system receives it. In this case the violation it is promptly notified to the authority giving her the possibility take action immediately.
+			\item \textbf{Position}\texttt{[MANDATORY]:} this field is marked as mandatory because, as we have previously said, the position will be retrieved by the GPS of the reporting device. The application does not allow a user to report a violation if its GPS service is not enabled, in this way, if a user is trying to report an infraction without the GPS, he will be forced to switch it on in order to complete the notification
 			
-			\item \textbf{Time}\texttt{[OPTIONAL]:} like the date it can be used to understand if the user notifies the infraction as soon as he spots it. In addition this field is also used to provide a filter in the statistics functionality: a user can provide the timestamp when the violation occurred even later when he does not remember the precise time, in order to accomplish this functionality.
+			\item \textbf{Type of Violation}\texttt{[MANDATORY]:} users need give additional information by providing the type of the violation they are reporting. This kind of data is used as a filter in the mining functionalities and it can be a very useful knowledge to both users and authorities.
 			
-			\item \textbf{Position}\texttt{[MANDATORY]:} users must pin the place where the parking violation occurred in order to report it. SafeStreet's functionalities are based in fact on this information that is processed with the functionalities provided by the MI. As all the notifications the position can be pinned even later and will be used by the application to find the exact street where the parking infraction was spotted.
+			\item \textbf{Type of Vehicle}\texttt{[MANDATORY]:} users must provide also this information in order to complete the notification. It is another filter in the mining functionalities.
 			
-			\item \textbf{Type}\texttt{[OPTIONAL]:} users are optionally able to give additional information by providing the type of the violation they are reporting. This kind of data can be very useful for the authority that can decide in this way on which of all the notifications it receives to take action.
-			
-			\item \textbf{Plate}\texttt{[OPTIONAL]:} this field is thought to give additional information to the functionalities provided by the IRI in order to recognize the plate of the reported vehicle. Obviously it will be always discarded when the algorithm recognizes a vehicle that does not have a plate and in case inconsistency is found when matching it with the one recognized in the picture. Whenever a plate is not found, the violation will be stored and notified to the authority without this information. 
+			\item \textbf{Plate}\texttt{[OPTIONAL]:} this field is thought to give additional information to the functionalities provided by the IRI in order to recognize the plate of the reported vehicle. As we have already said it is the image recognition algorithm who has the last word when deciding whether to discard or not a violation: if he recognizes a number, also thanks to this information, the notification will be considered, otherwise it will not be.
 		\end{itemize}
 	
-		Once the violation is received, before storing it, the system: checks if all the mandatory fields are present, checks if no inconsistency is found in the provided information, adds the metadata relative to the type of violation and the street where the infraction occurred. After all the information relative to a parking violation is stored in the system the related notification is sent to the authority. %todo aggiungere la storia che ciascun polizziotto ha il suo dispositivo e così è in grado di agire subito, fare attenzione al fatto che bisogna controllare se la violazione è stata riportata prima o dopo. La product function relativa sarebbe dopo questa
-		
-	\subsubsection[Statistics Function]{\hyperlink{toc}{Statistics Function}}
-		Data mining is used to retrieve the information about the stored data and provide the customers different ways to filter it. Thanks to the details of each infraction, in fact, the system is able to offer this service both to users and authorities. Customers, once decided the street of their interest, choose how to retrieve the frequency of parking violations by selecting the following filters:
+		Once the notification is received, the system first checks if no duplicates are already stored. If this does not occur, the violation is ready to be stored in the system and thus notified to the authority. The notification works as follows: each violation that has been accepted is stored as \textbf{unread} for the authority that governs the territory that contains its street, in this way, when the authority enters the system it will be able to see all the notifications that have been reported. 
+
+	\subsubsection[Statistics Function]{\hyperlink{toc}{Mining Function}}
+		Data mining is used to retrieve the information about the stored data and provide the customers different ways to filter it. Thanks to the details of each infraction, in fact, the system is able to offer this service both to users and authorities. Two functionalities are offered to customers thanks to the mining process: \emph{Highest Number of Violations} and \emph{Most Dangerous Vehicles}. Both these functionalities but also the one allowed only to the authorities (\emph{Single Violation Search}) can be retrieved with the filters described in the following list.
 			
 		\begin{itemize}
-			\item \textbf{No Filter:} the frequency is retrieved by giving a general view of all the parking violations that occur in the previously chosen street.
+			\item \textbf{Area:} there are three levels of filters defined in the area one. The widest is called \textbf{everywhere} and returns the information generally all over Italy, the second is called \textbf{city} and considers all the streets contained in the specified city, and the most specific one considers just a single \textbf{street}.
 			
-			\item \textbf{Time:} customers are able to filter the frequency by choosing a time lapse in which they are interested in. In this way the statistics can give very useful information both to users and authorities about the periods of time when the most violations occur.
+			\item \textbf{Time:} customers are able to filter by choosing a time lapse in which they are interested in. 
 			
-			\item \textbf{Type of vehicles:} the system is able to understand the type of the reported vehicles thanks to the functionalities provided by the image recognition algorithms. In this way the information stored about each violation can be filtered choosing one of the recognized vehicles: \textbf{cars, motorcycles, bicycles}.
+			\item \textbf{Type of vehicles:} the system stores in each notification the type of the vehicle that committed the violation. In this way this data can be filtered choosing one of the considered vehicles: \textbf{trucks, cars, motorcycles}.
 			
-			\item \textbf{Type of violation:} thanks to the information about the type of the parking violation (typically provided by the user) the application allows also to filter by the type the frequency of the parking violations. We can think of this statistic mainly for the authorities who will look for the highest type of vehicles that commit a violation in a street in order to take action; however this filter is also allowed to users who may be interested in this kind of data too.
+			\item \textbf{Type of violation:} thanks to the information about the type of the violation (provided by the user) the application allows also to filter by type. We can think of this statistic mainly for the authorities who will look for the highest type of vehicles that commit a violation in a street in order to take action; however this filter is also allowed to users who may be interested in this kind of data too.
 		\end{itemize}
 	
-	It is important to underline the fact that data is provided to each customer depending on its role. \textbf{Different levels of visibility} have to be considered when providing the information. For example: whenever an authority looks for the frequency in a street, it also receives a list of all the plates of the vehicles that committed those violations; users, instead, receive only the statistics in numbers. 
+		It is important to underline the fact that data is provided to each customer depending on its role. \textbf{Different levels of visibility} have to be considered when providing the information retrieved by the two shared functionalities. For example we should consider that the authorities have always the option to retrieve their information also with the number of the plates of the violations or the names of the users who reported them. The \emph{Single Violation Search} gives also to authorities a way to retrieve violations in the most specific way they could.
 	
 	\subsubsection[Safety Function]{\hyperlink{toc}{Safety Function}}
-		SafeStreets is able to process the information about the accidents that occur on the territory of the municipality that provides this data. Thanks to this additional information the system can cross it with its stored one and determine the safety of each area. In order to choose if an area is safe or not, two tresholds have to be defined as three levels of safety can be highlighted: \textbf{safe}, \textbf{half-safe} and \textbf{unsafe}.\\
+		\label{sec:safetyFunction}
+		SafeStreets is able to process the information provided by the municipality about the accidents that occur in a territory. Thanks to this additional data the system can cross it with its stored one and determine the \textbf{safety} of each street as we now precisely describe.\\
 		
-		The system dynamically changes the safety of an area thanks to the tresholds and uses this information to provide the customers two services related to the safety:
+		The system dynamically changes the safety of a streets thanks to two kind of tresholds defined for each street:
 		
-		\begin{itemize}
-			\item \textbf{Colored Areas:} customers are able to retrieve the information about the safety of an area both in general or in a specified time slot. In order to distinguish the different types of safety previously described the application highlights the areas with:
-			\begin{itemize}
-				\item \textbf{GREEN:} safe area
-				\item \textbf{YELLOW:} half-safe area
-				\item \textbf{RED:} unsafe area
-			\end{itemize} 
+		\begin{enumerate}
+			\item \textbf{Intervention Treshold:} each intervention has a defined treshold that once exceeded determines a street to be unsafe. Every type of accident or violation is related to one or more intervention so that, once they occur in a street they make increase the counter of each intervention. If one of the counters exceeds the treshold it means that the street has become \textbf{unsafe} and that the intervention should be taken in order to get back to \textbf{safety}.
+			
+			\item \textbf{Sum Treshold:} another treshold is needed to consider also the accidents that are not related to any intervention but anyway determine a street to be \textbf{unsafe}. This treshold is based on the sum of the accidents and parking violations that occur in the street. If the sum exceeds the treshold it means that the street has become \textbf{unsafe} and the related possible intervention is the one whose counter is the nearest to the treshold.
+		\end{enumerate}
+	
+		The safety of each street and then the related intervention is determined each day with the stored information about the previous month. Thanks to this data retrieved by the \emph{crossing} process, SafeStreets is also able to provide the following functionalities:
 		
-			\item \textbf{Intervention:} SafeStreets is also able to suggest a possible intervention only for the areas that are marked as unsafe. Customers are allowed to select an unsafe area and retrieve all the details for the intervention suggested; both users and authorities can access this functionality that is thought for: provide authorities the best solution in order to enhance the safety of the selected area; inform the users of the possible interventions that would be going to occur in the selected area if the municipality decides to take action.
-		\end{itemize}
+		 \begin{itemize}
+		 	\item \textbf{Unsafe Streets:} thanks to the MI SafeStreets can use its services to retrieve the portion of an area and highlight its streets with two different colors to distinguish \emph{safe streets} colored in \textbf{GREEN} from \emph{unsafe streets} colored in \textbf{RED}. The map interface provides functions that require a set of streets and the color to be highlighted with and returns the best positioned map with the respected colors. 
+		 	
+		 	\item \textbf{Urgent Interventions:} thanks to the tresholds we always have a suggestion for a possible intervention whenever a street is considered to be unsafe. 
+		 \end{itemize}
+	 
+	 	Both these services are provided to the customers who can also decide to filter the information retrieved by choosing one of the following filters: \textbf{city, path} or \textbf{street.} 
 		
 \subsection[User Characteristics]{\hyperlink{toc}{User Characteristics}}
+	\label{sec:userCharacteristics}
 	SafeStreets has two different customers that are very important to distinguish in order to provide correctly the functionalities previously described in subsection \ref{sec:productFunctions}. In the entire document a general client is called \textbf{customer} and the distinction is made between:
 	
 	\begin{itemize}
 		\item \textbf{USER}
 			\begin{itemize}
-				\item Is considered to be reliable.
+				\item Is considered to be reliable but human (he can insert the wrong plate).
 				\item Must have a smartphone to take pictures of a parking violation.
-				\todo{Must be at least 16 years old ?}
 				\item Can register to SafeStreets in order to be recognized as such.
-				\item Must login to SafeStreets to notify a parking violation.
-				\item Must login to SafeStreets to retrieve statistics.
+				\item Must login to SafeStreets to benefit of its services.
+				\item Can filter the mined data.
 				\item Can retrieve the safety of an area.
 				\item Can retrieve the suggestion for an intervention of an unsafe area.
 			\end{itemize}
@@ -201,7 +188,9 @@
 			\begin{itemize}
 				\item Is considered to provide correct and reliable information about accidents.
 				\item Can register to SafeStreets in order to be recognized as such.
-				\item Must login to SafeStreets to retrieve statistics.
+				\item Must login to SafeStreets to benefit of its services.
+				\item Can search for single violations.
+				\item Can filter the mined data.
 				\item Can provide information about the accidents that occur in its territory.
 				\item Can retrieve the safety of an area.
 				\item Can retrieve the suggestion for an intervention of an unsafe area.
@@ -216,20 +205,20 @@
 		
 	\begin{enumerate}[label=\textbf{DA\arabic*}]
 		\item GPS position is accurate ($\pm5$m).
-		\item Users are reliable.
-		\item Inconsistent and incomplete (with respect to the mandatory fields defined in \ref{sec:notificationFunction}) data received by the system is discarded.
+		\item Users are reliable but human.
 		\item Information provided by the municipality is correct and reliable.
-		\item The municipality area is composed of all the streets inside its limits.
+		%todo add all other domain assumptions
 	\end{enumerate} 
 	
 \subsection[The World and the Machine]{\hyperlink{toc}{The World and the Machine}}
 	Thanks to the constraints on the domain of interest for the system (section \ref{sec:domainAssumptions}), we are now able to describe SafeStreets with the \textit{World and the Machine} approach that allows to underline the most important phenomena that are present in the problem we are dealing with. The machine represents the system do be developed while the world (a.k.a environment) is the portion of the real world affected by the machine.\\
 	
-	Thanks to the distinction we have highlighted in the next page (\autoref{fig:worldAndMachine}) the main phenomena of our problem: the ones in the world affect the world only, the ones in the machine affect the machine only and the ones in between affect both the world and the machine. This figure can be also used to start guessing the requirements (section \ref{sec:specificRequirements}) of our system as they can be defined as: \textit{prescriptive assertions formulated in terms of shared phenomena.} 
+	Thanks to the distinction we have highlighted in the next page (\autoref{fig:worldAndMachine}) the main phenomena of our problem: the ones in the world affect the world only, the ones in the machine affect the machine only and the ones in between affect both the world and the machine. This figure can be also used to start guessing the requirements (section \ref{sec:specificRequirements}) of our system as they can be defined as: \textit{prescriptive assertions formulated in terms of shared phenomena.}
+	\vspace{1cm} 
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[angle=90, scale=0.6]{WorldAndMachine.png}
+		\includegraphics[width=\textwidth, scale=0.3]{WorldAndMachine.png}
 		\caption{\label{fig:worldAndMachine}The World and the Machine}
 	\end{figure}
- 
+ 	 
