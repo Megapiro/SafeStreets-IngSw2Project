@@ -14,6 +14,7 @@
 	\subsubsection{User}
 	
 		\paragraph{User Registration}
+		:
 		\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 			\toprule
 			\textbf{Name} & \textbf{User Registration} \\
@@ -122,7 +123,7 @@
 			\midrule
 			\textbf{Actors} & User \\
 			\midrule
-			\textbf{Entry conditions} & The application has started \\
+			\textbf{Entry conditions} & The user is logged in \\
 			\midrule
 			\textbf{Flow of events} & 
 			\begin{enumerate}
@@ -154,7 +155,7 @@
 			\midrule
 			\textbf{Actors} & User \\
 			\midrule
-			\textbf{Entry conditions} & The application has started \\
+			\textbf{Entry conditions} & The user is logged in \\
 			\midrule
 			\textbf{Flow of events} & 
 			\begin{enumerate}
@@ -182,7 +183,7 @@
 			\midrule
 			\textbf{Actors} & User \\
 			\midrule
-			\textbf{Entry conditions} & The application has started \\
+			\textbf{Entry conditions} & The user is logged in \\
 			\midrule
 			\textbf{Flow of events} & 
 			\begin{enumerate}
@@ -209,17 +210,16 @@
 			\midrule
 			\textbf{Actors} & User \\
 			\midrule
-			\textbf{Entry conditions} & The application has started \\
+			\textbf{Entry conditions} & The user is logged in \\
 			\midrule
 			\textbf{Flow of events} & 
 			\begin{enumerate}
 				%todo ma quanto bisogna specificare quello che fa il sistema in tutto questo?
 				\item The user selects the 'unsafe streets' option
-				\item The user selects the either the 'city' option or the 'route' option
-				\item The user chooses the region and the city from a list if 'city' option is chosen, otherwise he enters start and end points of the route
-				\item The user selects the types of violation he wants to include
+				\item The user selects the either the 'city' option, the 'route' option or the single street option
+				\item The user chooses the region and the city from a list if 'city' option is chosen, if 'route' option is chosen he enters start and end points of the route, otherwise he inserts the name of the street
 				\item The user confirms the query and sends it
-				\item The system returns a list with all the unsafe streets included in the query
+				\item The system returns a map where the streets selected with the filter are colored according to their safety: green if they're 'safe', red if they're 'unsafe'
 			\end{enumerate} \\
 			\midrule
 			\textbf{Exit conditions} & The list is shown to the user\\
@@ -228,7 +228,6 @@
 			\begin{itemize}
 				\item If no city is selected when 'city' option is chosen, the system notifies the user and waits for him to insert it
 				\item If no start or end points are chosen when 'route' option is selected, the system notifies the user and waits for him to insert them
-				\item If
 			\end{itemize} \\
 			\bottomrule
 			\caption{\emph{Find unsafe streets} use case description}
