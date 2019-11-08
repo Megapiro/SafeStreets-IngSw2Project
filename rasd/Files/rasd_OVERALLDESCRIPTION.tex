@@ -89,7 +89,7 @@
 			\end{figure}
 		
 		\paragraph{Request}
-			Information retrieval is another critical functionality that needs a state diagram to define how the information to be mined is provided with different levels of visibility depending on the role of the customer. The diagram (\autoref{fig:requestState}) coincides for both different kinds of requests a customer can do, in fact it is used to highlight the different visibility of the answered information rather than the difference between these requests. Whenever a query is received, the system has first to retrieve the data that is required thanks to the filters provided by the customer. After the information is found in the \textit{processed} state, the application needs to recognize the user in order to choose if answer with the retrieved data or not. If the query comes from a customer who could perform it the data is \textit{accepted} and then sent back reaching the \textit{data sent} state, otherwise it is \textit{rejected} and the answer will never reach its inquiring. 
+			Information retrieval is another critical functionality that needs a state diagram to define how the information to be mined is provided with different levels of visibility depending on the role of the customer. The diagram (\autoref{fig:requestState}) considers in fact the process of how the query obtained by a request will be managed in order to avoid providing secret data to the users. Whenever a request is received the relative query will be retrieved in the \textit{unprocessed} state and then executed in the \textit{processed} one. A check is now needed in order to understand the kind of customer from which the request is coming. If the query comes from a customer who could perform it the data is \textit{accepted} and sent back to the inquiring customer, otherwise it is \textit{rejected} and the diagram ends.
 			
 			\vspace{0.3cm}
 			\begin{figure}[h]
@@ -104,7 +104,7 @@
 			\vspace{0.3cm}
 			\begin{figure}[h]
 				\centering
-				\includegraphics[scale=0.23]{/diagrams/state/safety.png}
+				\includegraphics[scale=0.3]{/diagrams/state/safety.png}
 				\caption{\label{fig:safetyState}Area safety state diagram}
 			\end{figure}   
 
@@ -133,10 +133,12 @@
 		Once the notification is received, the system first checks if no duplicates are already stored. If this does not occur, the violation is ready to be stored in the system and thus notified to the authority. The notification works as follows: each violation that has been accepted is stored as \textbf{unread} for the authority that governs the territory that contains its street, in this way, when the authority enters the system it will be able to see all the notifications that have been reported. 
 
 	\subsubsection[Statistics Function]{\hyperlink{toc}{Mining Function}}
-		Data mining is used to retrieve the information about the stored data and provide the customers different ways to filter it. Thanks to the details of each infraction, in fact, the system is able to offer this service both to users and authorities. Two functionalities are offered to customers thanks to the mining process: \emph{Highest Number of Violations} and \emph{Most Dangerous Vehicles}. Both these functionalities but also the one allowed only to the authorities (\emph{Single Violation Search}) can be retrieved with the filters described in the following list.
+		Data mining is used to retrieve the information about the stored data and provide the customers different ways to filter it. Thanks to the details of each infraction, in fact, the system is able to offer this service both to users and authorities. Two functionalities are offered to customers thanks to the mining process: \emph{Highest Number of Violations} and \emph{Most Dangerous Vehicles}. Both these functionalities but also the one allowed only to the authorities (\emph{Find Reports}) can be retrieved with the filters described in the following list.
 			
 		\begin{itemize}
 			\item \textbf{Area:} there are three levels of filters defined in the area one. The widest is called \textbf{everywhere} and returns the information generally all over Italy, the second is called \textbf{city} and considers all the streets contained in the specified city, and the most specific one considers just a single \textbf{street}.
+			
+			\item \textbf{Date:} this filter is allowed only to authorities in the find reports functionality, in this way they are allowed to retrieve the violations in a more detailed search.
 			
 			\item \textbf{Time:} customers are able to filter by choosing a time lapse in which they are interested in. 
 			
@@ -145,11 +147,11 @@
 			\item \textbf{Type of violation:} thanks to the information about the type of the violation (provided by the user) the application allows also to filter by type. We can think of this statistic mainly for the authorities who will look for the highest type of vehicles that commit a violation in a street in order to take action; however this filter is also allowed to users who may be interested in this kind of data too.
 		\end{itemize}
 	
-		It is important to underline the fact that data is provided to each customer depending on its role. \textbf{Different levels of visibility} have to be considered when providing the information retrieved by the two shared functionalities. For example we should consider that the authorities have always the option to retrieve their information also with the number of the plates of the violations or the names of the users who reported them. The \emph{Single Violation Search} gives also to authorities a way to retrieve violations in the most specific way they could.
-	
+		Each functionality considers only the filters that are needed to achieve its mining process. As we see in fact in the interfaces (section \ref{sec:userInterfaces}) and in the use case diagrams (section \ref{sec:useCases}) just some of the listed filters are allowed to be selected. It is important to highlight that SafeStreets provides information to customers with different levels of visibility depending on their role. To accomplish this distinction the system provides the authorities an additional functionality that allows them to retrieve the information in the highest level of detail possible. \emph{Highest Number of Violations} and \emph{Most Dangerous Vehicles} are statistical functionalities that are not meant to be filtered differently depending on the user that is requiring them. Moreover the \emph{Find Reports} functionality is able to give the authorities a way to see in detail the reported violations thanks to the filters they will provide depending on their needs.
+
 	\subsubsection[Safety Function]{\hyperlink{toc}{Safety Function}}
 		\label{sec:safetyFunction}
-		SafeStreets is able to process the information provided by the municipality about the accidents that occur in a territory. Thanks to this additional data the system can cross it with its stored one and determine the \textbf{safety} of each street as we now precisely describe.\\
+		SafeStreets is able to process the information provided by the municipality about the accidents that occur in a territory. Thanks to this additional data the system can cross it with its stored one and determine the \textbf{safety} of each street as we now precisely described. Whenever a municipality is not able to provide the information about the accidents to SafeStreets the safety can be still determined thanks to the mathematical model further defined that will just use the information stored about the violations. \\
 		
 		The system dynamically changes the safety of a streets thanks to two kind of tresholds defined for each street:
 		
@@ -167,9 +169,9 @@
 		 	\item \textbf{Urgent Interventions:} thanks to the tresholds we always have a suggestion for a possible intervention whenever a street is considered to be unsafe. 
 		 \end{itemize}
 	 
-	 	Both these services are provided to the customers who can also decide to filter the information retrieved by choosing one of the following filters: \textbf{city, path} or \textbf{street.} 
+	 	Both these functionalities can be filtered in order to reduce the size of the interested area, the possible filters used in one or the other are: \textbf{city, path, street.}
 		
-\subsection[User Characteristics]{\hyperlink{toc}{User Characteristics}}
+\subsection[User Characteristics]{\hyperlink{toc}{User Characteristics}} %todo fare quando si sono definite bene tutte le domain assumptions
 	\label{sec:userCharacteristics}
 	SafeStreets has two different customers that are very important to distinguish in order to provide correctly the functionalities previously described in subsection \ref{sec:productFunctions}. In the entire document a general client is called \textbf{customer} and the distinction is made between:
 	
@@ -189,7 +191,7 @@
 				\item Is considered to provide correct and reliable information about accidents.
 				\item Can register to SafeStreets in order to be recognized as such.
 				\item Must login to SafeStreets to benefit of its services.
-				\item Can search for single violations.
+				\item Can search for detailed violations.
 				\item Can filter the mined data.
 				\item Can provide information about the accidents that occur in its territory.
 				\item Can retrieve the safety of an area.
