@@ -133,16 +133,17 @@
 				\item The user chooses the types of violation to be included
 				%maybe a checkbox
 				\item The user chooses the time slot
-				\item The user chooses the type of vehicles to be included
+				\item The user chooses the types of vehicle to be included
 				\item The user confirms the query and sends it
-				\item The system returns a list of the streets ordered by the highest number of violations, with the actual number next to the name of the street, corresponding to the chosen city and the chosen types of violation, in the specified time slot
+				\item The system returns a list of the streets ordered by the highest number of violations, with the actual number next to the name of the street, according to the filters
 			\end{enumerate} \\
 			\midrule
 			\textbf{Exit conditions} & The list of the streets is shown to the user \\
 			\midrule
 			\textbf{Exceptions} & 
 			\begin{itemize}
-				\item 	If no type of violation is selected, the system notifies the user and wait for him to insert at least one	
+				\item 	If no type of violation is selected, the system shows an error message and the procedure is aborted
+				\item If no type of vehicle is selected, the system shows an error message and the procedure is aborted	
 			\end{itemize} \\
 			\bottomrule
 			\caption{\emph{Find streets with the highest number of violations} use case description}
@@ -163,7 +164,7 @@
 				\item The user selects the region and the city from a list, or selects a street, or selects everywhere
 				\item The user selects the types of violation he wants to include
 				\item The user confirms the query and sends it
-				\item The system returns a list of the types of vehicles, ordered by the highest number of violations they committed, according to the filters
+				\item The system returns a list of the types of vehicle, ordered by the highest number of violations they committed, according to the filters
 			\end{enumerate} \\
 			\midrule
 			\textbf{Exit conditions} & The list is shown to the user\\
@@ -337,14 +338,18 @@
 			\item The authority chooses the 'find reports' option
 			\item The authority selects the types of violation to be included
 			\item The authority selects date interval and time slot
-			\item The authority selects the types of vehicles to be included
+			\item The authority selects the types of vehicle to be included
 			\item The authority optionally selects the street to include, otherwise 'city' will be selected
-			\item The system provides a list with all the violation reports that match the filter. In case 'city' option is selected, the considered city is that of competence of the authority
+			\item The authority confirms and sends the query
+			\item The system provides a list with all the violation reports that match the filter, sorted by chronological order from the most recent one. In case 'city' option is selected, the considered city is that of competence of the authority
 		\end{enumerate} \\
 		\midrule
 		\textbf{Exit conditions} & The list is shown to the authority\\
 		\midrule
-		\textbf{Exceptions} &  \\
+		\textbf{Exceptions} &  
+		\begin{enumerate}
+			\item If the date interval is not valid, the system notifies the authority and the procedure is aborted
+		\end{enumerate}\\
 		\bottomrule
 		\caption{\emph{Find reports} use case description}
 	\end{longtable}
