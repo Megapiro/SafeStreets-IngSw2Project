@@ -1,5 +1,5 @@
 \section[Overall Description]{\hyperlink{toc}{Overall Description}}
-
+\label{sec:overallDescription}
 \subsection[Product Perspective]{\hyperlink{toc}{Product Perspective}}
 	Thanks to the general introduction and the scope definition from the previous sections, we are now able to look at our system first from the outside and then from the inside. To deal with this description we are going to see the external interfaces the system has to interact with and then the definition of the model in order to have a feasible structure with them; at the end of the section \textbf{state diagrams} are used to emphasize the dynamic behavior of the most critical classes defined in the model.
 	\subsubsection[System Interfaces]{\hyperlink{toc}{System Interfaces}}
@@ -29,7 +29,7 @@
 		\end{itemize}
 	
 	\subsubsection[Model Structure]{\hyperlink{toc}{Model Structure}}
-	The static analysis now continues to define the internal structure of the system, in particular a high-level class diagram that considers the most important objects and their relations in order to achieve the \hyperref[sec:goals]{\textcolor{blue}{goals}} is shown in \autoref{fig:classDiagram}.\\
+	The static analysis now continues to define the internal structure of the system, in particular a high-level class diagram (\autoref{fig:classDiagram}) that considers the most important objects and their relations in order to achieve the \hyperref[sec:goals]{\textcolor{blue}{goals}}.\\
 	
 	The main objects in the UML class diagram are:
 	\begin{itemize}
@@ -114,7 +114,7 @@
 	
 	\subsubsection[Notification Function]{\hyperlink{toc}{Notification Function}}
 		\label{sec:notificationFunction}
-		Users are allowed to notify authorities thanks to SafeStreets: this notification process takes place entirely inside of the application. It starts when the user reports a violation and ends when the authority has the notification marked as unread in his interface (hence in the system too). Each user can report a violation as soon as he spots it, this means he is not allowed to notify it later; in this way we reduce the number of possibly incorrect notifications as we have assumed that the \emph{date} and \emph{time} are automatically added by the application as well as the position, always retrieved because a user \textbf{must} enable his GPS before reporting any violation.\\
+		Users are allowed to notify authorities thanks to SafeStreets: this notification process takes place entirely inside of the application. It starts when the user reports a violation and ends when the authority has the notification marked as unread in his interface (hence in the system too). Each user can report a violation as soon as he spots it, this means he is not allowed to notify it later; in this way we reduce the number of possibly incorrect notifications as we have assumed that the \emph{date} and \emph{time} are automatically added by the application as well as the position, always retrieved because a user \textbf{must} enable his GPS before reporting any violation.\\ %todo add rejected duplicate violation
 		
 		The notification functionality is provided to the user by an interface that allows him to insert all the information needed to report a violation. The fields a user fills are reported here with a label that describes if they are mandatory or not.
 		
@@ -171,15 +171,19 @@
 	 
 	 	Both these functionalities can be filtered in order to reduce the size of the interested area, the possible filters used in one or the other are: \textbf{city, path, street.}
 		
-\subsection[User Characteristics]{\hyperlink{toc}{User Characteristics}} %todo fare quando si sono definite bene tutte le domain assumptions
+\subsection[User Characteristics]{\hyperlink{toc}{User Characteristics}}
 	\label{sec:userCharacteristics}
 	SafeStreets has two different customers that are very important to distinguish in order to provide correctly the functionalities previously described in subsection \ref{sec:productFunctions}. In the entire document a general client is called \textbf{customer} and the distinction is made between:
 	
 	\begin{itemize}
 		\item \textbf{USER}
 			\begin{itemize}
-				\item Is considered to be reliable but human (he can insert the wrong plate).
+				\item Are supposed to live in Italy.
+				\item Always inserts correct data while registering.
+				\item Always inserts correct data while reporting violations.
+				\item Can not register with a username that corresponds to an existing PEC address.
 				\item Must have a smartphone to take pictures of a parking violation.
+				\item Must enable their GPS in order to report a violation.
 				\item Can register to SafeStreets in order to be recognized as such.
 				\item Must login to SafeStreets to benefit of its services.
 				\item Can filter the mined data.
@@ -188,8 +192,11 @@
 			\end{itemize}
 		\item \textbf{AUTHORITY/MUNICIPALITY}
 			\begin{itemize}
-				\item Is considered to provide correct and reliable information about accidents.
-				\item Can register to SafeStreets in order to be recognized as such.
+				\item Are supposed to be in Italy.
+				\item Always inserts correct data while registering.
+				\item Knows the PEC address of the territory they manage.
+				\item Is considered to provide correct information about accidents.
+				\item Can register to SafeStreets in order to be recognized as such with their PEC address.
 				\item Must login to SafeStreets to benefit of its services.
 				\item Can search for detailed violations.
 				\item Can filter the mined data.
@@ -201,18 +208,30 @@
 	
 \subsection[Domain Assumptions]{\hyperlink{toc}{Domain Assumptions}}
 	\label{sec:domainAssumptions}
-	Domain assumptions are used to define clearly the world in which SafeStreets interfaces. Thanks to them we are able to add constraints that define the bounds of the environment. \\
+	Domain assumptions are used to define clearly the world in which SafeStreets interfaces. Thanks to them we are able to add constraints that define the bounds of the environment. It is first important to give the description of one of these assumption to precise why we decided to consider it. The fact that \emph{The system is allowed to work in Italy} is used to deal with the recognition of the authorities. It is very important in fact to be sure of the identity of each customer in order to manage the security of the stored data, problems relative to the law and simplify the description with only the correct level of details. Thanks to this assumption in fact we can consider that every authority knows its PEC address and thus use this existing technology to define the recognition process. \\
 	
 	We assume that these assumptions hold true in the domain of the system:
 		
 	\begin{enumerate}[label=\textbf{DA\arabic*}]
-		\item GPS position is accurate ($\pm5$m).
-		\item Users are reliable but human.
-		\item Information provided by the municipality is correct and reliable.
-		%todo add all other domain assumptions
+		\item \label{dom:correctRegistration} Customers always insert correct data while registering to SafeStreets.
+		\item \label{dom:correctViolation} Users always insert correct data while reporting violations to SafeStreets.
+		\item \label{dom:pecKnown} The association between cities and PEC is well-known by SafeStreets.
+		\item \label{dom:uniquePec} PEC addresses are unique.
+		\item \label{dom:specialCharacters} Special characters are all the characters that are not letters nor numbers.
+		\item \label{dom:correctDateTime} Date and time on the devices on which SafeStreets runs are always correct.
+		\item \label{dom:gpsAccuracy} The GPS module of the devices on which SafeStreets runs always works correctly and has an accuracy of 2 meters.
+		\item \label{dom:correctCamera} The camera module of the devices on which SafeStreets runs always works correctly.
+		\item \label{dom:correctInternet} Internet connection works always without errors.
+		\item \label{dom:italy} The system is assumed to work in Italy.
+		\item \label{dom:italyMaps} The system knows maps of Italy and they’re always complete and up to date.
+		\item \label{dom:nonameStreets} There are no streets without a name.
+		\item \label{dom:noMaliciousPlates} No one physically and maliciously replaces license plates.
+		\item \label{dom:nosameCities} There are no cities with the same name in a given region.
+		\item \label{dom:correctAccidents} Accidents data provided by municipalities are always correct.
 	\end{enumerate} 
 	
 \subsection[The World and the Machine]{\hyperlink{toc}{The World and the Machine}}
+	\label{sec:worldMachine}
 	Thanks to the constraints on the domain of interest for the system (section \ref{sec:domainAssumptions}), we are now able to describe SafeStreets with the \textit{World and the Machine} approach that allows to underline the most important phenomena that are present in the problem we are dealing with. The machine represents the system do be developed while the world (a.k.a environment) is the portion of the real world affected by the machine.\\
 	
 	Thanks to the distinction we have highlighted in the next page (\autoref{fig:worldAndMachine}) the main phenomena of our problem: the ones in the world affect the world only, the ones in the machine affect the machine only and the ones in between affect both the world and the machine. This figure can be also used to start guessing the requirements (section \ref{sec:specificRequirements}) of our system as they can be defined as: \textit{prescriptive assertions formulated in terms of shared phenomena.}

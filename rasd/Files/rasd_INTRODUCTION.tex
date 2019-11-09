@@ -1,25 +1,80 @@
 \section[Introduction]{\hyperlink{toc}{Introduction}}
+\label{sec:introduction}
 \subsection[Purpose]{\hyperlink{toc}{Purpose}}
-\todo{Care next sentence, just used to test bibliography}
-This document is based on what we studied and deepened with these two further readings: \cite{IEEErasd} and \cite{IEEEre}.
-
-\subsection[Scope]{\hyperlink{toc}{Scope}}
-	\subsubsection[Goals]{\hyperlink{toc}{Goals}}
-	\label{sec:goals}
-\todo{WORLD AND MACHINE HERE ? GOALS SHOULD BE EXPLAINED WITH RESPECT WITH WORLD PHENOMENA FOR EXAMPLE!}
-
-\subsection[Glossary]{\hyperlink{toc}{Glossary}}
-	\subsubsection[Definitions]{\hyperlink{toc}{Definitions}}
-	\subsubsection[Acronyms]{\hyperlink{toc}{Acronyms}}
-		\begin{description}
-			\item[API:] Application Programming Interface
-			\item[IRI:] Image Recognition Interface
-			\item[MI:] Map Interface
-			\item [GPS:] Global Positioning System
-		\end{description}
-	\subsubsection[Abbreviations]{\hyperlink{toc}{Abbreviations}}
+	\label{sec:purpose}
+	This document completely describe the system in terms of functional and non-functional requirements and is used as a contractual basis between the customer and the developer. The structure follows the template studied at the lessons and is integrated with specific documents relative in particular to the template used \cite{IEEErasd}, to the requirements engineering process \cite{IEEEre} and to the categorization of the phenomena \cite{W&M}. Hence this document is the result of the requirements elicitation and the analysis activities paired with a specific description aimed to precise the behavior of the system.
 	
-\todo[inline]{guardare post BEEP relativo a che cosa sono le reference}
+\subsection[Context]{\hyperlink{toc}{Context}}
+	SafeStreets is a \emph{crowd-sourced} application that intends to provide a way to notify authorities when a traffic violation occurs. Nowadays almost everyone uses a device for the most of the activities and this gives the opportunity to achieve products whose knowledge is based on the concept of \emph{outsourcing}. Thanks to the system we are going to describe, in fact, each person will be able to report a violation to the authority in a very easy and fast way. The big amount of data SafeStreets expects to receive allows also to provide additional functionalities to its customers relative to statistics and important considerations about safety. However the main purpose of the application still remains to come up with a simple and effective way to report traffic violations, a problem always more important in particular in big cities where authorities are unable to deal with all the infractions that may occur. Without loss of generality we will consider the system to work only in Italy, this assumption is made in particular to obtain a way to recognize authorities as such using a technology already in use (PEC). The correct recognition of the authorities allows also to manage correctly one of the most difficult problem that SafeStreets has to deal with: the \emph{law}. In this way we accomplish both the problem of the security of the data relative to the violations and the one related to the correctness about the violations reported by the users.
+	
+\subsection[Scope]{\hyperlink{toc}{Scope}}
+	The aim of the system is to achieve with outsourcing a simple way to notify traffic violations and use this information to retrieve interesting data for both its customers: users and authorities. Hence we can think as the main objective of SafeStreets the one of the notification and then describe the other functionalities in the basic and advanced services.\\
+	
+	The system will describe the notification functionalities in terms of \emph{parking violations} but is thought for further extensions in order to deal with the other types. Users are the clients allowed to report a violation and authorities will be notified whenever a new one will be reported. This process takes place entirely inside the application where both customers once recognized will be able to benefit only to the services related to their role. As we have already said SafeStreets is a crowd-sourced application and thanks to this property it will use the big amount of data that will be received in order to provide more functionalities obtained with mining and crossing processes. We will call the \emph{basic functionality} the one related to the mining of the data in order to retrieve statistical data interesting for both the users and authorities. This functionality deals also with the possibility to provide the data with different levels of visibility depending on the role of the client. As precisely described in the section related to the functionalities provided by the application (\ref{sec:productFunctions}) the authorities benefit of an additional service that allows them to retrieve the information about the parking violations in the most detailed way (for example with the entire description of an infraction that contains also the data about who reported it and the plate of the vehicle). The \emph{advanced functionality} instead is related to the concept of \textbf{safety} that can be attributed to a street. This functionality is based on the crossing process between the data stored in SafeStreets system related to the violations and the one of the accidents possibly provided by a municipality. The safety of each street our application is able to retrieve is strictly bound with an additional service that wants to find a suggestion for a possible intervention for a street that has been marked as \emph{unsafe}.\\
+	
+	 Now that we have a first description of what SafeStreets aims to achieve we are able to have a look to the \textbf{goals} that have been chosen in order to accomplish these functionalities. Further in the document we will have the precise definition of each goal with the associated requirements and assumptions that must be jointly considered to obtain it (\ref{sec:functionalRequirements}). The description will be carried on first with the identification of the phenomena (section \ref{sec:worldMachine}) and then with the additional strict relation with the part that describes the requirements used for the goals and the use case diagrams (section \ref{sec:useCases} and traceability matrix \ref{tab:traceabilityMatrix}). 
+	
+	\subsubsection[Goals]{\hyperlink{toc}{Goals}}
+		\label{sec:goals}
+		\begin{enumerate}[label=\textbf{G\arabic*}]
+			\item \label{goal:notification} Users should be able to notify authorities when traffic violations occur, in particular parking violations.
+			\item \label{goal:mining} Users and authorities should be able to mine the information stored by SafeStreets, with different levels of visibility.
+				\begin{enumerate}[label=\textbf{G2\Alph*}]
+					\item \label{goal:miningA} Users and authorities should be able to know where the highest number of violations occur.
+					\item \label{goal:miningB} Users and authorities should be able to know what types of vehicle make the most violations.
+					\item \label{goal:miningC} Authorities should be able to consult every violation report sent by users.
+				\end{enumerate}
+			\item \label{goal:safety} Users should be able to know which streets are safe and which ones are not.
+			\item \label{goal:intervention} Users and authorities should be able to know the possible interventions that could be done in a city.
+		\end{enumerate}
+	
+\subsection[Glossary]{\hyperlink{toc}{Glossary}} %todo rileggendo vedere se manca qualcosa 
+	\label{sec:glossary}
+	\subsubsection[Definitions]{\hyperlink{toc}{Definitions}}
+		\begin{itemize}
+			\item \textbf{Data Mining:} is the activity related to extract automatically information hidden in a database of big dimensions.
+			\item \textbf{Data Mining Engine:} is the system assigned to the processes that extracts data. 
+			\item \textbf{Datawarehouse:} is an OLAP system able to structure the data in order to obtain particular functionalities like data mining.
+			\item \textbf{Posta Elettronica Certificata:} is a technology that allows to send email with a legal approach.
+			\item \textbf{Crowdsourcing:} is a sourcing model in which individuals or organizations obtain goods and services from a large, relatively open and often rapidly-evolving group of internet users.
+		\end{itemize}
+	\subsubsection[Acronyms]{\hyperlink{toc}{Acronyms}}
+		\begin{itemize}
+			\item \textbf{PEC:} Posta Elettronica Certificata
+			\item \textbf{API:} Application Programming Interface
+			\item \textbf{IRI:} Image Recognition Interface
+			\item \textbf{MI:} Map Interface
+			\item \textbf{GPS:} Global Positioning System
+			\item \textbf{OS:} Operating System
+			\item \textbf{OLAP:} On-Line Analytical Processing
+			\item \textbf{JSON:} JavaScript Object Notation
+			\item \textbf{XML:} eXtensible Markup Language
+			\item \textbf{RDF:} Resource Description Framework
+		\end{itemize}
+	\subsubsection[Abbreviations]{\hyperlink{toc}{Abbreviations}}
+		\begin{itemize}
+	        \item \textbf{i.i.f:} if and only if
+			\item \textbf{G:} goal
+			\item \textbf{DA:} domain assumption
+			\item \textbf{R:} requirement
+		\end{itemize}
 		
-\subsection[Document Structure]{\hyperlink{toc}{Document Structure}}	\todo[inline]{if previous subsections are ot used here we can also rename it as Document Overview, watch Scroccas}
+\subsection[Document Structure]{\hyperlink{toc}{Document Structure}}
+	The document is structured in a double linked way in order to provide an easier and quicker navigation in particular for the parts where several abbreviations are used and the entire text would not fix in the layout (try with requirements in the traceability matrix \ref{tab:traceabilityMatrix}). The aim is to give a description that interconnects the most interesting parts of the document also related in the theoretical aspects: \textbf{\hyperref[sec:worldMachine]{World and Machine}},
+	\textbf{\hyperref[sec:goalSatisfaction]{Goals and Requirements}}  and \textbf{\hyperref[sec:useCases]{Use Cases}.}\\
+	
+	Moreover the document is structured as now briefly described:
+	\begin{enumerate}
+		\item \textbf{\hyperref[sec:introduction]{Introduction}:} gives a first description of the problem and describes the purpose of the system SafeStreets. Goals are also highlighted to enforce the previous shallow description; the section ends with the glossary.
+		
+		\item \textbf{\hyperref[sec:overallDescription]{Overall Description}:} starts with the product perspective where first is highlighted the system from the outside and then from the inside with a high-level description of its structure. State diagrams are then used to highlight the most critical objects identified in the modeling process and then product functions are ready to be precisely described. The section ends with the identification of the important phenomena for the problem now clearly described with the World and Machine paradigm.
+		
+		\item \textbf{\hyperref[sec:specificRequirements]{Specific Requirements}:} in this section requirements are described precisely starting with the ones of the interfaces that SafeStreets uses to provide its services to the external world. The core of the section are the functional requirements where the satisfaction of the goals is proved thanks to the requirements and the domain assumptions previously defined. Use Cases are also important in particular to highlight their strict relation with the requirements also highlighted with the traceability matrix.
+		
+		\item \textbf{\hyperref[sec:formalAnalysisUsingAlloy]{Formal Analysis Using Alloy}:} includes the model described formally thanks to the alloy language. This section highlights the most critical aspects of the entire problems and proves their satisfaction in specific worlds generated for this purpose.
+		
+		\item \textbf{\hyperref[sec:effortSpent]{Effort Spent}:} this section have been used to keep track of the hours spent to complete the document. The first table defines the hours spent together while taking the most important decisions, the seconds instead contain the individual hours.
+		
+		\item \textbf{\hyperref[sec:references]{References}:} includes all the references used to define the document.
+	\end{enumerate}
 

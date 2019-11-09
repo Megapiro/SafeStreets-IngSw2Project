@@ -1,8 +1,9 @@
 \section[Specific Requirements]{\hyperlink{toc}{Specific Requirements}}
+	\label{sec:specificRequirements}
+	This section is devoted to a specific description of every kind of requirement our system has to deal with in order to achieve all the functionalities described.
 
 \subsection[External Interface Requirements]{\hyperlink{toc}{External Interface Requirements}}
 	\label{sec:externalInterfaceRequirements}
-	%todo SafeStreets offers an interface to its customers to provide them its basic and advanced functionalities. All the data needed to authenticate the users will be managed inside the system as well as the information related to the violations in order to be mined and crossed whenever needed.
 	\subsubsection[User Interfaces]{\hyperlink{toc}{User Interfaces}} % todo sistemare dimensioni mockups
 	\label{sec:userInterfaces}
 	The following section illustrates thanks to some mockups the interfaces SafeStreets provides to its customers in order to provide functionalities. Each picture is described only be the caption as complete and precise descriptions are given in the sections related to the description of the functionalities and how they are managed (\ref{sec:productFunctions}, \ref{sec:useCases}).
@@ -102,382 +103,769 @@
  			
  		\end{minipage}
 	 \end{figure} 
+ 
 	\FloatBarrier
+	
 	\subsubsection[Hardware Interfaces]{\hyperlink{toc}{Hardware Interfaces}}
+		Hardware interfaces have to be considered on the clients' software in order to interact with the camera and the GPS module. As described in the section \ref{sec:notificationFunction} in fact, a user must always take at least one picture and enable the GPS in order to report a violation. 
+		
 	\subsubsection[Software Interfaces]{\hyperlink{toc}{Software Interfaces}}
+		The interfaces used by SafeStreets to benefit of services provided by external systems are precisely described in the section \ref{sec:systemInterfaces}. Internal interfaces should be also considered in order to interact with a \emph{datawarehouse} as the mining processes can be performed. SafeStreets does not provide APIs to external possible clients.
+		
 	\subsubsection[Communication Interfaces]{\hyperlink{toc}{Communication Interfaces}}
+		An important communication interface that must be considered while developing the system is the one that makes the system receive the accidents data provided by the municipality. We are now unable to know how the municipality will provide this information but we can start considering the most popular formats that would be used: JSON, XML, RDF... 
 
 \subsection[Functional Requirements]{\hyperlink{toc}{Functional Requirements}}
-
-\subsubsection[Use Cases Diagrams]{\hyperlink{toc}{Use Cases Diagrams}}
-
-\subsubsection[Use Cases Description]{\hyperlink{toc}{Use Cases Description}}
-	\label{sec:useCases}
+	\label{sec:functionalRequirements}
+	This subsection aims to give a \emph{complete} description of the \emph{functional requirements} of our system by defining the ones together with the domain assumptions that satisfy the \textbf{goals} identified.
 	
-	\paragraph{User}
-	\begin{enumerate}
-		\item \textbf{User Registration} 
-			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
-				\toprule
-				\textbf{Name} & \textbf{User Registration} \\
-				\midrule
-				\textbf{Actors} & User \\
-				\midrule
-				\textbf{Entry conditions} & The application has started \\
-				\midrule
-				\textbf{Flow of events} & 
-				\begin{enumerate}
-					\item The user chooses the sign up option
-					\item The user selects the 'user' registration type
-					\item The user chooses a username and a password
-					\item The user inserts his name, surname and address
-					\item The user submits the form
-					\item The system checks the username to be unique
-					\item The system saves the user data
-				\end{enumerate} \\
-				\midrule
-				\textbf{Exit conditions} & The user is registered in the system\\
-				\midrule
-				\textbf{Exceptions} & 
-				\begin{itemize}
-					\item If the username inserted by the user is already used by another user, or if the username contains any special character, the system displays an error message asking the user to insert a different one
-				\end{itemize} \\
-				\bottomrule
-				\caption{\emph{User Registration} use case description}
-			\end{longtable}
+	\subsubsection[Requirements]{\hyperlink{toc}{Requirements}}
+		\begin{enumerate}[label=\textbf{R\arabic*}]
+			\item \label{req:userReg} The system must allow users to register.
+			\item \label{req:authorityReg} The system must allow authorities to register.
+			\item \label{req:userLogin} The system must allow the user to log in.
+			\item \label{req:authorityLogin} The system must allow authorities to log in.
+			\item \label{req:uniqueName} The system must guarantee that each username is unique.
+			\item \label{req:saveRegData} The system must save the customers registration data.
+			\item \label{req:specialCharacters} The system must prevent users to use special characters in their username.
+			\item \label{req:takePictures} The system must allow users to take pictures of the violation they want to report.
+			\item \label{req:dateTime} The system must retrieve date and time while the user reports a violation.
+			\item \label{req:gpsPosition} The system must retrieve the GPS position while the user reports a violation.
+			\item \label{req:violationType} The system must allow users to insert the type of violation they’re reporting.
+			\item \label{req:vehicleType} The system must allow users to insert the type of the vehicles they’re reporting.
+			\item \label{req:plateNumber} The system must allow users to insert the license plate number of the vehicle they are reporting.
+			\item \label{req:readPlate} The system must read the license plate from every picture sent by the user.
+			\item \label{req:storeViolation} The system must store the data received along with the name of the street where the violation occurred.
+			\item \label{req:streetName} The system must be able to retrieve the name of the street from the GPS coordinates.
+			\item \label{req:notifyAuthority} The system must be able to show authorities all the violation reports sent by users.
+			\item \label{req:mineData} The system must be able to mine the stored violation reports.
+			\item \label{req:cityFilter} The system must allow the customer to filter by city.
+			\item \label{req:streetFilter} The system must allow the customer to filter by city.
+			\item \label{req:pathFilter} The system must allow the customer to filter by path.
+			\item \label{req:violationFilter} The system must allow the customer to filter by type of violation.
+			\item \label{req:timeFilter} The system must allow the customer to filter by time slot.
+			\item \label{req:dateFilter} The system must allow the authority to filter by date intervals.
+			\item \label{req:vehicleFilter} The system must allow the customer to filter by type of vehicle.
+			\item \label{req:sortedResult} The system must be able to sort streets by number of violations.
+			\item \label{req:sortedVehicles} The system must be able to sort types of vehicle by number of violations they make.
+			\item \label{req:visibility} The system must be able to provide different levels of visibility.
+			\item \label{req:accidentsData} The system must be able to store and manage data about accidents, if provided by the authority.
+			\item \label{req:crossData} The System must be able to cross accidents data with violations one.
+			\item \label{req:safeStreet} The system must be able to determine whether a street is safe or not.
+			\item \label{req:cityStreets} The system must know all the streets inside a city.
+			\item \label{req:pathFinder} The system must find a path between two given points in a map.
+			\item \label{req:colorMap} The system must be able to color the streets in a map according to their safety.
+			\item \label{req:interventions} The system must be able to determine the most urgent interventions in a street.	
+		\end{enumerate}
+	
+	\subsubsection[Goals]{\hyperlink{toc}{Goals}}
+		\label{sec:goalSatisfaction}
+		\begin{description}
+			\item \ref{goal:notification}\ Users should be able to notify authorities when traffic violations occur, in particular parking violations.
+				\begin{description}
+					\item \ref{req:userReg}\ The system must allow users to register.
+					\item \ref{req:authorityReg}\ The system must allow authorities to register.
+					\item \ref{req:userLogin}\ The system must allow the user to log in.
+					\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
+					\item \ref{req:uniqueName}\ The system must guarantee that each username is unique.
+					\item \ref{req:saveRegData}\ The system must save the customers' registration data.
+					\item \ref{req:specialCharacters}\ The system must prevent users to use special characters in their username.
+					\item \ref{req:takePictures}\ The system must allow users to take pictures of the violation they want to report.
+					\item \ref{req:dateTime}\ The system must retrieve date and time while the user reports a violation.
+					\item \ref{req:gpsPosition}\ The system must retrieve the GPS position while the user reports a violation.
+					\item \ref{req:violationType}\ The system must allow users to insert the type of violation they’re reporting.
+					\item \ref{req:vehicleType}\ The system must allow users to insert the type of the vehicles they’re reporting.
+					\item \ref{req:plateNumber}\ The system must allow users to insert the license plate number of the vehicle they are reporting.
+					\item \ref{req:readPlate}\ The system must read the license plate from every picture sent by the user.
+					\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+					\item \ref{req:streetName}\ The system must be able to retrieve the name of the street from the GPS coordinates.
+					\item \ref{req:notifyAuthority}\ The system must be able to show authorities all the violation reports sent by users.
+					\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+					\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+					\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+					\item \ref{dom:uniquePec}\ PEC addresses are unique.
+					\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+					\item \ref{dom:correctDateTime}\ Date and time on the devices on which SafeStreets runs are always correct.
+					\item \ref{dom:gpsAccuracy}\ The GPS module of the devices on which SafeStreets runs always works correctly and has an accuracy of 2 meters.
+					\item \ref{dom:correctCamera}\ The camera module of the devices on which SafeStreets runs always works correctly.
+					\item \ref{dom:correctInternet}\ Internet connection works always without errors.
+					\item \ref{dom:italy}\ The system is assumed to work in Italy.
+					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+					\item \ref{dom:nonameStreets}\ There are no streets without a name.
+					\item \ref{dom:noMaliciousPlates}\ No one physically and maliciously replaces license plates.
+				\end{description}
+					
+			\item \ref{goal:mining}\ Users and authorities should be able to mine the information stored by SafeStreets, with different levels of visibility.
+				\begin{description}
+					\item \ref{goal:miningA} Users and authorities should be able to know where the highest number of violations occur.
+						\begin{description}
+							\item \ref{req:userReg}\ The system must allow users to register.
+							\item \ref{req:authorityReg}\ The system must allow authorities to register.
+							\item \ref{req:userLogin}\ The system must allow the user to log in.
+							\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
+							\item \ref{req:saveRegData}\ The system must save the customers registration data.
+							\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+							\item \ref{req:mineData}\ The system must be able to mine the stored violation reports.
+							\item \ref{req:cityFilter}\ The system must allow the customer to filter by city.
+							\item \ref{req:violationFilter}\ The system must allow the customer to filter by type of violation.
+							\item \ref{req:timeFilter}\ The system must allow the customer to filter by time slot.
+							\item \ref{req:vehicleFilter}\ The system must allow the customer to filter by type of vehicle.
+							\item \ref{req:sortedResult}\ The system must be able to sort streets by number of violations.
+							\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+							\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+							\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+							\item \ref{dom:uniquePec}\ PEC addresses are unique.
+							\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
+							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+							\item \ref{dom:nonameStreets}\ There are no streets without a name.
+						\end{description}
+					\item \ref{goal:miningB} Users and authorities should be able to know what types of vehicle make the most violations.
+						\begin{description}
+							\item \ref{req:userReg}\ The system must allow users to register.
+							\item \ref{req:authorityReg}\ The system must allow authorities to register.
+							\item \ref{req:userLogin}\ The system must allow the user to log in.
+							\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
+							\item \ref{req:saveRegData}\ The system must save the customers registration data.
+							\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+							\item \ref{req:mineData}\ The system must be able to mine the stored violation reports.
+							\item \ref{req:cityFilter}\ The system must allow the customer to filter by city.
+							\item \ref{req:streetFilter}\ The system must allow the customer to filter by city.
+							\item \ref{req:violationFilter}\ The system must allow the customer to filter by type of violation.
+							\item \ref{req:sortedVehicles}\ The system must be able to sort types of vehicle by number of violations they make.
+							\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+							\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+							\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+							\item \ref{dom:uniquePec}\ PEC addresses are unique.
+							\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
+							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+							\item \ref{dom:nonameStreets}\ There are no streets without a name.
+						\end{description}
+					\item \ref{goal:miningC} Authorities should be able to consult every violation report sent by users.
+						\begin{description}
+							\item \ref{req:authorityReg} The system must allow authorities to register.
+							\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
+							\item \ref{req:saveRegData}\ The system must save the customers registration data.
+							\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+							\item \ref{req:mineData}\ The system must be able to mine the stored violation reports.
+							\item \ref{req:cityFilter}\ The system must allow the customer to filter by city.
+							\item \ref{req:streetFilter}\ The system must allow the customer to filter by city.
+							\item \ref{req:violationFilter}\ The system must allow the customer to filter by type of violation.
+							\item \ref{req:timeFilter}\ The system must allow the customer to filter by time slot.
+							\item \ref{req:dateFilter}\ The system must allow the authority to filter by date intervals.
+							\item \ref{req:vehicleFilter}\ The system must allow the customer to filter by type of vehicle.
+							\item \ref{req:visibility}\ The system must be able to provide different levels of visibility.
+							\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+							\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+							\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+							\item \ref{dom:uniquePec}\ PEC addresses are unique.
+							\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
+							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+							\item \ref{dom:nonameStreets}\ There are no streets without a name.
+						\end{description}
+				\end{description}
+			\item \ref{goal:safety} Users should be able to know which streets are safe and which ones are not.
+				\begin{description}
+					\item \ref{req:userReg}\ The system must allow users to register.
+					\item \ref{req:authorityReg}\ The system must allow authorities to register.
+					\item \ref{req:userLogin}\ The system must allow the user to log in.
+					\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
+					\item \ref{req:saveRegData}\ The system must save the customers registration data.
+					\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+					\item \ref{req:crossData}\ The System must be able to cross accidents data with violations one.
+					\item \ref{req:safeStreet}\ The system must be able to determine whether a street is safe or not.
+					\item \ref{req:accidentsData}\ The system must be able to store and manage data about accidents, if provided by the authority.
+					\item \ref{req:cityStreets} The system must know all the streets inside a city.
+					\item \ref{req:pathFinder} The system must find a path between two given points in a map.
+					\item \ref{req:colorMap} The system must be able to color the streets in a map according to their safety.
+					\item \ref{req:cityFilter} The system must allow the customer to filter by city.
+					\item \ref{req:streetFilter} The system must allow the customer to filter by city.
+					\item \ref{req:pathFilter} The system must allow the customer to filter by path.
+					\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+					\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+					\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+					\item \ref{dom:uniquePec}\ PEC addresses are unique.
+					\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+					\item \ref{dom:correctInternet}\ Internet connection works always without errors.
+					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+					\item \ref{dom:nonameStreets}\ There are no streets without a name.
+					\item \ref{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.
+				\end{description}	
+			\item \ref{goal:intervention} Users and authorities should be able to know the possible interventions that could be done in a city.
+				\begin{description}
+					\item \ref{req:userReg}\ The system must allow users to register.
+					\item \ref{req:authorityReg}\ The system must allow authorities to register.
+					\item \ref{req:userLogin}\ The system must allow the user to log in.
+					\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
+					\item \ref{req:saveRegData}\ The system must save the customers registration data.
+					\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+					\item \ref{req:crossData}\ The System must be able to cross accidents data with violations one.
+					\item \ref{req:accidentsData}\ The system must be able to store and manage data about accidents, if provided by the authority.
+					\item \ref{req:cityStreets} The system must know all the streets inside a city.
+					\item \ref{req:interventions} The system must be able to determine the most urgent interventions in a street.
+					\item \ref{req:cityFilter} The system must allow the customer to filter by city.
+					\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+					\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+					\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+					\item \ref{dom:uniquePec}\ PEC addresses are unique.
+					\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+					\item \ref{dom:correctInternet}\ Internet connection works always without errors.
+					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+					\item \ref{dom:nonameStreets}\ There are no streets without a name.
+					\item \ref{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.	
+				\end{description}		
+		\end{description}
+
+\subsection[Use Cases Identification]{\hyperlink{toc}{Use Cases Identification}}
+	In the following subsection the usage of the system is going to be described first with a general description using scenarios and then in a more specific way using use case diagrams. These diagrams are described only once for each functionality because totally the same for both the users and the authorities. Hence only the ones where critical behaviors are needed to be considered are duplicated highlighting these parts. The subsection ends with the traceability matrix that allows to define the correspondence between \emph{requirements, use cases and scenarios.}
+	
+	\subsubsection[Scenarios]{\hyperlink{toc}{Scenarios}}
+		Consider these scenarios in order to clarify the usage of the system and the further description with use case diagrams.
 		
-		\item \textbf{User Login}
-			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
-				\toprule
-				\textbf{Name} & \textbf{User Login} \\
-				\midrule
-				\textbf{Actors} & User \\
-				\midrule
-				\textbf{Entry conditions} & The application has started \\
-				\midrule
-				\textbf{Flow of events} & 
-				\begin{enumerate}
-					\item The user chooses the login option
-					\item The user chooses the 'user' login type
-					\item The user inserts his username
-					\item The user inserts his password
-					\item The user submits the form
-					\item The system checks the username to be existing
-					\item The system checks the password to be right for that username
-					\item The system notifies the user that login is successful
-				\end{enumerate} \\
-				\midrule
-				\textbf{Exit conditions} & The user is logged in\\
-				\midrule
-				\textbf{Exceptions} & 
-				\begin{itemize}
-					\item If the username is not recognized by the system, that means that the user is not registered yet, or the username is incorrect. The system notifies the user and the procedure is aborted
-					\item If the inserted password is wrong, the system notifies the user and the procedure is aborted			
-				\end{itemize} \\
-				\bottomrule
-				\caption{\emph{User Login} use case description}
-			\end{longtable}
-		
-		\item \textbf{Report Violation}
-			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
-				\toprule
-				\textbf{Name} & \textbf{Report violation} \\
-				\midrule
-				\textbf{Actors} & User \\
-				\midrule
-				\textbf{Entry conditions} & The user is logged in \\
-				\midrule
-				\textbf{Flow of events} & 
-				\begin{enumerate}
-					\item The user selects the report violation option
-					\item The system retrieves the GPS location
-					\item The user chooses the option to take pictures
-					\item The user takes some pictures through the application
-					\item The user selects the pictures he wants to send
-					\item The user optionally inserts the license plate number
-					\item The user chooses the type of violation from a list
-					\item The user chooses the type of vehicle from a list
-					\item The user chooses the option to confirm
-					\item The system receives the sent data
-					\item The system runs an algorithm to read the license plate, with the help of the information provided by the user
-					\item The system retrieves the name of the street from the GPS location
-					\item The system stores the violation report
-				\end{enumerate} \\
-				\midrule
-				\textbf{Exit conditions} & The information about the violation is stored\\
-				\midrule
-				\textbf{Exceptions} & 
-				\begin{itemize}
-					\item If the system fails to retrieve the GPS location, the user is notified and the application shows the home page
-					\item If the system fails to read the license plate, or what it reads does not match the information provided by the user, the field will be left empty
-				\end{itemize} \\
-				\bottomrule
-				\caption{\emph{Report violation} use case description}
-			\end{longtable}
-		
-		\item \textbf{Find streets with the highest number of violations}
-			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
-				\toprule
-				\textbf{Name} & \textbf{Find streets with the highest number of violations} \\
-				\midrule
-				\textbf{Actors} & User \\
-				\midrule
-				\textbf{Entry conditions} & The user is logged in \\
-				\midrule
-				\textbf{Flow of events} & 
-				\begin{enumerate}
-					\item The user selects the 'streets with highest number of violation' option
-					\item The user chooses the region he is looking for from a list
-					\item The user chooses the city from a list
-					\item The user chooses the types of violation to be included
-					%maybe a checkbox
-					\item The user chooses the time slot
-					\item The user chooses the types of vehicle to be included
-					\item The user confirms the query and sends it
-					\item The system returns a list of the streets ordered by the highest number of violations, with the actual number next to the name of the street, according to the filters
-				\end{enumerate} \\
-				\midrule
-				\textbf{Exit conditions} & The list of the streets is shown to the user \\
-				\midrule
-				\textbf{Exceptions} & 
-				\begin{itemize}
-					\item 	If no type of violation is selected, the system shows an error message and the procedure is aborted
-					\item If no type of vehicle is selected, the system shows an error message and the procedure is aborted	
-				\end{itemize} \\
-				\bottomrule
-				\caption{\emph{Find streets with the highest number of violations} use case description}
-			\end{longtable}
-		
-		\item \textbf{Find Most Dangerous Vehicles}
-			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
-				\toprule
-				\textbf{Name} & \textbf{Find dangerous vehicles} \\
-				\midrule
-				\textbf{Actors} & User \\
-				\midrule
-				\textbf{Entry conditions} & The user is logged in \\
-				\midrule
-				\textbf{Flow of events} & 
-				\begin{enumerate}
-					\item The user selects the 'most dangerous vehicles' option
-					\item The user selects the region and the city from a list, or selects a street, or selects everywhere
-					\item The user selects the types of violation he wants to include
-					\item The user confirms the query and sends it
-					\item The system returns a list of the types of vehicle, ordered by the highest number of violations they committed, according to the filters
-				\end{enumerate} \\
-				\midrule
-				\textbf{Exit conditions} & The list is shown to the user\\
-				\midrule
-				\textbf{Exceptions} & 
-				\begin{itemize}
-					\item 	If no type of violation is selected, the system notifies the user and wait for him to insert at least one	
-				\end{itemize} \\
-				\bottomrule
-				\caption{\emph{Find most dangerous vehicles} use case description}
-			\end{longtable}
-		
-		\item \textbf{Find Urgent Interventions}
-			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
-				\toprule
-				\textbf{Name} & \textbf{Find urgent interventions} \\
-				\midrule
-				\textbf{Actors} & User \\
-				\midrule
-				\textbf{Entry conditions} & The user is logged in \\
-				\midrule
-				\textbf{Flow of events} & 
-				\begin{enumerate}
-					\item The user selects the 'urgent interventions' option
-					\item The user selects the region and the city from a list
-					%todo Magari facciamo anche filtrare per tipi di interventions
-					\item The user confirms the query and sends it
-					\item The system returns a list of the most urgent interventions in the selected city, each with their respective street
-					%todo comunque in qualche modo i tipi di intervento vanno modellati
-				\end{enumerate} \\
-				\midrule
-				\textbf{Exit conditions} & The list is shown to the user\\
-				\midrule
-				\textbf{Exceptions} &  \\
-				\bottomrule
-				\caption{\emph{Find urgent interventions} use case description}
-			\end{longtable}
-		
-		\item \textbf{Find Unsafe Streets}
-			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
-				\toprule
-				\textbf{Name} & \textbf{Find unsafe streets} \\
-				\midrule
-				\textbf{Actors} & User \\
-				\midrule
-				\textbf{Entry conditions} & The user is logged in \\
-				\midrule
-				\textbf{Flow of events} & 
-				\begin{enumerate}
-					%todo ma quanto bisogna specificare quello che fa il sistema in tutto questo?
-					\item The user selects the 'unsafe streets' option
-					\item The user selects the either the 'city' option, the 'route' option or the single street option
-					\item The user chooses the region and the city from a list if 'city' option is chosen, if 'route' option is chosen he enters start and end points of the route, otherwise he inserts the name of the street
-					\item The user confirms the query and sends it
-					\item The system returns a map where the streets selected with the filter are colored according to their safety: green if they're 'safe', red if they're 'unsafe'
-				\end{enumerate} \\
-				\midrule
-				\textbf{Exit conditions} & The list is shown to the user\\
-				\midrule
-				\textbf{Exceptions} & 
-				\begin{itemize}
-					\item If no city is selected when 'city' option is chosen, the system notifies the user and waits for him to insert it
-					\item If no start or end points are chosen when 'route' option is selected, the system notifies the user and waits for him to insert them
-				\end{itemize} \\
-				\bottomrule
-				\caption{\emph{Find unsafe streets} use case description}
-			\end{longtable}
-	\end{enumerate}
-		
-	\paragraph{Authority}
-	\begin{enumerate}
-		\item \textbf{Authority Registration}
-			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
-				\toprule
-				\textbf{Name} & \textbf{Registration} \\
-				\midrule
-				\textbf{Actors} & Authority \\
-				\midrule
-				\textbf{Entry conditions} & The application has started \\
-				\midrule
-				\textbf{Flow of events} & 
-				\begin{enumerate}
-					\item The authority chooses the sign up option
-					\item The authority selects the 'authority' registration type
-					\item The authority chooses the region and the city of competence
-					\item The authority inserts its PEC address
-					\item The system checks that PEC address matches the chosen city
-					\item The system sends a confirmation code to the PEC address
-					\item The authority enters the confirmation code in a text box
-					\item The authority submits the form
-					\item The system checks the entered code to match the sent one
-					\item The system saves the authority's data
-				\end{enumerate} \\
-				\midrule
-				\textbf{Exit conditions} & The authority is registered in the system\\
-				\midrule
-				\textbf{Exceptions} & 
-				\begin{itemize}
-					\item If the selected city already has an authority registered, an error message is shown and the procedure is aborted
-					\item If the PEC address doesn't match the chosen city, an error message is shown and the procedure is aborted
-					\item If the entered code doesn't match the sent one, an error message is shown and the procedure is aborted
-				\end{itemize} \\
-				\bottomrule
-				\caption{\emph{Authority Registration} use case description}
-			\end{longtable}
-		
-		\item \textbf{Authority Login}
-			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
-				\toprule
-				\textbf{Name} & \textbf{Authority Login} \\
-				\midrule
-				\textbf{Actors} & Authority\\
-				\midrule
-				\textbf{Entry conditions} & The application has started \\
-				\midrule
-				\textbf{Flow of events} & 
-				\begin{enumerate}
-					\item The authority chooses the login option
-					\item The authority chooses the 'authority' login type
-					\item The authority inserts its PEC address as username
-					\item The authority inserts its password
-					\item The authority submits the form
-					\item The system checks the username to be registered
-					\item The system checks the password to be right for that username
-					\item The system notifies the authority that login is successful
-				\end{enumerate} \\
-				\midrule
-				\textbf{Exit conditions} & The authority is logged in\\
-				\midrule
-				\textbf{Exceptions} & 
-				\begin{itemize}
-					\item If the username is not recognized by the system, that means that the authority is not registered yet, or the username is incorrect. The system notifies the authority and the procedure is aborted
-					\item If the inserted password is wrong, the system notifies the authority and the procedure is aborted			
-				\end{itemize} \\
-				\bottomrule
-				\caption{\emph{Authority Login} use case description}
-			\end{longtable}
-		
-		\item \textbf{Check Unread Reports}
-			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
-				\toprule
-				\textbf{Name} & \textbf{Check unread reports} \\
-				\midrule
-				\textbf{Actors} & Authority\\
-				\midrule
-				\textbf{Entry conditions} & The authority is logged in \\
-				\midrule
-				\textbf{Flow of events} & 
-				\begin{enumerate}
-					\item The authority chooses the 'unread reports' option
-					\item The system provides a list with all the unread violation reports that match the city of competence of the authority
-				\end{enumerate} \\
-				\midrule
-				\textbf{Exit conditions} & The list is shown to the authority\\
-				\midrule
-				\textbf{Exceptions} &  \\
-				\bottomrule
-				\caption{\emph{Check unread reports} use case description}
-			\end{longtable}
+		\paragraph{User}
+		\begin{enumerate}
+			\item \label{sce:notification} A man living in Milan has a son with disabilities named Gianluca. His son in particular suffers leg paralysis and therefore is confined to a wheelchair. Since he wants his son to live his life at its fullest, he made him take up para table tennis, the variant of table tennis designed for people with disabilities. The problem is, although few places are reserved for people with disabilities, there’s no much parking in the area where training sessions are held, and so, unfortunately, people get to park in reserved spots anyway, even if they’re not allowed to. Gianluca’s father got really annoyed because of this situation, especially because sidewalks are not in good conditions and therefore he can’t park too far away. In addition, policemen never show up in the area. He discovers SafeStreets, and starts reporting to the authorities all of those vehicles that have not exposed the pass for people with disabilities, by sending pictures of those vehicles. He makes sure that the license plate is readable and hopes that local police will take action.
 			
-		\item \textbf{Find Reports}
-			\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
-				\toprule
-				\textbf{Name} & \textbf{Find reports} \\
-				\midrule
-				\textbf{Actors} & Authority\\
-				\midrule
-				\textbf{Entry conditions} & The authority is logged in \\
-				\midrule
-				\textbf{Flow of events} & 
-				\begin{enumerate}
-					\item The authority chooses the 'find reports' option
-					\item The authority selects the types of violation to be included
-					\item The authority selects date interval and time slot
-					\item The authority selects the types of vehicle to be included
-					\item The authority optionally selects the street to include, otherwise 'city' will be selected
-					\item The authority confirms and sends the query
-					\item The system provides a list with all the violation reports that match the filter, sorted by chronological order from the most recent one. In case 'city' option is selected, the considered city is that of competence of the authority
-				\end{enumerate} \\
-				\midrule
-				\textbf{Exit conditions} & The list is shown to the authority\\
-				\midrule
-				\textbf{Exceptions} &  
-				\begin{enumerate}
-					\item If the date interval is not valid, the system notifies the authority and the procedure is aborted
-				\end{enumerate}\\
-				\bottomrule
-				\caption{\emph{Find reports} use case description}
-			\end{longtable}
-	\end{enumerate}
-
-\subsubsection[Traceability Matrix]{\hyperlink{toc}{Traceability Matrix}} % aggiungi le c nella tabular e i requirements per aumentare le dimensioni, c line anche il 9 è il numero di colonne cambia anche quello così si copre bene tutta la tabella
-	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-		\cline{2-9}
-		\multicolumn{1}{c|}{} & R1 & R2 & R3 & R4 & R5 & R6 & R7 & R8 \\
-		\hline
-		use case 1 & \xmark & & & & & & &\\
-		\hline
-		use case 2 & & & & \xmark & & & &\\
-		\hline
-		use case 3 & \xmark & \xmark & \xmark & & & & \xmark &\\
-		\hline
-	\end{tabular}
+			\item \label{sce:basicUser} A group of guys fond of bicycles and competitions is going to organize a treasure hunt in Citta Studi. In this kind of game the competitors have to seek the treasures and who first finds all of them wins. The organizers must position the treasures in each area where the less number of parking violations occur to avoid bikers getting hurt when reaching them on a very high speed. Typically each organizer has an area in which he has to decide where to put the treasure. Using SafeStreet’s basic functionality each of them can filter its interested area with: the street where he wants to put the treasure and the time in which he expects the bickers will reach it.
+			
+			\item \label{sce:advancedUser} A sportive family from Milan decides to go by bike on a weekend trip to the Idroscalo. Knowing that the bicycle lane from Milan to Idroscalo gets interrupted once reached the city of Novegro, they have to decide which street is better to reach Idroscalo safely. Thanks to SafeStreets they can look over the area and choose whether to continue taking a short path aside the highway or to get inside Novegro and enter the park from the bottom. 
+		\end{enumerate}
 	
-\subsection[Performance Requirements]{\hyperlink{toc}{Performance Requirements}}
+		\paragraph{Authority}
+		\begin{enumerate}
+			\item \label{sce:basicAuthority} Cesate Public Library is the only library in Cesate and is usually open for too little time. The problem is the municipality of Cesate has lately become short on money and therefore can’t pay enough people to work in there. Students living in that small town have no other place to study in silence and if they really need it, they can do nothing but go to Arese or Saronno, that have really big libraries but are only reachable after 15 minutes by car. Since Lombardy Region hasn’t got any plan to give funds to Cesate, the municipality, that really cares about the future of its young citizens, decides to go his own way and tries to give the most traffic tickets it can. In order to do this without wasting time, the municipality uses SafeStreets to figure out where the highest number of traffic violations occur, and then sends policemen in those streets to give fines.
+			
+			\item \label{sce:advancedAuthority} It’s almost election time in Cesate and the outgoing local administration would like to be elected again for their second mandate. In order to gain the highest number of votes in the upcoming elections, the party decides that finally it’s time to make some useful public works. The problem is they really have no clue about what their citizens need most, but fortunately, Ascanio, the City council member to the transports, knows SafeStreets. He is able to get the list of the most urgent works, according to SafeStreets. He in particular finds out that an old street that links the old part of the city to the newest one is the place where a lot of cyclists fall because of potholes. They asphalt that street and are elected again.
+		\end{enumerate}
+		
+	\subsubsection[Use Cases Diagrams]{\hyperlink{toc}{Use Cases Diagrams}}
+	
+	\subsubsection[Use Cases Description]{\hyperlink{toc}{Use Cases Description}}
+		\label{sec:useCases}
+		
+		\paragraph{User}
+		\begin{enumerate}
+			\item \textbf{User Registration} 
+				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+					\toprule
+					\textbf{Name} & \textbf{User Registration} \\
+					\midrule
+					\textbf{Actors} & User \\
+					\midrule
+					\textbf{Entry conditions} & The application has started \\
+					\midrule
+					\textbf{Flow of events} & 
+					\begin{enumerate}
+						\item The user chooses the sign up option
+						\item The user selects the 'user' registration type
+						\item The user chooses a username and a password
+						\item The user inserts his name, surname and address
+						\item The user submits the form
+						\item The system checks the username to be unique
+						\item The system saves the user data
+					\end{enumerate} \\
+					\midrule
+					\textbf{Exit conditions} & The user is registered in the system\\
+					\midrule
+					\textbf{Exceptions} & 
+					\begin{itemize}
+						\item If the username inserted by the user is already used by another user, or if the username contains any special character, the system displays an error message asking the user to insert a different one
+					\end{itemize} \\
+					\bottomrule
+					\caption{\emph{User Registration} use case description}
+				\end{longtable}
+			
+			\item \textbf{User Login}
+				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+					\toprule
+					\textbf{Name} & \textbf{User Login} \\
+					\midrule
+					\textbf{Actors} & User \\
+					\midrule
+					\textbf{Entry conditions} & The application has started \\
+					\midrule
+					\textbf{Flow of events} & 
+					\begin{enumerate}
+						\item The user chooses the login option
+						\item The user chooses the 'user' login type
+						\item The user inserts his username
+						\item The user inserts his password
+						\item The user submits the form
+						\item The system checks the username to be existing
+						\item The system checks the password to be right for that username
+						\item The system notifies the user that login is successful
+					\end{enumerate} \\
+					\midrule
+					\textbf{Exit conditions} & The user is logged in\\
+					\midrule
+					\textbf{Exceptions} & 
+					\begin{itemize}
+						\item If the username is not recognized by the system, that means that the user is not registered yet, or the username is incorrect. The system notifies the user and the procedure is aborted
+						\item If the inserted password is wrong, the system notifies the user and the procedure is aborted			
+					\end{itemize} \\
+					\bottomrule
+					\caption{\emph{User Login} use case description}
+				\end{longtable}
+			
+			\item \textbf{Report Violation}
+				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+					\toprule
+					\textbf{Name} & \textbf{Report violation} \\
+					\midrule
+					\textbf{Actors} & User \\
+					\midrule
+					\textbf{Entry conditions} & The user is logged in \\
+					\midrule
+					\textbf{Flow of events} & 
+					\begin{enumerate}
+						\item The user selects the report violation option
+						\item The system retrieves the GPS location
+						\item The user chooses the option to take pictures
+						\item The user takes some pictures through the application
+						\item The user selects the pictures he wants to send
+						\item The user optionally inserts the license plate number
+						\item The user chooses the type of violation from a list
+						\item The user chooses the type of vehicle from a list
+						\item The user chooses the option to confirm
+						\item The system receives the sent data
+						\item The system runs an algorithm to read the license plate, with the help of the information provided by the user
+						\item The system retrieves the name of the street from the GPS location
+						\item The system stores the violation report
+					\end{enumerate} \\
+					\midrule
+					\textbf{Exit conditions} & The information about the violation is stored\\
+					\midrule
+					\textbf{Exceptions} & 
+					\begin{itemize}
+						\item If the system fails to retrieve the GPS location, the user is notified and the application shows the home page
+						\item If the system fails to read the license plate, or what it reads does not match the information provided by the user, the field will be left empty
+					\end{itemize} \\
+					\bottomrule
+					\caption{\emph{Report violation} use case description}
+				\end{longtable}
+			
+			\item \textbf{Find streets with the highest number of violations}
+				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+					\toprule
+					\textbf{Name} & \textbf{Find streets with the highest number of violations} \\
+					\midrule
+					\textbf{Actors} & User \\
+					\midrule
+					\textbf{Entry conditions} & The user is logged in \\
+					\midrule
+					\textbf{Flow of events} & 
+					\begin{enumerate}
+						\item The user selects the 'streets with highest number of violation' option
+						\item The user chooses the region he is looking for from a list
+						\item The user chooses the city from a list
+						\item The user chooses the types of violation to be included
+						%maybe a checkbox
+						\item The user chooses the time slot
+						\item The user chooses the types of vehicle to be included
+						\item The user confirms the query and sends it
+						\item The system returns a list of the streets ordered by the highest number of violations, with the actual number next to the name of the street, according to the filters
+					\end{enumerate} \\
+					\midrule
+					\textbf{Exit conditions} & The list of the streets is shown to the user \\
+					\midrule
+					\textbf{Exceptions} & 
+					\begin{itemize}
+						\item If no type of violation is selected, the system shows an error message and the procedure is aborted
+						\item If no type of vehicle is selected, the system shows an error message and the procedure is aborted	
+					\end{itemize} \\
+					\bottomrule
+					\caption{\emph{Find streets with the highest number of violations} use case description}
+				\end{longtable}
+			
+			\item \textbf{Find Most Dangerous Vehicles}
+				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+					\toprule
+					\textbf{Name} & \textbf{Find dangerous vehicles} \\
+					\midrule
+					\textbf{Actors} & User \\
+					\midrule
+					\textbf{Entry conditions} & The user is logged in \\
+					\midrule
+					\textbf{Flow of events} & 
+					\begin{enumerate}
+						\item The user selects the 'most dangerous vehicles' option
+						\item The user selects the region and the city from a list, or selects a street, or selects everywhere
+						\item The user selects the types of violation he wants to include
+						\item The user confirms the query and sends it
+						\item The system returns a list of the types of vehicle, ordered by the highest number of violations they committed, according to the filters
+					\end{enumerate} \\
+					\midrule
+					\textbf{Exit conditions} & The list is shown to the user\\
+					\midrule
+					\textbf{Exceptions} & 
+					\begin{itemize}
+						\item 	If no type of violation is selected, the system notifies the user and wait for him to insert at least one	
+					\end{itemize} \\
+					\bottomrule
+					\caption{\emph{Find most dangerous vehicles} use case description}
+				\end{longtable}
+			
+			\item \textbf{Find Urgent Interventions}
+				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+					\toprule
+					\textbf{Name} & \textbf{Find urgent interventions} \\
+					\midrule
+					\textbf{Actors} & User \\
+					\midrule
+					\textbf{Entry conditions} & The user is logged in \\
+					\midrule
+					\textbf{Flow of events} & 
+					\begin{enumerate}
+						\item The user selects the 'urgent interventions' option
+						\item The user selects the region and the city from a list
+						\item The user confirms the query and sends it
+						\item The system returns a list of the most urgent interventions in the selected city, each with their respective street
+					\end{enumerate} \\
+					\midrule
+					\textbf{Exit conditions} & The list is shown to the user\\
+					\midrule
+					\textbf{Exceptions} &  \\
+					\bottomrule
+					\caption{\emph{Find urgent interventions} use case description}
+				\end{longtable}
+			
+			\item \textbf{Find Unsafe Streets}
+				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+					\toprule
+					\textbf{Name} & \textbf{Find unsafe streets} \\
+					\midrule
+					\textbf{Actors} & User \\
+					\midrule
+					\textbf{Entry conditions} & The user is logged in \\
+					\midrule
+					\textbf{Flow of events} & 
+					\begin{enumerate}
+						\item The user selects the 'unsafe streets' option
+						\item The user selects the either the 'city' option, the 'route' option or the single street option
+						\item The user chooses the region and the city from a list if 'city' option is chosen, if 'route' option is chosen he enters start and end points of the route, otherwise he inserts the name of the street
+						\item The user confirms the query and sends it
+						\item The system returns a map where the streets selected with the filter are colored according to their safety: green if they're 'safe', red if they're 'unsafe'
+					\end{enumerate} \\
+					\midrule
+					\textbf{Exit conditions} & The list is shown to the user\\
+					\midrule
+					\textbf{Exceptions} & 
+					\begin{itemize}
+						\item If no city is selected when 'city' option is chosen, the system notifies the user and waits for him to insert it
+						\item If no start or end points are chosen when 'route' option is selected, the system notifies the user and waits for him to insert them
+					\end{itemize} \\
+					\bottomrule
+					\caption{\emph{Find unsafe streets} use case description}
+				\end{longtable}
+		\end{enumerate}
+			
+		\paragraph{Authority}
+		\begin{enumerate}
+			\item \textbf{Authority Registration}
+				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+					\toprule
+					\textbf{Name} & \textbf{Registration} \\
+					\midrule
+					\textbf{Actors} & Authority \\
+					\midrule
+					\textbf{Entry conditions} & The application has started \\
+					\midrule
+					\textbf{Flow of events} & 
+					\begin{enumerate}
+						\item The authority chooses the sign up option
+						\item The authority selects the 'authority' registration type
+						\item The authority chooses the region and the city of competence
+						\item The authority inserts its PEC address
+						\item The system checks that PEC address matches the chosen city
+						\item The system sends a confirmation code to the PEC address
+						\item The authority enters the confirmation code in a text box
+						\item The authority submits the form
+						\item The system checks the entered code to match the sent one
+						\item The system saves the authority's data
+					\end{enumerate} \\
+					\midrule
+					\textbf{Exit conditions} & The authority is registered in the system\\
+					\midrule
+					\textbf{Exceptions} & 
+					\begin{itemize}
+						\item If the selected city already has an authority registered, an error message is shown and the procedure is aborted
+						\item If the PEC address doesn't match the chosen city, an error message is shown and the procedure is aborted
+						\item If the entered code doesn't match the sent one, an error message is shown and the procedure is aborted
+					\end{itemize} \\
+					\bottomrule
+					\caption{\emph{Authority Registration} use case description}
+				\end{longtable}
+			
+			\item \textbf{Authority Login}
+				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+					\toprule
+					\textbf{Name} & \textbf{Authority Login} \\
+					\midrule
+					\textbf{Actors} & Authority\\
+					\midrule
+					\textbf{Entry conditions} & The application has started \\
+					\midrule
+					\textbf{Flow of events} & 
+					\begin{enumerate}
+						\item The authority chooses the login option
+						\item The authority chooses the 'authority' login type
+						\item The authority inserts its PEC address as username
+						\item The authority inserts its password
+						\item The authority submits the form
+						\item The system checks the username to be registered
+						\item The system checks the password to be right for that username
+						\item The system notifies the authority that login is successful
+					\end{enumerate} \\
+					\midrule
+					\textbf{Exit conditions} & The authority is logged in\\
+					\midrule
+					\textbf{Exceptions} & 
+					\begin{itemize}
+						\item If the username is not recognized by the system, that means that the authority is not registered yet, or the username is incorrect. The system notifies the authority and the procedure is aborted
+						\item If the inserted password is wrong, the system notifies the authority and the procedure is aborted			
+					\end{itemize} \\
+					\bottomrule
+					\caption{\emph{Authority Login} use case description}
+				\end{longtable}
+			
+			\item \textbf{Check Unread Reports}
+				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+					\toprule
+					\textbf{Name} & \textbf{Check unread reports} \\
+					\midrule
+					\textbf{Actors} & Authority\\
+					\midrule
+					\textbf{Entry conditions} & The authority is logged in \\
+					\midrule
+					\textbf{Flow of events} & 
+					\begin{enumerate}
+						\item The authority chooses the 'unread reports' option
+						\item The system provides a list with all the unread violation reports that match the city of competence of the authority
+					\end{enumerate} \\
+					\midrule
+					\textbf{Exit conditions} & The list is shown to the authority\\
+					\midrule
+					\textbf{Exceptions} &  \\
+					\bottomrule
+					\caption{\emph{Check unread reports} use case description}
+				\end{longtable}
+				
+			\item \textbf{Find Reports}
+				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+					\toprule
+					\textbf{Name} & \textbf{Find reports} \\
+					\midrule
+					\textbf{Actors} & Authority\\
+					\midrule
+					\textbf{Entry conditions} & The authority is logged in \\
+					\midrule
+					\textbf{Flow of events} & 
+					\begin{enumerate}
+						\item The authority chooses the 'find reports' option
+						\item The authority selects the types of violation to be included
+						\item The authority selects date interval and time slot
+						\item The authority selects the types of vehicle to be included
+						\item The authority optionally selects the street to include, otherwise 'city' will be selected
+						\item The authority confirms and sends the query
+						\item The system provides a list with all the violation reports that match the filter, sorted by chronological order from the most recent one. In case 'city' option is selected, the considered city is that of competence of the authority
+					\end{enumerate} \\
+					\midrule
+					\textbf{Exit conditions} & The list is shown to the authority\\
+					\midrule
+					\textbf{Exceptions} &  
+					\begin{enumerate}
+						\item If the date interval is not valid, the system notifies the authority and the procedure is aborted
+					\end{enumerate}\\
+					\bottomrule
+					\caption{\emph{Find reports} use case description}
+				\end{longtable}
+		\end{enumerate}
 
-\subsection[Design Constraints]{\hyperlink{toc}{Design Constraints}}
-	\subsubsection[Standards Compliance]{\hyperlink{toc}{Standards Compliance}}
-	\subsubsection[Hardware Limitations]{\hyperlink{toc}{Hardware Limitations}}
-	\subsubsection[Any other Constraint]{\hyperlink{toc}{Any other Constraint}}
+	\FloatBarrier
+	\newpage
 
-\subsection[Software System Attributes]{\hyperlink{toc}{Software System Attributes}}
-	\subsubsection[Reliability]{\hyperlink{toc}{Reliability}}
-	\subsubsection[Availability]{\hyperlink{toc}{Availability}}
-	\subsubsection[Security]{\hyperlink{toc}{Security}}
-	\subsubsection[Maintainability]{\hyperlink{toc}{Maintainability}}
-	\subsubsection[Portability]{\hyperlink{toc}{Portability}}
+	\subsubsection[Traceability Matrix]{\hyperlink{toc}{Traceability Matrix}} % todo dimensioni di merda qua
+		\label{tab:traceabilityMatrix}
+		\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+				\cline{2-11}
+				\multicolumn{1}{c|}{} & \ref{req:userReg} & \ref{req:authorityReg} & \ref{req:userLogin} & \ref{req:authorityLogin} & \ref{req:uniqueName} & \ref{req:saveRegData} & \ref{req:specialCharacters} & \ref{req:takePictures} & \ref{req:dateTime}  & \ref{req:gpsPosition}\\
+				\hline
+				Registration & \xmark & \xmark & & & \xmark & \xmark & \xmark & & &\\
+				\hline
+				Login & & & \xmark & \xmark & \xmark & & \xmark & & &\\
+				\hline
+				Report Violation & \xmark & & \xmark & & & & \xmark & \xmark & \xmark & \xmark \\
+				\hline
+				Highest Violations & \xmark & \xmark & \xmark & \xmark & & & & & &\\
+				\hline
+				Dangerous Vehicles & \xmark & \xmark & \xmark & \xmark & & & & & &\\
+				\hline
+				Urgent Interventions & \xmark & \xmark & \xmark & \xmark & & & & & &\\
+				\hline
+				Unsafe Streets & \xmark & \xmark & \xmark & \xmark & & & & & &\\
+				\hline
+				Unread Reports & & \xmark & & \xmark & & & & & &\\
+				\hline
+				Find Reports & & \xmark & & \xmark & & & & & &\\
+				\hline
+				Scenario \ref{sce:notification} & \xmark & & \xmark & & & & \xmark & \xmark & \xmark & \xmark \\
+				\hline
+				Scenario \ref{sce:basicUser} & \xmark & & \xmark & & & & & & &\\
+				\hline
+				Scenario \ref{sce:advancedUser} & \xmark & & \xmark & & & & & & &\\
+				\hline
+				Scenario \ref{sce:basicAuthority} & & \xmark & & \xmark & & & & & &\\
+				\hline
+				Scenario \ref{sce:advancedAuthority} & & \xmark & & \xmark & & & & & &\\
+				\hline
+			\end{tabular}
+			\vspace{0.4cm}
+			\caption{Requirements from R1 to R10}
+		\end{table}
+		
+		\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+				\cline{2-10}
+				\multicolumn{1}{c|}{} & \ref{req:violationType} &  \ref{req:vehicleType} & \ref{req:plateNumber} & \ref{req:readPlate} & \ref{req:storeViolation} & \ref{req:streetName} & \ref{req:notifyAuthority} & \ref{req:mineData} & \ref{req:cityFilter} \\
+				\hline
+				Registration & & & & & & & & & \\
+				\hline
+				Login & & & & & & & & & \\
+				\hline
+				Report Violation & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \\
+				\hline
+				Highest Violations & & & & & & & & \xmark & \xmark \\
+				\hline
+				Dangerous Vehicles & & & & & & & & \xmark & \xmark \\
+				\hline
+				Urgent Interventions & & & & & \xmark & & & & \xmark \\
+				\hline
+				Unsafe Streets & & & & & \xmark & & & & \xmark\\
+				\hline
+				Unread Reports & & & & & \xmark & & & & \\
+				\hline
+				Find Reports & & & & & \xmark & & & & \xmark \\
+				\hline
+				Scenario \ref{sce:notification} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
+				\hline
+				Scenario \ref{sce:basicUser} & & & & & & & & \xmark & \xmark\\
+				\hline
+				Scenario \ref{sce:advancedUser} & & & & & \xmark & & & & \xmark\\
+				\hline
+				Scenario \ref{sce:basicAuthority} & & & & & & & & \xmark & \xmark\\
+				\hline
+				Scenario \ref{sce:advancedAuthority} & & & & & \xmark & & & & \xmark \\
+				\hline
+			\end{tabular}
+			\vspace{0.4cm}
+			\caption{Requirements from R11 to R19}
+		\end{table}
+			
+		\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+				\cline{2-10}
+				\multicolumn{1}{c|}{} & \ref{req:streetFilter} & \ref{req:pathFilter} & \ref{req:violationFilter} & \ref{req:timeFilter} & \ref{req:dateFilter} & \ref{req:vehicleFilter} & \ref{req:sortedResult} & \ref{req:sortedVehicles} & \ref{req:visibility} \\
+				\hline
+				Registration & & & & & & & & &\\
+				\hline
+				Login & & & & & & & & &\\
+				\hline
+				Report Violation & & & & & & & & & \\
+				\hline
+				Highest Violations & & & \xmark & \xmark & & \xmark & \xmark & \xmark &\\
+				\hline
+				Dangerous Vehicles & & & \xmark & \xmark & & & \xmark & &\\
+				\hline
+				Urgent Interventions & \xmark & & & & & & & &\\
+				\hline
+				Unsafe Streets & \xmark & \xmark & & & & & & &\\
+				\hline
+				Unread Reports & & & & & & & & &\\
+				\hline
+				Find Reports & \xmark & & \xmark & \xmark & \xmark & \xmark & & & \xmark\\
+				\hline
+				Scenario \ref{sce:notification} & & & & & & & & & \\
+				\hline
+				Scenario \ref{sce:basicUser} & & & \xmark & \xmark & & \xmark & \xmark & &\\
+				\hline
+				Scenario \ref{sce:advancedUser} & \xmark & \xmark & & & & & & &\\
+				\hline
+				Scenario \ref{sce:basicAuthority} & & & \xmark & \xmark & & \xmark & \xmark & &\\
+				\hline
+				Scenario \ref{sce:advancedAuthority} & \xmark & & & & & & & &\\
+				\hline
+			\end{tabular}
+			\vspace{0.4cm}
+			\caption{Requirements from R20 to R28}
+		\end{table}
+		
+		\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|c|c|c|c|c|c|}
+				\cline{2-8}
+				\multicolumn{1}{c|}{} & \ref{req:accidentsData} & \ref{req:crossData} & \ref{req:safeStreet} & \ref{req:cityStreets} & \ref{req:pathFinder} & \ref{req:colorMap} & \ref{req:interventions} \\
+				\hline
+				Registration & & & & & & &\\
+				\hline
+				Login & & & & & & &\\
+				\hline
+				Report Violation & & & & & & & \\
+				\hline
+				Highest Violations & & & & & & & \\
+				\hline
+				Dangerous Vehicles & & & & & & & \\
+				\hline
+				Urgent Interventions & \xmark & \xmark & & \xmark & & &\xmark \\
+				\hline
+				Unsafe Streets & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
+				\hline
+				Unread Reports & & & & & & &\\
+				\hline
+				Find Reports & & & & & & &\\
+				\hline
+				Scenario \ref{sce:notification} & & & & & & & \\
+				\hline
+				Scenario \ref{sce:basicUser} & & & & & & & \\
+				\hline
+				Scenario \ref{sce:advancedUser} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
+				\hline
+				Scenario \ref{sce:basicAuthority} & & & & & & & \\
+				\hline
+				Scenario \ref{sce:advancedAuthority} & \xmark & \xmark & & \xmark & & &\xmark \\
+				\hline
+			\end{tabular}
+			\vspace{0.4cm}
+			\caption{Requirements from R29 to R35}
+		\end{table}
+		
+	\FloatBarrier
+	
+	\subsection[Performance Requirements]{\hyperlink{toc}{Performance Requirements}}
+		SafeStreets is a system that provides to serve all devices that have the possibility to take pictures and to retrieve the position thanks to the GPS. All the computation will take place on the servers of the system thus we expect a light weight application that can be accessed by both the users and authorities. Interaction with modules of the device have to be considered, in particular with the camera and the GPS in order to provide all mandatory data while reporting a violation. The notification functionality requires a quick response to each violation in order to store it in the system for the authorities as soon as possible. Further considerations about responsiveness have to be considered for the basic and advanced functionalities that require mining and crossing processes in order to obtain a result. To accomplish this problem we will give a possible solution in the further section of how to organize the design in order to run algorithms that allow to mine and cross the data. Technical support for installation is not required as the result is a simple device application each customer can download from the store; moreover it is important to highlight that the registration process for the authority needs to provide a verification code and thus a quick interaction is an other time needed.
+	
+	\subsection[Design Constraints]{\hyperlink{toc}{Design Constraints}}
+		\subsubsection[Standards Compliance]{\hyperlink{toc}{Standards Compliance}}
+			The most important standard that needs to be considered in a crowd-sourced system and in particular for the functionalities that SafeStreets intends to provide is the \emph{data mining} process. As we are going to expect to receive big amounts of data the approach to consider a \emph{datawarehouse} would be the correct solution paired with a data mining engine working with the data already stored. Considering the system to follow the standard process of mining we can give a further detail based on how the definition of the model has been carried out: the classification technique seems in fact the better one in order to classify the violations (largest instances we expect to manage). 
+		\subsubsection[Hardware Limitations]{\hyperlink{toc}{Hardware Limitations}}
+			Hardware limitations would be critical in devices that do not provide a camera or a GPS module. As described in the section \ref{sec:notificationFunction} in fact a user must provide at least one picture and enable his GPS in order to report a violation. No further considerations have to be considered as we have also considered that the image recognition algorithms will be helped by the information provided by the users and this can make us not to require high definition pictures of the infractions reported.
+		\subsubsection[Any other Constraint]{\hyperlink{toc}{Any other Constraint}}
+			\emph{Regulatory policies}  have to be considered for the interaction between SafeStreets and both users and authorities. The application in fact will ask the position of each user while reporting a violation but will also provide its name to authorities whenever they receive the notification or use the \emph{find reports} functionality.
+			Authorities instead need to accept the treatment that will be carried out by the crossing process over the accidents data they provide to SafeStreets.
+	
+	\subsection[Software System Attributes]{\hyperlink{toc}{Software System Attributes}}
+		\subsubsection[Reliability]{\hyperlink{toc}{Reliability}}
+			As the system aims to be a crowd-sourced application it needs to care of the data he stores, in particular the one used for the mining and crossing processes. Design considerations are needed in order to face any failure, if a decision needs to be made to choose which data is the most important to protect, the one relative to the violations is going to be preferred rather than the one of the customers. The loss of the information of a client in fact is definitely not a problem as he would create a new account without any limitation.
+		\subsubsection[Availability]{\hyperlink{toc}{Availability}}
+			As nowadays systems tend to be always more available we need to accomplish this feature but with some considerations related to the fact that we expect to receive the highest affluence in the day rather than in the night. Hence an availability of 99\% is needed for the notification functionality, for the basic and advanced functionalities instead 96\% should be enough to cover the desires of both customers.
+		\subsubsection[Security]{\hyperlink{toc}{Security}}
+			SafeStreets needs to deal with security to store the information of a user while registering but also to ensure the correct registration of an authority. The recognition of a customer is the most important feature to consider in order to ensure providing the correct level visibility of the data they query. The recognition process considers to send a verification code to the PEC address of the registering authority that deals with all security problems avoiding more complex technologies that each authority would not posses.
+		\subsubsection[Maintainability]{\hyperlink{toc}{Maintainability}}
+			The software needs to take in account the possibility to encounter bugs even if a high test coverage should be considered in the developing process in particular in the query definition that may lead to critical aspects related to the management of the datawarehouse together with the data mining engine. Talking about the capability to meet new requirements the system is thought to be extensible in particular for the additional types of violations that may be considered. 
+		\subsubsection[Portability]{\hyperlink{toc}{Portability}}
+			The client side of the system would be developed in a native way in order to accomplish a better interaction with the system for both the most used OSs. The server side instead would consider the possibility to use different mining engines rather than how to store the data in the datawarehouse where a proprietary software would be possibly considered.
