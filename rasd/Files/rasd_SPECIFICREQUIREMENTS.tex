@@ -147,9 +147,9 @@
 			\item \label{req:sortedVehicles} The system must be able to sort types of vehicle by number of violations they make.
 			\item \label{req:visibility} The system must be able to provide different levels of visibility.
 			\item \label{req:accidentsData} The system must be able to store and manage data about accidents, if provided by the authority.
-			\item \label{req:crossData} The System must be able to cross accidents data with violations one.
+			\item \label{req:crossData} The system must be able to cross accidents data with violations one.
 			\item \label{req:safeStreet} The system must be able to determine whether a street is safe or not.
-			\item \label{req:cityStreets} The system must know all the streets inside a city.
+			\item \label{req:cityStreets} The system must be able to access all the available maps.
 			\item \label{req:pathFinder} The system must find a path between two given points in a map.
 			\item \label{req:colorMap} The system must be able to color the streets in a map according to their safety.
 			\item \label{req:interventions} The system must be able to determine the most urgent interventions in a street.	
@@ -158,7 +158,8 @@
 	\subsubsection[Goals]{\hyperlink{toc}{Goals}}
 		\label{sec:goalSatisfaction}
 		\begin{description}
-			\item \ref{goal:notification}\ Users should be able to notify authorities when traffic violations occur, in particular parking violations.
+			\setlength\itemsep{0.7cm}
+			\item \ref{goal:notification}\ \textbf{Users should be able to notify authorities when traffic violations occur, in particular parking violations.}
 				\begin{description}
 					\item \ref{req:userReg}\ The system must allow users to register.
 					\item \ref{req:authorityReg}\ The system must allow authorities to register.
@@ -187,7 +188,7 @@
 					\item \ref{dom:correctCamera}\ The camera module of the devices on which SafeStreets runs always works correctly.
 					\item \ref{dom:correctInternet}\ Internet connection works always without errors.
 					\item \ref{dom:italy}\ The system is assumed to work in Italy.
-					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+					\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
 					\item \ref{dom:nonameStreets}\ There are no streets without a name.
 					\item \ref{dom:noMaliciousPlates}\ No one physically and maliciously replaces license plates.
 					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
@@ -195,9 +196,10 @@
 					\item \ref{dom:nomultipleViolations}\ No multiple violations of the same vehicle occur in the same place at the same time.
 				\end{description}
 					
-			\item \ref{goal:mining}\ Users and authorities should be able to mine the information stored by SafeStreets, with different levels of visibility.
+			\item \ref{goal:mining}\ \textbf{Users and authorities should be able to mine the information stored by SafeStreets, with different levels of visibility.}
 				\begin{description}
-					\item \ref{goal:miningA} Users and authorities should be able to know where the highest number of violations occur.
+					\setlength\itemsep{0.7cm}
+					\item \ref{goal:miningA}\ \textbf{Users and authorities should be able to know where the highest number of violations occur.}
 						\begin{description}
 							\item \ref{req:userReg}\ The system must allow users to register.
 							\item \ref{req:authorityReg}\ The system must allow authorities to register.
@@ -217,12 +219,12 @@
 							\item \ref{dom:uniquePec}\ PEC addresses are unique.
 							\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
 							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
-							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+							\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
 							\item \ref{dom:nonameStreets}\ There are no streets without a name.
 							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
 							\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
 						\end{description}
-					\item \ref{goal:miningB} Users and authorities should be able to know what types of vehicle make the most violations.
+					\item \ref{goal:miningB}\ \textbf{Users and authorities should be able to know what types of vehicle make the most violations.}
 						\begin{description}
 							\item \ref{req:userReg}\ The system must allow users to register.
 							\item \ref{req:authorityReg}\ The system must allow authorities to register.
@@ -240,12 +242,12 @@
 							\item \ref{dom:uniquePec}\ PEC addresses are unique.
 							\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
 							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
-							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+							\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
 							\item \ref{dom:nonameStreets}\ There are no streets without a name.
 							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
 							\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
 						\end{description}
-					\item \ref{goal:miningC} Authorities should be able to consult every violation report sent by users.
+					\item \ref{goal:miningC}\ \textbf{Authorities should be able to consult every violation report sent by users.}
 						\begin{description}
 							\item \ref{req:authorityReg}\ The system must allow authorities to register.
 							\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
@@ -265,13 +267,13 @@
 							\item \ref{dom:uniquePec}\ PEC addresses are unique.
 							\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
 							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
-							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+							\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
 							\item \ref{dom:nonameStreets}\ There are no streets without a name.
 							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
 							\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
 						\end{description}
 				\end{description}
-			\item \ref{goal:safety} Users should be able to know which streets are safe and which ones are not.
+			\item \ref{goal:safety}\ \textbf{Users should be able to know which streets are safe and which ones are not.} 
 				\begin{description}
 					\item \ref{req:userReg}\ The system must allow users to register.
 					\item \ref{req:authorityReg}\ The system must allow authorities to register.
@@ -279,10 +281,10 @@
 					\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
 					\item \ref{req:saveRegData}\ The system must save the customers registration data.
 					\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
-					\item \ref{req:crossData}\ The System must be able to cross accidents data with violations one.
+					\item \ref{req:crossData}\ The system must be able to cross accidents data with violations one.
 					\item \ref{req:safeStreet}\ The system must be able to determine whether a street is safe or not.
 					\item \ref{req:accidentsData}\ The system must be able to store and manage data about accidents, if provided by the authority.
-					\item \ref{req:cityStreets} The system must know all the streets inside a city.
+					\item \ref{req:cityStreets} The system must be able to access all the available maps.
 					\item \ref{req:pathFinder} The system must find a path between two given points in a map.
 					\item \ref{req:colorMap} The system must be able to color the streets in a map according to their safety.
 					\item \ref{req:cityFilter} The system must allow the customer to filter by city.
@@ -294,13 +296,13 @@
 					\item \ref{dom:uniquePec}\ PEC addresses are unique.
 					\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
 					\item \ref{dom:correctInternet}\ Internet connection works always without errors.
-					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+					\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
 					\item \ref{dom:nonameStreets}\ There are no streets without a name.
 					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
 					\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
 					\item \ref{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.
 				\end{description}	
-			\item \ref{goal:intervention} Users and authorities should be able to know the possible interventions that could be done in a city.
+			\item \ref{goal:intervention}\ \textbf{Users and authorities should be able to know the possible interventions that could be done in a city.}
 				\begin{description}
 					\item \ref{req:userReg}\ The system must allow users to register.
 					\item \ref{req:authorityReg}\ The system must allow authorities to register.
@@ -308,9 +310,9 @@
 					\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
 					\item \ref{req:saveRegData}\ The system must save the customers registration data.
 					\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
-					\item \ref{req:crossData}\ The System must be able to cross accidents data with violations one.
+					\item \ref{req:crossData}\ The system must be able to cross accidents data with violations one.
 					\item \ref{req:accidentsData}\ The system must be able to store and manage data about accidents, if provided by the authority.
-					\item \ref{req:cityStreets} The system must know all the streets inside a city.
+					\item \ref{req:cityStreets} The system must be able to access all the available maps.
 					\item \ref{req:interventions} The system must be able to determine the most urgent interventions in a street.
 					\item \ref{req:cityFilter} The system must allow the customer to filter by city.
 					\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
@@ -319,7 +321,7 @@
 					\item \ref{dom:uniquePec}\ PEC addresses are unique.
 					\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
 					\item \ref{dom:correctInternet}\ Internet connection works always without errors.
-					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
+					\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
 					\item \ref{dom:nonameStreets}\ There are no streets without a name.
 					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
 					\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
@@ -356,7 +358,7 @@
 	\subsubsection[Use Cases Diagrams]{\hyperlink{toc}{Use Case Diagram}}
 		The following diagram is a high-level description of the possible interactions of actors with the system and highlights the different use case in which actors are involved.
 		
-		\vspace{1cm}
+		\vspace{0.3cm}
 		
 		\begin{figure}[h!]
 			\centering
