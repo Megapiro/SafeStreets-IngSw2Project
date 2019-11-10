@@ -2,12 +2,6 @@ sig Username{}
 
 sig Password{}
 
-/*
-sig Pec{
-	content: one String
-}
-*/
-
 sig Registration{
 	username: one Username,
 	password: one Password
@@ -20,7 +14,15 @@ abstract sig Customer{
 sig User extends Customer{}
 
 sig Authority extends Customer{
-	city: one City
+	city: one City,
+	unreadReports : set StoredReport
+}
+
+fact UnreadReportsRule{
+	all sr:StoredReport, a:Authority | sr in a.unreadReports iff
+	(
+		sr.status = Unread and sr.report.position.street.city in a.city
+	)
 }
 
 sig City{
@@ -29,6 +31,7 @@ sig City{
 }
 
 sig Street{
+	city : one City,
 	streetName: one StreetName,
 	positions: some Position,
 	reports: set Report,
@@ -81,11 +84,6 @@ sig StoredReport{
 	status : one ReportStatus
 }
 
-fact CorrectStreetNameInReport{
-	all sr: StoredReport | sr.streetName in 
-		sr.report.position.street.streetName
-}
-
 abstract sig ReportStatus{}
 
 one sig Read extends ReportStatus{}
@@ -107,6 +105,10 @@ sig Accident{
 
 fact NoStreetWithoutCity{
 	all s: Street | one c:City | s in c.streets
+}
+
+fact StreetCityLinked{
+	all s:Street, c:City | s in c.streets iff c in s.city
 }
 
 fact NoStreetsWithSameNameInCity{
@@ -213,33 +215,98 @@ fact CityAuthorityLink{
 --///////////////////////////////////////////////////////////////////////////////////////////////////////////
 --REQUESTS AND RESULT
 --///////////////////////////////////////////////////////////////////////////////////////////////////////////
+--requests
 
-abstract sig Request{
-	customer : one Customer
-}
-
-sig ReportsRequest extends Request{
+sig ReportsRequest {
+	authority : one Authority,
+	violationTypes : some ViolationType,
+	dates : some Date,
+	time : some Time,
+	vehicleTypes: some VehicleType,
+	street : lone Street
 	
-}{
-	customer = Authority
 }
 
-sig MostViolationsRequest extends Request{}
+sig InterventionsRequest{
+	city : one City
+}
 
-sig DangerousVehiclesRequest extends Request{}
+-------------------------------------------------------------------------------------------------------------
+--results
 
-sig UnsafeStreetsRequest extends Request{}
+sig ReportsResult{
+	request : one ReportsRequest,
+	storedReports : set StoredReport
+}
 
-sig InterventionsRequest extends Request{}
+fact ReportsResultRule{
+	all sr:StoredReport, result:ReportsResult | sr in result.storedReports iff
+	(
+		sr.report.violationType in result.request.violationTypes and
+		sr.report.date in result.request.dates and
+		sr.report.time in result.request.time and
+		sr.report.vehicleType in result.request.vehicleTypes and
+		(result.request.street = none implies sr.report.position.street.city in 
+			result.request.authority.city else sr.report.position.street in
+				result.request.street
+		)
+	)
+}
 
+sig InterventionsResult{
+	request : one InterventionsRequest,
+	interventions : set Intervention
+}
+
+fact InterventionsResultRule{
+	all i:Intervention, result:InterventionsResult | i in result.interventions iff 
+	(
+		some s:Street | s in result.request.city.streets and 
+			i in s.suggestedInterventions
+	)
+}
+
+fact OneResultForOneRequestReports{
+	all req : ReportsRequest | one res :ReportsResult | req in res.request
+}
+
+fact OneResultForOneRequestIntervention{
+	all req : InterventionsRequest | one res :InterventionsResult | req in res.request
+}
+
+--///////////////////////////////////////////////////////////////////////////////////////////////////////////
+--REPORTS
+--///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+fact NoDuplicateStoredReports{
+	no disj r1,r2 : StoredReport | 
+		r1.report = r2.report or
+		(
+			r1.report.position = r2.report.position and
+			r1.report.violationType = r2.report.violationType and
+			r1.plate = r2.plate and 
+			r1.report.date = r2.report.date
+		)
+}
+
+fact CorrectStreetNameInReport{
+	all sr: StoredReport | sr.streetName in 
+		sr.report.position.street.streetName
+}
+
+fact UnreadReportIfNoAuthority{
+	all sr: StoredReport | sr.report.position.street.city.authority = none implies
+		sr.status = Unread
+}
 
 --///////////////////////////////////////////////////////////////////////////////////////////////////////////
 --PREDICATES AND COMMANDS
 --///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pred show{
+/*pred show{
 	(all c:City| #(c.streets) = 2 ) and
-	all vt: ViolationType | #vt.interventions > 0 
+	all vt: ViolationType | #vt.interventions > 0 and
+	#ReportsResult = 2
 	--#ReportsRequest = 1
 	
 	--all s: Street | #s.reports = 0
@@ -247,4 +314,46 @@ pred show{
 run show for 5 but 2 StreetName, 2 Registration, 
 									1 User, 1 City, 2 Intervention,
 									3 Position, 2 ViolationType,2 Report, 2 Accident,
-									2 AccidentType, 2 StoredReport
+									2 AccidentType, 2 StoredReport, 1 Time,
+ 2 ReportsRequest
+*/
+
+pred world1{
+	#Report = 0 and 
+	#ReportsRequest = 0 and
+	#InterventionsRequest = 0 and
+ 	#ViolationType = 0 and
+	#AccidentType = 0 and
+
+	#City = 3
+	#Authority = 2
+	#User = 2
+}
+
+--run world1 for 4
+
+pred world2{
+	#City = 1 and
+	#ReportsRequest = 0 and
+	#InterventionsRequest = 0 and
+	#StoredReport = 2 and
+	#Accident = 2 and
+	#AccidentType = 1 and
+	#Registration = 2 and
+	#Intervention = 2 
+}
+--run world2 for 2
+
+pred world3{
+	#City = 1 and
+	--#Street = 1 and
+	#InterventionsRequest = 1 and
+	#ReportsRequest = 0 and
+	#Report = 1 and
+	#AccidentType = 0 and
+	#Accident = 0
+	#Intervention = 1
+
+}
+
+run world3 for 2
