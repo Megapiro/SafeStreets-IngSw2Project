@@ -6,7 +6,7 @@
 	\label{sec:externalInterfaceRequirements}
 	\subsubsection[User Interfaces]{\hyperlink{toc}{User Interfaces}}
 	\label{sec:userInterfaces}
-	The following section illustrates thanks to some mockups the interfaces SafeStreets provides to its customers in order to provide functionalities. Each picture is described only be the caption as complete and precise descriptions are given in the sections related to the description of the functionalities and how they are managed (\ref{sec:productFunctions}, \ref{sec:useCases}).
+	The following subsection illustrates thanks to some mockups the interfaces SafeStreets supplies to its customers in order to provide functionalities. Each picture is described only by the caption as complete and precise descriptions are given in the sections related to the definition of the functionalities and how they are managed (\ref{sec:productFunctions}, \ref{sec:useCases}).
 	
 	\begin{figure}[h]
 		\centering
@@ -104,10 +104,10 @@
 	\FloatBarrier
 	
 	\subsubsection[Hardware Interfaces]{\hyperlink{toc}{Hardware Interfaces}}
-		Hardware interfaces have to be considered on the clients' software in order to interact with the camera and the GPS module. As described in the section \ref{sec:notificationFunction} in fact, a user must always take at least one picture and enable the GPS in order to report a violation. 
+		Hardware interfaces have to be considered on the clients' software in order to interact with the camera and the GPS modules. As described in the section \ref{sec:notificationFunction} in fact, a user must always take at least one picture and enable the GPS in order to report a violation. 
 		
 	\subsubsection[Software Interfaces]{\hyperlink{toc}{Software Interfaces}}
-		The interfaces used by SafeStreets to benefit of services provided by external systems are precisely described in the section \ref{sec:systemInterfaces}. Internal interfaces should be also considered in order to interact with a \emph{datawarehouse} as the mining processes can be performed. SafeStreets does not provide APIs to external possible clients.
+		The interfaces used by SafeStreets to benefit of services provided by external systems are precisely described in the section \ref{sec:systemInterfaces}. Internal interfaces should be also considered in order to interact with a \emph{datawarehouse} as the mining processes can be performed and the data can be structured in the best way according to the model defined (see section \ref{sec:standardCompliance}). SafeStreets does not provide APIs to external possible clients.
 		
 	\subsubsection[Communication Interfaces]{\hyperlink{toc}{Communication Interfaces}}
 		An important communication interface that must be considered while developing the system is the one that makes the system receive the accidents data provided by the municipality. We are now unable to know how the municipality will provide this information but we can start considering the most popular formats that would be used: JSON, XML, RDF... 
@@ -189,6 +189,8 @@
 					\item \ref{dom:italy}\ The system is assumed to work in Italy.
 					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 					\item \ref{dom:nonameStreets}\ There are no streets without a name.
+					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
+					\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
 					\item \ref{dom:noMaliciousPlates}\ No one physically and maliciously replaces license plates.
 				\end{description}
 					
@@ -216,6 +218,8 @@
 							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
 							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 							\item \ref{dom:nonameStreets}\ There are no streets without a name.
+							\item \ref{dom:nosameStreets} In a city there are not streets with the same name.
+							\item \ref{dom:streetCity} Every street belongs to exactly one city.
 						\end{description}
 					\item \ref{goal:miningB} Users and authorities should be able to know what types of vehicle make the most violations.
 						\begin{description}
@@ -238,6 +242,8 @@
 							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
 							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 							\item \ref{dom:nonameStreets}\ There are no streets without a name.
+							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
+							\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
 						\end{description}
 					\item \ref{goal:miningC} Authorities should be able to consult every violation report sent by users.
 						\begin{description}
@@ -261,6 +267,8 @@
 							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
 							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 							\item \ref{dom:nonameStreets}\ There are no streets without a name.
+							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
+							\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
 						\end{description}
 				\end{description}
 			\item \ref{goal:safety} Users should be able to know which streets are safe and which ones are not.
@@ -288,6 +296,8 @@
 					\item \ref{dom:correctInternet}\ Internet connection works always without errors.
 					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 					\item \ref{dom:nonameStreets}\ There are no streets without a name.
+					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
+					\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
 					\item \ref{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.
 				\end{description}	
 			\item \ref{goal:intervention} Users and authorities should be able to know the possible interventions that could be done in a city.
@@ -311,40 +321,48 @@
 					\item \ref{dom:correctInternet}\ Internet connection works always without errors.
 					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 					\item \ref{dom:nonameStreets}\ There are no streets without a name.
+					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
+					\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
 					\item \ref{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.	
 				\end{description}		
 		\end{description}
 
 \subsection[Use Cases Identification]{\hyperlink{toc}{Use Cases Identification}}
-	In the following subsection the usage of the system is going to be described first with a general description using scenarios and then in a more specific way using use case diagrams. These diagrams are described only once for each functionality because totally the same for both the users and the authorities. Hence only the ones where critical behaviors are needed to be considered are duplicated highlighting these parts. The subsection ends with the traceability matrix that allows to define the correspondence between \emph{requirements, use cases and scenarios.}
+	In the following subsection the usage of the system is going to be described first with a general description using scenarios and then in a more specific way using use case diagrams. These diagrams are going to be described only once for the functionalities that totally coincide between users and authorities. Hence only the ones where critical behaviors are needed to be considered are duplicated highlighting these parts. The subsection ends with the traceability matrix that allows to define the correspondence between \emph{requirements, use cases and scenarios.}
 	
 	\subsubsection[Scenarios]{\hyperlink{toc}{Scenarios}}
 		Consider these scenarios in order to clarify the usage of the system and the further description with use case diagrams.
 		
 		\paragraph{User}
-		\begin{enumerate}
+		\begin{enumerate}[label=\textbf{US\arabic*}]
 			\item \label{sce:notification} A man living in Milan has a son with disabilities named Gianluca. His son in particular suffers leg paralysis and therefore is confined to a wheelchair. Since he wants his son to live his life at its fullest, he made him take up para table tennis, the variant of table tennis designed for people with disabilities. The problem is, although few places are reserved for people with disabilities, there’s no much parking in the area where training sessions are held, and so, unfortunately, people get to park in reserved spots anyway, even if they’re not allowed to. Gianluca’s father got really annoyed because of this situation, especially because sidewalks are not in good conditions and therefore he can’t park too far away. In addition, policemen never show up in the area. He discovers SafeStreets, and starts reporting to the authorities all of those vehicles that have not exposed the pass for people with disabilities, by sending pictures of those vehicles. He makes sure that the license plate is readable and hopes that local police will take action.
 			
-			\item \label{sce:basicUser} A group of guys fond of bicycles and competitions is going to organize a treasure hunt in Citta Studi. In this kind of game the competitors have to seek the treasures and who first finds all of them wins. The organizers must position the treasures in each area where the less number of parking violations occur to avoid bikers getting hurt when reaching them on a very high speed. Typically each organizer has an area in which he has to decide where to put the treasure. Using SafeStreet’s basic functionality each of them can filter its interested area with: the street where he wants to put the treasure and the time in which he expects the bickers will reach it.
+			\item \label{sce:basicUser} A group of guys fond of bicycles and competitions is going to organize a treasure hunt in Citta Studi. In this kind of game the competitors have to seek the treasures and who first finds all of them wins. The organizers must position the treasures in each area where the less number of parking violations occur to avoid bikers getting hurt when reaching them on a very high speed. Typically each organizer has an area in which he has to decide where to put the treasure. Using SafeStreet’s basic functionality each of them can select Milan as the filter for the area together with the time lapse in which they expect the bikers to arrive and determine the best street in their area where the less number of violations occur.
 			
-			\item \label{sce:advancedUser} A sportive family from Milan decides to go by bike on a weekend trip to the Idroscalo. Knowing that the bicycle lane from Milan to Idroscalo gets interrupted once reached the city of Novegro, they have to decide which street is better to reach Idroscalo safely. Thanks to SafeStreets they can look over the area and choose whether to continue taking a short path aside the highway or to get inside Novegro and enter the park from the bottom. 
+			\item \label{sce:advancedUser} A sportive family from Milan decides to go by bike on a weekend trip to the Idroscalo. Knowing that the bicycle lane from Milan to Idroscalo gets interrupted once reached the city of Novegro, they have to decide which street is better to reach Idroscalo safely. Thanks to SafeStreets advanced functionality they can select the path and choose whether to continue taking a short part aside the highway or to get inside Novegro and enter the park from the bottom. 
 		\end{enumerate}
 	
 		\paragraph{Authority}
-		\begin{enumerate}
+		\begin{enumerate}[label=\textbf{AS\arabic*}]
+			\item \label{sce:findReports} Circolo Vela Bellano (CVB) is a sailing club located on the high part of the Como lake. Every year it organizes a competition named \emph{Coppa Bellano} where all members of the club tend to participate. CVB every year tries to ask to the municipality if for the entire week-end when the competition is organized the competitors can be enabled to park also on the spots for the residents (highly more than the free ones definitely not enough for the hundreds of people coming). This year, fortunately, the municipality of Bellano has decided to take action for this request, but first wants to be sure that the problem is really the one reported by the club. To solve this doubt it registers to SafeStreets using the PEC address and thanks to the \emph{Find Reports} functionality it can filter all the violations that occurred the previous year when the competition took place. The high level of details in each violation shows that the plates numbers are all of vehicles owned by people not from Bellano. Hence the municipality decides to accomplish the desire of the club understanding that it is better to encourage the hundreds of people arriving in a small town like Bellano rather than giving them fines!
+			
 			\item \label{sce:basicAuthority} Cesate Public Library is the only library in Cesate and is usually open for too little time. The problem is the municipality of Cesate has lately become short on money and therefore can’t pay enough people to work in there. Students living in that small town have no other place to study in silence and if they really need it, they can do nothing but go to Arese or Saronno, that have really big libraries but are only reachable after 15 minutes by car. Since Lombardy Region hasn’t got any plan to give funds to Cesate, the municipality, that really cares about the future of its young citizens, decides to go his own way and tries to give the most traffic tickets it can. In order to do this without wasting time, the municipality uses SafeStreets to figure out where the highest number of traffic violations occur, and then sends policemen in those streets to give fines.
 			
 			\item \label{sce:advancedAuthority} It’s almost election time in Cesate and the outgoing local administration would like to be elected again for their second mandate. In order to gain the highest number of votes in the upcoming elections, the party decides that finally it’s time to make some useful public works. The problem is they really have no clue about what their citizens need most, but fortunately, Ascanio, the City council member to the transports, knows SafeStreets. He is able to get the list of the most urgent works, according to SafeStreets. He in particular finds out that an old street that links the old part of the city to the newest one is the place where a lot of cyclists fall because of potholes. They asphalt that street and are elected again.
 		\end{enumerate}
+	
+		\newpage
 		
 	\subsubsection[Use Cases Diagrams]{\hyperlink{toc}{Use Cases Diagrams}}
 		The following diagram is a high-level description of the possible interactions of actors with the system and highlights the different use case in which actors are involved.
 		
-		\begin{figure}[h]
+		\begin{figure}[h!]
 			\centering
-			\includegraphics[scale=0.22]{/diagrams/usecaseDiagramModel.png}
+			\includegraphics[scale=0.23]{/diagrams/usecaseDiagramModel.png}
 			\caption{Use Case Diagram}
 		\end{figure}
+	
+		\FloatBarrier
 	
 	\subsubsection[Use Cases Description]{\hyperlink{toc}{Use Cases Description}}
 		\label{sec:useCases}
@@ -759,176 +777,201 @@
 
 	\FloatBarrier
 
-	\subsubsection[Traceability Matrix]{\hyperlink{toc}{Traceability Matrix}} % todo dimensioni di merda qua
+	\subsubsection[Traceability Matrix]{\hyperlink{toc}{Traceability Matrix}}
 		\label{tab:traceabilityMatrix}
-		\begin{table}[h]
+		
+		\begin{table}[h!]
 			\centering
-			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
-				\cline{2-11}
-				\multicolumn{1}{c|}{} & \ref{req:userReg} & \ref{req:authorityReg} & \ref{req:userLogin} & \ref{req:authorityLogin} & \ref{req:uniqueName} & \ref{req:saveRegData} & \ref{req:specialCharacters} & \ref{req:takePictures} & \ref{req:dateTime}  & \ref{req:gpsPosition}\\
-				\hline
-				Registration & \xmark & \xmark & & & \xmark & \xmark & \xmark & & &\\
-				\hline
-				Login & & & \xmark & \xmark & \xmark & & \xmark & & &\\
-				\hline
-				Report Violation & \xmark & & \xmark & & & & \xmark & \xmark & \xmark & \xmark \\
-				\hline
-				Highest Violations & \xmark & \xmark & \xmark & \xmark & & & & & &\\
-				\hline
-				Dangerous Vehicles & \xmark & \xmark & \xmark & \xmark & & & & & &\\
-				\hline
-				Urgent Interventions & \xmark & \xmark & \xmark & \xmark & & & & & &\\
-				\hline
-				Unsafe Streets & \xmark & \xmark & \xmark & \xmark & & & & & &\\
-				\hline
-				Unread Reports & & \xmark & & \xmark & & & & & &\\
-				\hline
-				Find Reports & & \xmark & & \xmark & & & & & &\\
-				\hline
-				Scenario \ref{sce:notification} & \xmark & & \xmark & & & & \xmark & \xmark & \xmark & \xmark \\
-				\hline
-				Scenario \ref{sce:basicUser} & \xmark & & \xmark & & & & & & &\\
-				\hline
-				Scenario \ref{sce:advancedUser} & \xmark & & \xmark & & & & & & &\\
-				\hline
-				Scenario \ref{sce:basicAuthority} & & \xmark & & \xmark & & & & & &\\
-				\hline
-				Scenario \ref{sce:advancedAuthority} & & \xmark & & \xmark & & & & & &\\
-				\hline
-			\end{tabular}
-			\vspace{0.4cm}
-			\caption{Requirements from R1 to R10}
+			\begin{minipage}{0.5\textheight}
+				\centering
+				\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+					\cline{2-11}
+					\multicolumn{1}{c|}{} & \ref{req:userReg} & \ref{req:authorityReg} & \ref{req:userLogin} & \ref{req:authorityLogin} & \ref{req:uniqueName} & \ref{req:saveRegData} & \ref{req:specialCharacters} & \ref{req:takePictures} & \ref{req:dateTime}  & \ref{req:gpsPosition}\\
+					\hline
+					Registration & \xmark & \xmark & & & \xmark & \xmark & \xmark & & &\\
+					\hline
+					Login & & & \xmark & \xmark & \xmark & & \xmark & & &\\
+					\hline
+					Report Violation & \xmark & & \xmark & & & & \xmark & \xmark & \xmark & \xmark \\
+					\hline
+					Highest Violations & \xmark & \xmark & \xmark & \xmark & & & & & &\\
+					\hline
+					Dangerous Vehicles & \xmark & \xmark & \xmark & \xmark & & & & & &\\
+					\hline
+					Urgent Interventions & \xmark & \xmark & \xmark & \xmark & & & & & &\\
+					\hline
+					Unsafe Streets & \xmark & \xmark & \xmark & \xmark & & & & & &\\
+					\hline
+					Unread Reports & & \xmark & & \xmark & & & & & &\\
+					\hline
+					Find Reports & & \xmark & & \xmark & & & & & &\\
+					\hline
+					\ref{sce:notification} & \xmark & & \xmark & & & & \xmark & \xmark & \xmark & \xmark \\
+					\hline
+					\ref{sce:basicUser} & \xmark & & \xmark & & & & & & &\\
+					\hline
+					\ref{sce:advancedUser} & \xmark & & \xmark & & & & & & &\\
+					\hline
+					\ref{sce:findReports} & & \xmark & & \xmark & & & & & &\\
+					\hline
+					\ref{sce:basicAuthority} & & \xmark & & \xmark & & & & & &\\
+					\hline
+					\ref{sce:advancedAuthority} & & \xmark & & \xmark & & & & & &\\
+					\hline
+				\end{tabular}
+				\vspace{0.4cm}
+				\caption{Requirements from R1 to R10}
+			\end{minipage}
 		\end{table}
 		
-		\begin{table}[h]
+		\vfill
+		
+		\begin{table}[h!]
 			\centering
-			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
-				\cline{2-10}
-				\multicolumn{1}{c|}{} & \ref{req:violationType} &  \ref{req:vehicleType} & \ref{req:plateNumber} & \ref{req:readPlate} & \ref{req:storeViolation} & \ref{req:streetName} & \ref{req:notifyAuthority} & \ref{req:mineData} & \ref{req:cityFilter} \\
-				\hline
-				Registration & & & & & & & & & \\
-				\hline
-				Login & & & & & & & & & \\
-				\hline
-				Report Violation & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \\
-				\hline
-				Highest Violations & & & & & & & & \xmark & \xmark \\
-				\hline
-				Dangerous Vehicles & & & & & & & & \xmark & \xmark \\
-				\hline
-				Urgent Interventions & & & & & \xmark & & & & \xmark \\
-				\hline
-				Unsafe Streets & & & & & \xmark & & & & \xmark\\
-				\hline
-				Unread Reports & & & & & \xmark & & & & \\
-				\hline
-				Find Reports & & & & & \xmark & & & & \xmark \\
-				\hline
-				Scenario \ref{sce:notification} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
-				\hline
-				Scenario \ref{sce:basicUser} & & & & & & & & \xmark & \xmark\\
-				\hline
-				Scenario \ref{sce:advancedUser} & & & & & \xmark & & & & \xmark\\
-				\hline
-				Scenario \ref{sce:basicAuthority} & & & & & & & & \xmark & \xmark\\
-				\hline
-				Scenario \ref{sce:advancedAuthority} & & & & & \xmark & & & & \xmark \\
-				\hline
-			\end{tabular}
-			\vspace{0.4cm}
-			\caption{Requirements from R11 to R19}
+			\begin{minipage}{0.5\textheight}
+				\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+					\cline{2-10}
+					\multicolumn{1}{c|}{} & \ref{req:violationType} &  \ref{req:vehicleType} & \ref{req:plateNumber} & \ref{req:readPlate} & \ref{req:storeViolation} & \ref{req:streetName} & \ref{req:notifyAuthority} & \ref{req:mineData} & \ref{req:cityFilter} \\
+					\hline
+					Registration & & & & & & & & & \\
+					\hline
+					Login & & & & & & & & & \\
+					\hline
+					Report Violation & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \\
+					\hline
+					Highest Violations & & & & & & & & \xmark & \xmark \\
+					\hline
+					Dangerous Vehicles & & & & & & & & \xmark & \xmark \\
+					\hline
+					Urgent Interventions & & & & & \xmark & & & & \xmark \\
+					\hline
+					Unsafe Streets & & & & & \xmark & & & & \xmark\\
+					\hline
+					Unread Reports & & & & & \xmark & & & & \\
+					\hline
+					Find Reports & & & & & \xmark & & & & \xmark \\
+					\hline
+					\ref{sce:notification} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
+					\hline
+					\ref{sce:basicUser} & & & & & & & & \xmark & \xmark\\
+					\hline
+					\ref{sce:advancedUser} & & & & & \xmark & & & & \xmark\\
+					\hline
+					\ref{sce:findReports} & & & & & \xmark & & & & \xmark \\
+					\hline
+					\ref{sce:basicAuthority} & & & & & & & & \xmark & \xmark\\
+					\hline
+					\ref{sce:advancedAuthority} & & & & & \xmark & & & & \xmark \\
+					\hline
+				\end{tabular}
+				\vspace{0.4cm}
+				\caption{Requirements from R11 to R19}
+			\end{minipage}
 		\end{table}
 			
 		\begin{table}[h]
 			\centering
-			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
-				\cline{2-10}
-				\multicolumn{1}{c|}{} & \ref{req:streetFilter} & \ref{req:pathFilter} & \ref{req:violationFilter} & \ref{req:timeFilter} & \ref{req:dateFilter} & \ref{req:vehicleFilter} & \ref{req:sortedResult} & \ref{req:sortedVehicles} & \ref{req:visibility} \\
-				\hline
-				Registration & & & & & & & & &\\
-				\hline
-				Login & & & & & & & & &\\
-				\hline
-				Report Violation & & & & & & & & & \\
-				\hline
-				Highest Violations & & & \xmark & \xmark & & \xmark & \xmark & \xmark &\\
-				\hline
-				Dangerous Vehicles & & & \xmark & \xmark & & & \xmark & &\\
-				\hline
-				Urgent Interventions & \xmark & & & & & & & &\\
-				\hline
-				Unsafe Streets & \xmark & \xmark & & & & & & &\\
-				\hline
-				Unread Reports & & & & & & & & &\\
-				\hline
-				Find Reports & \xmark & & \xmark & \xmark & \xmark & \xmark & & & \xmark\\
-				\hline
-				Scenario \ref{sce:notification} & & & & & & & & & \\
-				\hline
-				Scenario \ref{sce:basicUser} & & & \xmark & \xmark & & \xmark & \xmark & &\\
-				\hline
-				Scenario \ref{sce:advancedUser} & \xmark & \xmark & & & & & & &\\
-				\hline
-				Scenario \ref{sce:basicAuthority} & & & \xmark & \xmark & & \xmark & \xmark & &\\
-				\hline
-				Scenario \ref{sce:advancedAuthority} & \xmark & & & & & & & &\\
-				\hline
-			\end{tabular}
-			\vspace{0.4cm}
-			\caption{Requirements from R20 to R28}
+			\begin{minipage}{0.5\textheight}
+				\centering
+				\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+					\cline{2-10}
+					\multicolumn{1}{c|}{} & \ref{req:streetFilter} & \ref{req:pathFilter} & \ref{req:violationFilter} & \ref{req:timeFilter} & \ref{req:dateFilter} & \ref{req:vehicleFilter} & \ref{req:sortedResult} & \ref{req:sortedVehicles} & \ref{req:visibility} \\
+					\hline
+					Registration & & & & & & & & &\\
+					\hline
+					Login & & & & & & & & &\\
+					\hline
+					Report Violation & & & & & & & & & \\
+					\hline
+					Highest Violations & & & \xmark & \xmark & & \xmark & \xmark & \xmark &\\
+					\hline
+					Dangerous Vehicles & & & \xmark & \xmark & & & \xmark & &\\
+					\hline
+					Urgent Interventions & \xmark & & & & & & & &\\
+					\hline
+					Unsafe Streets & \xmark & \xmark & & & & & & &\\
+					\hline
+					Unread Reports & & & & & & & & &\\
+					\hline
+					Find Reports & \xmark & & \xmark & \xmark & \xmark & \xmark & & & \xmark\\
+					\hline
+					\ref{sce:notification} & & & & & & & & & \\
+					\hline
+					\ref{sce:basicUser} & & & \xmark & \xmark & & \xmark & \xmark & &\\
+					\hline
+					\ref{sce:advancedUser} & \xmark & \xmark & & & & & & &\\
+					\hline
+					\ref{sce:findReports} & \xmark & & \xmark & \xmark & \xmark & \xmark & & & \xmark\\
+					\hline
+					\ref{sce:basicAuthority} & & & \xmark & \xmark & & \xmark & \xmark & &\\
+					\hline
+					\ref{sce:advancedAuthority} & \xmark & & & & & & & &\\
+					\hline
+				\end{tabular}
+				\vspace{0.4cm}
+				\caption{Requirements from R20 to R28}
+			\end{minipage}
 		\end{table}
+	
+		\vfill
 		
 		\begin{table}[h]
 			\centering
-			\begin{tabular}{|c|c|c|c|c|c|c|c|}
-				\cline{2-8}
-				\multicolumn{1}{c|}{} & \ref{req:accidentsData} & \ref{req:crossData} & \ref{req:safeStreet} & \ref{req:cityStreets} & \ref{req:pathFinder} & \ref{req:colorMap} & \ref{req:interventions} \\
-				\hline
-				Registration & & & & & & &\\
-				\hline
-				Login & & & & & & &\\
-				\hline
-				Report Violation & & & & & & & \\
-				\hline
-				Highest Violations & & & & & & & \\
-				\hline
-				Dangerous Vehicles & & & & & & & \\
-				\hline
-				Urgent Interventions & \xmark & \xmark & & \xmark & & &\xmark \\
-				\hline
-				Unsafe Streets & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
-				\hline
-				Unread Reports & & & & & & &\\
-				\hline
-				Find Reports & & & & & & &\\
-				\hline
-				Scenario \ref{sce:notification} & & & & & & & \\
-				\hline
-				Scenario \ref{sce:basicUser} & & & & & & & \\
-				\hline
-				Scenario \ref{sce:advancedUser} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
-				\hline
-				Scenario \ref{sce:basicAuthority} & & & & & & & \\
-				\hline
-				Scenario \ref{sce:advancedAuthority} & \xmark & \xmark & & \xmark & & &\xmark \\
-				\hline
-			\end{tabular}
-			\vspace{0.4cm}
-			\caption{Requirements from R29 to R35}
+			\begin{minipage}{0.5\textheight}
+				\centering
+				\begin{tabular}{|c|c|c|c|c|c|c|c|}
+					\cline{2-8}
+					\multicolumn{1}{c|}{} & \ref{req:accidentsData} & \ref{req:crossData} & \ref{req:safeStreet} & \ref{req:cityStreets} & \ref{req:pathFinder} & \ref{req:colorMap} & \ref{req:interventions} \\
+					\hline
+					Registration & & & & & & &\\
+					\hline
+					Login & & & & & & &\\
+					\hline
+					Report Violation & & & & & & & \\
+					\hline
+					Highest Violations & & & & & & & \\
+					\hline
+					Dangerous Vehicles & & & & & & & \\
+					\hline
+					Urgent Interventions & \xmark & \xmark & & \xmark & & &\xmark \\
+					\hline
+					Unsafe Streets & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
+					\hline
+					Unread Reports & & & & & & &\\
+					\hline
+					Find Reports & & & & & & &\\
+					\hline
+					\ref{sce:notification} & & & & & & & \\
+					\hline
+					\ref{sce:basicUser} & & & & & & & \\
+					\hline
+					\ref{sce:advancedUser} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
+					\hline
+					\ref{sce:findReports} & & & & & & &\\
+					\hline
+					\ref{sce:basicAuthority} & & & & & & & \\
+					\hline
+					\ref{sce:advancedAuthority} & \xmark & \xmark & & \xmark & & &\xmark \\
+					\hline
+				\end{tabular}
+				\vspace{0.4cm}
+				\caption{Requirements from R29 to R35}
+			\end{minipage}
 		\end{table}
 		
 	\FloatBarrier
 	
 	\subsection[Performance Requirements]{\hyperlink{toc}{Performance Requirements}}
-		SafeStreets is a system that provides to serve all devices that have the possibility to take pictures and to retrieve the position thanks to the GPS. All the computation will take place on the servers of the system thus we expect a light weight application that can be accessed by both the users and authorities. Interaction with modules of the device have to be considered, in particular with the camera and the GPS in order to provide all mandatory data while reporting a violation. The notification functionality requires a quick response to each violation in order to store it in the system for the authorities as soon as possible. Further considerations about responsiveness have to be considered for the basic and advanced functionalities that require mining and crossing processes in order to obtain a result. To accomplish this problem we will give a possible solution in the further section of how to organize the design in order to run algorithms that allow to mine and cross the data. Technical support for installation is not required as the result is a simple device application each customer can download from the store; moreover it is important to highlight that the registration process for the authority needs to provide a verification code and thus a quick interaction is an other time needed.
+		SafeStreets is a system that provides to serve all devices that have the possibility to take pictures and to retrieve the position thanks to the GPS. All the computation will take place on the servers of the system thus we expect a light weight application that can be accessed by both the users and authorities. Interaction with modules of the device have to be considered, in particular with the camera and the GPS in order to provide all mandatory data while reporting a violation. The notification functionality requires a quick response to each violation in order to store it in the system for the authorities as soon as possible. Further considerations about responsiveness have to be considered for the basic and advanced functionalities that require mining and crossing processes in order to obtain a result. To accomplish this problem we will give a possible solution in the further section of how to organize the design in order to run algorithms that allow to mine and cross the data. Technical support for installation is not required as the result is a simple device application each customer can download from the store; moreover it is important to highlight that the registration process for the authority needs to provide a verification code and thus a quick interaction needs to be considered once again.
 	
 	\subsection[Design Constraints]{\hyperlink{toc}{Design Constraints}}
 		\subsubsection[Standards Compliance]{\hyperlink{toc}{Standards Compliance}}
-			The most important standard that needs to be considered in a crowd-sourced system and in particular for the functionalities that SafeStreets intends to provide is the \emph{data mining} process. As we are going to expect to receive big amounts of data the approach to consider a \emph{datawarehouse} would be the correct solution paired with a data mining engine working with the data already stored. Considering the system to follow the standard process of mining we can give a further detail based on how the definition of the model has been carried out: the classification technique seems in fact the better one in order to classify the violations (largest instances we expect to manage). 
+			\label{sec:standardCompliance}
+			The most important standard that needs to be considered in a crowd-sourced system and in particular for the functionalities that SafeStreets intends to provide is the \emph{data mining} process. As we are going to expect to receive big amounts of data the approach to consider a \emph{datawarehouse} would be the correct solution paired with a data mining engine working with the data already stored. Considering the system to follow the standard process of data mining we can give a further detail based on how the definition of the model has been carried out: the classification technique seems in fact the better one in order to respect the classification described for the violations (largest instances we expect to manage). 
 		\subsubsection[Hardware Limitations]{\hyperlink{toc}{Hardware Limitations}}
-			Hardware limitations would be critical in devices that do not provide a camera or a GPS module. As described in the section \ref{sec:notificationFunction} in fact a user must provide at least one picture and enable his GPS in order to report a violation. No further considerations have to be considered as we have also considered that the image recognition algorithms will be helped by the information provided by the users and this can make us not to require high definition pictures of the infractions reported.
+			Hardware limitations would be critical in devices that do not provide a camera or a GPS module. As described in the section \ref{sec:notificationFunction} in fact a user must provide at least one picture and enable his GPS in order to report a violation. No further considerations have to be considered as we have also specified that the image recognition algorithms will be helped by the information provided by the users; this can make us not to require high definition pictures of the infractions reported and thus nor the newest cameras for the devices.
 		\subsubsection[Any other Constraint]{\hyperlink{toc}{Any other Constraint}}
-			\emph{Regulatory policies}  have to be considered for the interaction between SafeStreets and both users and authorities. The application in fact will ask the position of each user while reporting a violation but will also provide its name to authorities whenever they receive the notification or use the \emph{find reports} functionality.
+			\emph{Regulatory policies}  have to be considered for the interaction between SafeStreets and both users and authorities. The application in fact will ask the position of each user while reporting a violation but will also provide its name to authorities whenever they receive a notification or use the \emph{find reports} functionality.
 			Authorities instead need to accept the treatment that will be carried out by the crossing process over the accidents data they provide to SafeStreets.
 	
 	\subsection[Software System Attributes]{\hyperlink{toc}{Software System Attributes}}
@@ -937,8 +980,8 @@
 		\subsubsection[Availability]{\hyperlink{toc}{Availability}}
 			As nowadays systems tend to be always more available we need to accomplish this feature but with some considerations related to the fact that we expect to receive the highest affluence in the day rather than in the night. Hence an availability of 99\% is needed for the notification functionality, for the basic and advanced functionalities instead 96\% should be enough to cover the desires of both customers.
 		\subsubsection[Security]{\hyperlink{toc}{Security}}
-			SafeStreets needs to deal with security to store the information of a user while registering but also to ensure the correct registration of an authority. The recognition of a customer is the most important feature to consider in order to ensure providing the correct level visibility of the data they query. The recognition process considers to send a verification code to the PEC address of the registering authority that deals with all security problems avoiding more complex technologies that each authority would not posses.
+			SafeStreets needs to deal with security to store the information of a user while registering but also to ensure the correct registration of an authority. The recognition of a customer is the most important feature to consider in order to ensure providing the correct level visibility of the data they query. The recognition process considers to send a verification code to the PEC address of the registering authority, this deals with all security problems avoiding more complex technologies that each authority would not posses.
 		\subsubsection[Maintainability]{\hyperlink{toc}{Maintainability}}
 			The software needs to take in account the possibility to encounter bugs even if a high test coverage should be considered in the developing process in particular in the query definition that may lead to critical aspects related to the management of the datawarehouse together with the data mining engine. Talking about the capability to meet new requirements the system is thought to be extensible in particular for the additional types of violations that may be considered. 
 		\subsubsection[Portability]{\hyperlink{toc}{Portability}}
-			The client side of the system would be developed in a native way in order to accomplish a better interaction with the system for both the most used OSs. The server side instead would consider the possibility to use different mining engines rather than how to store the data in the datawarehouse where a proprietary software would be possibly considered.
+			The client side of the system would be developed in a native way in order to accomplish a better interaction with the system for both the most used device OSs. The server side instead would consider the possibility to use different mining engines rather than how to store the data in the datawarehouse where a proprietary software would be possibly considered.
