@@ -146,19 +146,23 @@ fact AccidentStreetLinked{
 
 //an intervention is suggested for a street iff the number of reports in 
 //that street that contain violation types linked to that intervention
-//is greater than 0
+//is greater than 0 OR the number of accidents in that street linked to
+//that intervention is greater than 0
 fact InterventionSuggestedThreshold{
 	all s: Street, i:Intervention| (i in s.suggestedInterventions iff  
 		(#getReportsFromInterventionAndStreet[i, s] > 0 or
 		#getAccidentsFromInterventionAndStreet[i, s] > 0))
 }
 
+//gets all the reports for that street, having as violation type one linked to the
+//given intervention
 fun getReportsFromInterventionAndStreet[i : Intervention, s : Street] : set Report{
 	{
 		r : Report | i in r.violationType.interventions and r in s.reports
 	}
 }
 
+//same thing as above but for accidents
 fun getAccidentsFromInterventionAndStreet[i: Intervention, s : Street] : set Accident{
 	{
 		a : Accident | i in a.type.interventions and a in s.accidents
@@ -232,6 +236,8 @@ sig ReportsResult{
 	storedReports : set StoredReport
 }
 
+//this is the rule to apply the filter that comes with the ReportsRequest
+//only those reports that satisfy these conditions will be included in the result
 fact ReportsResultRule{
 	all sr:StoredReport, result:ReportsResult | sr in result.storedReports iff
 	(
@@ -251,6 +257,10 @@ sig InterventionsResult{
 	interventions : set Intervention
 }
 
+
+//this is the rule to apply the filter that comes with the InterventionsRequest
+//only those interventions that satisfy the following conditions will be included
+//in the result
 fact InterventionsResultRule{
 	all i:Intervention, result:InterventionsResult | i in result.interventions iff 
 	(
@@ -259,6 +269,7 @@ fact InterventionsResultRule{
 	)
 }
 
+//every request has exactly one result
 fact OneResultForOneRequestReports{
 	all req : ReportsRequest | one res :ReportsResult | req in res.request
 }
@@ -271,6 +282,8 @@ fact OneResultForOneRequestIntervention{
 //REPORTS
 ////////////////////////////////////////////////////
 
+//the system must not store reports that have the exact same fields
+//nor reports that are considered to be duplicate
 fact NoDuplicateStoredReports{
 	no disj r1,r2 : StoredReport | 
 		r1.report = r2.report or
@@ -287,6 +300,9 @@ fact CorrectStreetNameInReport{
 		sr.report.position.street.streetName
 }
 
+//the system correctly receives and store reports sent by users 
+//even if there's no authority registered for the city to which the 
+//position of the report belongs
 fact UnreadReportIfNoAuthority{
 	all sr: StoredReport | sr.report.position.street.city.authority = none implies
 		sr.status = Unread
