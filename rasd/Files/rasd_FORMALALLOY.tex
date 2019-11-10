@@ -8,27 +8,27 @@
 	
 	\subsection[First World]{\hyperlink{toc}{First World}}
 	%descrizione mondo
-	In this first world, the focus is on the registration and on the map structure. 
+	In this first world (\autoref{fig:firstWorld}), the focus is on the registration and on the map structure. 
 	A street is considered as a set of position, and one position belongs to exactly one street. Inside a city, all the streets must have different names, but this constraint is not valid anymore if we consider two different cities.
 	Usernames are unique, but there's no constraint on customer's passwords.
 	An authority is always registered with a city, but a city could have no authority registered.
 	
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[scale=0.35]{Files/alloy/world1.png}
-		\caption{First World generated}
+		\includegraphics[scale=0.4, angle=90]{Files/alloy/world1.png}
+		\caption{\label{fig:firstWorld}First World generated}
 	\end{figure}
 	
 	\subsection[Second World]{\hyperlink{toc}{Second World}}
 	%descrizione mondo
-	This second world captures a few aspects of the model: they are essentially reports, accidents and interventions. The threshold to activate the suggestion of an intervention has been lowered to 1 here. That means that if there's a report for a street, and that report has a violation type that is linked to an intervention, that intervention will be suggested by the system for that street. Alternatively, the same applies for accidents that are registered for a particular street. The two conditions for activating a suggested intervention are put in 'or'.
+	This second world (\autoref{fig:secondWorld})captures a few aspects of the model: they are essentially reports, accidents and interventions. The threshold to activate the suggestion of an intervention has been lowered to 1 here. That means that if there's a report for a street, and that report has a violation type that is linked to an intervention, that intervention will be suggested by the system for that street. Alternatively, the same applies for accidents that are registered for a particular street. The two conditions for activating a suggested intervention are put in 'or'.
 	The street name retrieved by the system while storing the report is of course the name of the street that contains the position that comes with that report.
 	A stored report could be read by the authority. In case it's not, it will be part of the unread reports list for that authority.
 	
 	\begin{figure}[hbtp]
 		\centering
 		\includegraphics[scale=0.4, angle=90]{Files/alloy/world2.png}
-		\caption{Second World Generated}
+		\caption{\label{fig:secondWorld}Second World Generated}
 	\end{figure}
 	
 	\FloatBarrier
@@ -39,5 +39,6 @@
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.6]{Files/alloy/world3.png}
+		\caption{Third World Generated}
 	\end{figure}
 	
