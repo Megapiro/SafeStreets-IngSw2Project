@@ -57,9 +57,9 @@
 		
 		\item \textbf{Request:} is the general class representing the interaction of a user with the system whenever mining, safety or suggestion is asked by the customer. In order to answer with the correct data it will be important to retrieve the user who sends the request and provide it to him with the correct visibility.
 		
-		\item \textbf{BasicRequest:} is the request that deals with the basic functionality. Thanks to it the application will be able to capture the filters selected by the user and answer correctly.
+		\item \textbf{BasicRequest:} is the request that deals with the basic functionality. It is extended in fact with the three different requests that can be performed by a customer: the two related to the mining service (\textbf{MostViolationsRequest} and \textbf{DangerousVehiclesRequest}), and the one that provides a different level of visibility to the authority (\textbf{FindReportsRequest}).
 		
-		\item \textbf{AdvancedRequest:} is the request that deals with the advanced functionality. Thanks to it the application will be able to capture the requirements of the customer and provide data about safety or possible interventions. These different requests are in fact defined by the classes: \textbf{SafetyRequest, InterventionRequest.}
+		\item \textbf{AdvancedRequest:} is the request that deals with the advanced functionality. It is extended in fact by the different requests that can be performed by a customer: \textbf{UnsafeStreetsRequest} and \textbf{InterventionRequest.}
 		
 		\item \textbf{PossibleIntervention:} represents a possible intervention suggested for a precise street. The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \ref{sec:stateDiagrams} and \ref{sec:safetyFunction}.
 		
@@ -135,7 +135,16 @@
 		Once the notification is received the system first tries to retrieve the plate of the reported vehicle. If the plate's number is found it means that the violation is valid and the check for duplicates can be carried out. If no duplicate is found, the violation is ready to be stored in the system and thus notified to the authority. The \textbf{notification} works as follows: each violation that has been accepted is stored as \textbf{unread} for the authority that governs the territory that contains its street, in this way, when the authority enters the system it will be able to see all the notifications that have been reported. 
 
 	\subsubsection[Statistics Function]{\hyperlink{toc}{Mining Function}}
-		Data mining is used to retrieve the information about the stored data and provide the customers different ways to filter it. Thanks to the details of each infraction, in fact, the system is able to offer this service both to users and authorities. Two functionalities are offered to customers thanks to the mining process: \emph{Highest Number of Violations} and \emph{Most Dangerous Vehicles}. Both these functionalities but also the one allowed only to the authorities (\emph{Find Reports}) can be retrieved with the filters described in the following list.
+		Data mining is used to retrieve the information about the stored data and provide the customers different ways to filter it. Thanks to the details of each infraction, in fact, the system is able to offer this service both to users and authorities. \\
+		
+		Two functionalities are offered to customers thanks to the mining process: 
+		
+		\begin{itemize}
+			\item \textbf{Highest Number of Violations:} returns an ordered list of the streets where the highest numbers of violations occur.
+			\item \textbf{Most Dangerous Vehicles:} returns an ordered list of the types of vehicles that make the highest number of violations.
+		\end{itemize}
+		
+		 Both these functionalities but also the one allowed only to the authorities (\emph{Find Reports}) can be filtered with some of the the filters listed below.
 			
 		\begin{itemize}
 			\item \textbf{Area:} there are three levels of filters defined in the area one. The widest is called \textbf{everywhere} and returns the information generally all over Italy, the second is called \textbf{city} and considers all the streets contained in the specified city, and the most specific one considers just a single \textbf{street}.
@@ -149,7 +158,9 @@
 			\item \textbf{Type of violation:} thanks to the information about the type of the violation (provided by the user) the application allows also to filter by type. We can think of this statistic mainly for the authorities who will look for the highest type of vehicles that commit a violation in a street in order to take action; however this filter is also allowed to users who may be interested in this kind of data too.
 		\end{itemize}
 	
-		Each functionality considers only the filters that are needed to achieve its mining process. As we see in fact in the interfaces (section \ref{sec:userInterfaces}) and in the use case diagrams (section \ref{sec:useCases}) just some of the listed filters are allowed to be selected. It is important to highlight that SafeStreets provides information to customers with different levels of visibility depending on their role. To accomplish this distinction the system provides the authorities an additional functionality that allows them to retrieve the information in the highest level of detail possible. \emph{Highest Number of Violations} and \emph{Most Dangerous Vehicles} are in fact statistical functionalities that are not meant to be provided differently depending on the user that is requiring them. Moreover the \emph{Find Reports} functionality is able to give the authorities a way to retrieve each violation in detail as it is stored in the system. This functionality is the one that contains the highest number of filters as it can provide a specific way to retrieve the violations of interest to the authorities. 
+		Each functionality considers only the filters that are needed to achieve its mining process. As we see in the interfaces (section \ref{sec:userInterfaces}) and in the use case diagrams (section \ref{sec:useCases}) just some of the listed filters are allowed to be selected. \\
+		
+		It is important to highlight that SafeStreets provides information to customers with different levels of visibility depending on their role. To accomplish this distinction the system provides the authorities an additional functionality that allows them to retrieve the information in the highest level of detail possible. \emph{Highest Number of Violations} and \emph{Most Dangerous Vehicles} are in fact statistical functionalities that are not meant to be provided differently depending on the user that is requiring them. Moreover the \textbf{Find Reports} functionality is able to give the authorities a way to retrieve each violation in detail as it is stored in the system. This functionality is the one that contains the highest number of filters as it can provide a specific way to retrieve the violations of interest to the authorities. 
 
 	\subsubsection[Safety Function]{\hyperlink{toc}{Safety Function}}
 		\label{sec:safetyFunction}
@@ -232,6 +243,7 @@
 		\item \label{dom:nosameStreets} In a city there are not streets with the same name.
 		\item \label{dom:streetCity} Every street belongs to exactly one city.
 		\item \label{dom:correctAccidents} Accidents data provided by municipalities are always correct.
+		\item \label{dom:nomultipleViolations} No multiple violations of the same vehicle occur in the same place at the same time.
 	\end{enumerate} 
 	
 \subsection[The World and the Machine]{\hyperlink{toc}{The World and the Machine}}
@@ -243,7 +255,7 @@
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=\textwidth, scale=0.3]{WorldAndMachine.png}
+		\includegraphics[scale=0.82, angle=90]{WorldAndMachine.png}
 		\caption{\label{fig:worldAndMachine}The World and the Machine}
 	\end{figure}
  	 

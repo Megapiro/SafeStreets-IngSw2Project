@@ -192,6 +192,7 @@
 					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
 					\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
 					\item \ref{dom:noMaliciousPlates}\ No one physically and maliciously replaces license plates.
+					\item \ref{dom:nomultipleViolations}\ No multiple violations of the same vehicle occur in the same place at the same time.
 				\end{description}
 					
 			\item \ref{goal:mining}\ Users and authorities should be able to mine the information stored by SafeStreets, with different levels of visibility.
@@ -218,8 +219,8 @@
 							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
 							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 							\item \ref{dom:nonameStreets}\ There are no streets without a name.
-							\item \ref{dom:nosameStreets} In a city there are not streets with the same name.
-							\item \ref{dom:streetCity} Every street belongs to exactly one city.
+							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
+							\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
 						\end{description}
 					\item \ref{goal:miningB} Users and authorities should be able to know what types of vehicle make the most violations.
 						\begin{description}
@@ -247,7 +248,7 @@
 						\end{description}
 					\item \ref{goal:miningC} Authorities should be able to consult every violation report sent by users.
 						\begin{description}
-							\item \ref{req:authorityReg} The system must allow authorities to register.
+							\item \ref{req:authorityReg}\ The system must allow authorities to register.
 							\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
 							\item \ref{req:saveRegData}\ The system must save the customers registration data.
 							\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
@@ -353,8 +354,10 @@
 	
 		\newpage
 		
-	\subsubsection[Use Cases Diagrams]{\hyperlink{toc}{Use Cases Diagrams}}
+	\subsubsection[Use Cases Diagrams]{\hyperlink{toc}{Use Case Diagram}}
 		The following diagram is a high-level description of the possible interactions of actors with the system and highlights the different use case in which actors are involved.
+		
+		\vspace{1cm}
 		
 		\begin{figure}[h!]
 			\centering
@@ -962,7 +965,7 @@
 	\FloatBarrier
 	
 	\subsection[Performance Requirements]{\hyperlink{toc}{Performance Requirements}}
-		SafeStreets is a system that provides to serve all devices that have the possibility to take pictures and to retrieve the position thanks to the GPS. All the computation will take place on the servers of the system thus we expect a light weight application that can be accessed by both the users and authorities. Interaction with modules of the device have to be considered, in particular with the camera and the GPS in order to provide all mandatory data while reporting a violation. The notification functionality requires a quick response to each violation in order to store it in the system for the authorities as soon as possible. Further considerations about responsiveness have to be considered for the basic and advanced functionalities that require mining and crossing processes in order to obtain a result. To accomplish this problem we will give a possible solution in the further section of how to organize the design in order to run algorithms that allow to mine and cross the data. Technical support for installation is not required as the result is a simple device application each customer can download from the store; moreover it is important to highlight that the registration process for the authority needs to provide a verification code and thus a quick interaction needs to be considered once again.
+		SafeStreets is a system that provides to serve all mobile devices that have the possibility to take pictures and to retrieve the position thanks to the GPS. All the computation will take place on the servers of the system thus we expect a light weight application that can be accessed by both the users and authorities. Interaction with modules of the device have to be considered, in particular with the camera and the GPS in order to provide all mandatory data while reporting a violation. The notification functionality requires a quick response to each violation in order to store it in the system for the authorities as soon as possible. Further considerations about responsiveness have to be considered for the basic and advanced functionalities that require mining and crossing processes in order to obtain a result. To accomplish this problem we will give a possible solution in the further section of how to organize the design in order to run algorithms that allow to mine and cross the data. Technical support for installation is not required as the result is a simple device application each customer can download from the store; moreover it is important to highlight that the registration process for the authority needs to provide a verification code and thus a quick interaction needs to be considered once again.
 	
 	\subsection[Design Constraints]{\hyperlink{toc}{Design Constraints}}
 		\subsubsection[Standards Compliance]{\hyperlink{toc}{Standards Compliance}}
