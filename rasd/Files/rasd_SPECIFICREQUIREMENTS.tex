@@ -4,34 +4,34 @@
 
 \subsection[External Interface Requirements]{\hyperlink{toc}{External Interface Requirements}}
 	\label{sec:externalInterfaceRequirements}
-	\subsubsection[User Interfaces]{\hyperlink{toc}{User Interfaces}} % todo sistemare dimensioni mockups
+	\subsubsection[User Interfaces]{\hyperlink{toc}{User Interfaces}}
 	\label{sec:userInterfaces}
 	The following section illustrates thanks to some mockups the interfaces SafeStreets provides to its customers in order to provide functionalities. Each picture is described only be the caption as complete and precise descriptions are given in the sections related to the description of the functionalities and how they are managed (\ref{sec:productFunctions}, \ref{sec:useCases}).
 	
 	\begin{figure}[h]
 		\centering
-		\begin{minipage}{0.45\textwidth}
+		\begin{minipage}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.58\textwidth]{/mockups/login.png}
+			\includegraphics[width=0.45\textwidth]{/mockups/login.png}
 			\caption{Login Interface}
 		\end{minipage}\hfill
-		\begin{minipage}{0.45\textwidth}
+		\begin{minipage}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.58\textwidth]{/mockups/userRegistration.png}
-			\caption{User Registration Interface}
+			\includegraphics[width=0.45\textwidth]{/mockups/userRegistration.png}
+			\caption{Register User Interface}
 		\end{minipage}
 	\end{figure}
 
 	\begin{figure}[h]
 		\centering
-		\begin{minipage}{0.45\textwidth}
+		\begin{minipage}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.58\textwidth]{/mockups/authorityRegistration.png}
-			\caption{Authority Registration Interface}
+			\includegraphics[width=0.45\textwidth]{/mockups/authorityRegistration.png}
+			\caption{Register Authority Interface}
 		\end{minipage}\hfill
-		\begin{minipage}{0.45\textwidth}
+		\begin{minipage}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.58\textwidth]{/mockups/userHome.png}
+			\includegraphics[width=0.45\textwidth]{/mockups/userHome.png}
 			\caption{User Home Interface}
 		\end{minipage}
 	\end{figure}
@@ -66,26 +66,26 @@
 
 	\begin{figure}[h]
 		\centering
-		\begin{minipage}{0.45\textwidth}
+		\begin{minipage}{0.48\textwidth}
 			\centering
 			\includegraphics[width=0.7\textwidth]{/mockups/findReports.png}
 			\caption{Find Reports Interface}
 		\end{minipage}\hfill
-		\begin{minipage}{0.45\textwidth}
+		\begin{minipage}{0.48\textwidth}
 			\centering
 			\includegraphics[width=0.7\textwidth]{/mockups/reportsFound.png}
-			\caption{Reports Found Interface Result}
+			\caption{Reports Found Interface}
 		\end{minipage}
 	\end{figure}
 
 	\begin{figure}[h]
 		\centering
-		\begin{minipage}{0.45\textwidth}
+		\begin{minipage}{0.48\textwidth}
 			\centering
 			\includegraphics[width=0.7\textwidth]{/mockups/urgentInterventions.png}
 			\caption{Urgent Interventions Interface}
 		\end{minipage}\hfill
-		\begin{minipage}{0.45\textwidth}
+		\begin{minipage}{0.48\textwidth}
 			\centering
 			\includegraphics[width=0.7\textwidth]{/mockups/interventionsFound.png}
 			\caption{Intervention Found Interface Result}
@@ -94,14 +94,11 @@
 	 
 	 \begin{figure}[h]
 	 	\centering
-	 	\begin{minipage}{0.45\textwidth}
+	 	\begin{minipage}{0.7\textwidth}
 	 		\centering
 	 		\includegraphics[width=0.7\textwidth]{/mockups/unsafeStreets.png}
 	 		\caption{Streets Safety Interface}
 	 	\end{minipage}
- 		\begin{minipage}{0.45\textwidth}
- 			
- 		\end{minipage}
 	 \end{figure} 
  
 	\FloatBarrier
@@ -341,6 +338,13 @@
 		\end{enumerate}
 		
 	\subsubsection[Use Cases Diagrams]{\hyperlink{toc}{Use Cases Diagrams}}
+		The following diagram is a high-level description of the possible interactions of actors with the system and highlights the different use case in which actors are involved.
+		
+		\begin{figure}[h]
+			\centering
+			\includegraphics[scale=0.22]{/diagrams/usecaseDiagramModel.png}
+			\caption{Use Case Diagram}
+		\end{figure}
 	
 	\subsubsection[Use Cases Description]{\hyperlink{toc}{Use Cases Description}}
 		\label{sec:useCases}
@@ -377,6 +381,13 @@
 					\caption{\emph{User Registration} use case description}
 				\end{longtable}
 			
+				\begin{figure}[h]
+					\centering
+					\includegraphics[scale=0.24]{/diagrams/sequence/userRegistration.png}
+					\caption{User Registration sequence diagram}
+				\end{figure}
+				
+				\FloatBarrier
 			\item \textbf{User Login}
 				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 					\toprule
@@ -409,6 +420,13 @@
 					\caption{\emph{User Login} use case description}
 				\end{longtable}
 			
+				\begin{figure}[h]
+					\centering
+					\includegraphics[scale=0.25]{/diagrams/sequence/login.png}
+					\caption{User Login sequence diagram}
+				\end{figure}
+			
+				\FloatBarrier
 			\item \textbf{Report Violation}
 				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 					\toprule
@@ -446,6 +464,13 @@
 					\caption{\emph{Report violation} use case description}
 				\end{longtable}
 			
+				\begin{figure}[h]
+					\centering 
+					\includegraphics[scale=0.2, angle=90]{/diagrams/sequence/reportViolation.png}
+					\caption{Report Violation sequence diagram}
+				\end{figure}
+			
+				\FloatBarrier
 			\item \textbf{Find streets with the highest number of violations}
 				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 					\toprule
@@ -479,6 +504,13 @@
 					\caption{\emph{Find streets with the highest number of violations} use case description}
 				\end{longtable}
 			
+				\begin{figure}[h]
+					\centering
+					\includegraphics[scale=0.26]{/diagrams/sequence/highestViolations.png}
+					\caption{Highest Number of Violations sequence diagram}
+				\end{figure}
+			
+				\FloatBarrier
 			\item \textbf{Find Most Dangerous Vehicles}
 				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 					\toprule
@@ -507,6 +539,13 @@
 					\caption{\emph{Find most dangerous vehicles} use case description}
 				\end{longtable}
 			
+				\begin{figure}[h]
+					\centering
+					\includegraphics[scale=0.23]{/diagrams/sequence/dangerousVehicles.png}
+					\caption{Dangerous Vehicles sequence diagram}
+				\end{figure}
+			
+				\FloatBarrier
 			\item \textbf{Find Urgent Interventions}
 				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 					\toprule
@@ -531,6 +570,13 @@
 					\caption{\emph{Find urgent interventions} use case description}
 				\end{longtable}
 			
+				\begin{figure}[hbtp]
+					\centering
+					\includegraphics[scale=0.26]{/diagrams/sequence/urgentInterventions.png}
+					\caption{Urgent Interventions sequence diagram}
+				\end{figure}
+			
+				\FloatBarrier
 			\item \textbf{Find Unsafe Streets}
 				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 					\toprule
@@ -560,6 +606,14 @@
 					\caption{\emph{Find unsafe streets} use case description}
 				\end{longtable}
 		\end{enumerate}
+		
+		\begin{figure}[h]
+			\centering
+			\includegraphics[scale=0.26, angle=90]{/diagrams/sequence/unsafeStreets.png}
+			\caption{Unsafe Streets sequence diagram}
+		\end{figure}
+			
+		\FloatBarrier
 			
 		\paragraph{Authority}
 		\begin{enumerate}
@@ -598,6 +652,13 @@
 					\caption{\emph{Authority Registration} use case description}
 				\end{longtable}
 			
+				\begin{figure}[h]
+					\centering
+					\includegraphics[scale=0.25]{/diagrams/sequence/authorityRegistration.png}
+					\caption{Authority Registration sequence diagram}
+				\end{figure}
+			
+				\FloatBarrier
 			\item \textbf{Authority Login}
 				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 					\toprule
@@ -652,6 +713,13 @@
 					\caption{\emph{Check unread reports} use case description}
 				\end{longtable}
 				
+				\begin{figure}[h]
+					\centering
+					\includegraphics[scale=0.25]{/diagrams/sequence/unreadReports.png}
+					\caption{Unread Reports sequence diagram}
+				\end{figure}
+				
+				\FloatBarrier
 			\item \textbf{Find Reports}
 				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
 					\toprule
@@ -681,10 +749,15 @@
 					\bottomrule
 					\caption{\emph{Find reports} use case description}
 				\end{longtable}
+	
+				\begin{figure}[hbtp]
+					\centering
+					\includegraphics[scale=0.25]{/diagrams/sequence/findReports.png}
+					\caption{Find Reports sequence diagram}
+				\end{figure}
 		\end{enumerate}
 
 	\FloatBarrier
-	\newpage
 
 	\subsubsection[Traceability Matrix]{\hyperlink{toc}{Traceability Matrix}} % todo dimensioni di merda qua
 		\label{tab:traceabilityMatrix}
