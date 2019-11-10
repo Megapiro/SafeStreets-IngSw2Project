@@ -21,10 +21,10 @@
 			\begin{itemize}
 				\item \textsc{IRI} is used to process the pictures received from a violation. Whenever an infraction is reported, the application needs to retrieve the plate's number of the violation in order to be stored and notified to the authority. The image recognition algorithm "has always the last word": it uses the information provided by the user to help the recognition and, in all the cases a plate number will be found, it will be considered correct in the stored information and thus notifiable. Hence, whenever the algorithm does not recognize any plate number the entire notification will be discarded.
 			
-				\item \textsc{MI} is used to process the map issues. This interface provides two services fundamental for the application: the first is used to retrieve the exact street where a reported violation has occurred using its GPS position, the second offers the system a way to highlight a map with different colors when it provides the functions a list of streets and their related colors. We will describe precisely in further sections how the street retrieval is used in the notification service while the map highlight in the safety one.
+				\item \textsc{MI} is used to process the map issues. This interface provides two services fundamental for the application: the first is used to retrieve the exact street where a reported violation has occurred (using its GPS position), the second offers the system a way to highlight a map with different colors when it provides to the functions a list of streets and their related colors. We will describe precisely in further sections how the street retrieval is used in the notification service while the map highlight in the safety one.
 			\end{itemize}
 			
-			\item \textbf{Right hand side:} interfaces that enable the system to receive from the authority the information about the accidents in its territory. This interaction is fundamental to obtain the data further crossed with the one of the violations in the system in order to determine the safety of an area together with its possible suggestions for possible interventions.
+			\item \textbf{Right hand side:} interfaces that enable the system to receive from the municipality the information about the accidents in its territory. This interaction is fundamental to obtain the data further crossed with the one of the violations in the system in order to determine the safety of an area together with its suggestions for possible interventions.
 			
 		\end{itemize}
 	
@@ -33,7 +33,7 @@
 	
 	The main objects in the UML class diagram are:
 	\begin{itemize}
-		\item \textbf{Customer:} the system has to track two types of users. The distinction, in fact, is fundamental to recognize the municipality providing accident's data but also to give a different level of visibility to the information asked by a request. This class keeps track of the information related to the login (username and password).
+		\item \textbf{Customer:} the system has to track two types of clients. The distinction, in fact, is fundamental to recognize the municipality providing accident's data but also to give a different level of visibility to the information asked by a request. This class keeps track of the information related to the login (username and password).
 		
 		\item \textbf{User:} identifies a citizen with all the data he provides in its registration. Users are the clients of the application that report violations and mine the data related both to the frequency of parking violations and the most dangerous vehicles or to the safety of an area and its related suggested intervention.
 		
@@ -45,15 +45,15 @@
 		
 		\item \textbf{Accident:} will be used to store the data received by the municipality by characterizing each accident as: \textbf{BikeCrash, MotorcycleCrash, CarCrash, ParkingHit...} The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \ref{sec:stateDiagrams} and \ref{sec:safetyFunction}.
 		
-		\item \textbf{Position:} stores the coordinates of where the parking violation occurred retrieved by the GPS. The position of each infraction will be used to retrieve the street thanks to the functionalities provided by the MI. This information is used to filter the mined data in the basic functionality.
+		\item \textbf{Position:} stores the coordinates obtained by the GPS of where the parking violation occurred. The position of each infraction will be used to retrieve the street thanks to the functionalities provided by the MI.
 		
-		\item \textbf{Street:} is one of the most important object to be managed. Each recognized street will be added to the system to achieve its basic and advanced functionalities. As we see is one of the classes with the most relations, in fact: it defines the city and the path, it is queried by the mining and safety requests and has a possible suggestion associated in case it is considered unsafe.
+		\item \textbf{Street:} is one of the most important objects to be managed. Each recognized street will be added to the system to achieve its basic and advanced functionalities. As we see is one of the classes with the most relations, in fact: it defines the city and the path, it is queried by the mining and safety requests and has a possible suggestion associated in case it is considered unsafe. The relation with the safety class determines the one of the street.
 		
 		\item \textbf{City:} represents the entire area that is governed by a municipality. Also this class is important to be considered as a filter in the functionalities of the system but also for the requests.
 		
 		\item \textbf{Path:} represents the last way in which a filter about an area can be performed. This option is mainly thought for the advanced function about retrieving the most unsafe streets in the selected path.
 		
-		\item \textbf{Vehicle:} vehicles are considered in order to define the types which have plates and thus that can be reported in a violation. Some examples of classes are: \textbf{Truck, Car, Motorcycle...}
+		\item \textbf{Vehicle:} vehicles are considered in order to define the feasible types which have plates and thus that can be reported in a violation. Some examples of classes are: \textbf{Truck, Car, Motorcycle...}
 		
 		\item \textbf{Request:} is the general class representing the interaction of a user with the system whenever mining, safety or suggestion is asked by the customer. In order to answer with the correct data it will be important to retrieve the user who sends the request and provide it to him with the correct visibility.
 		
@@ -110,7 +110,7 @@
 
 \subsection[Product Functions]{\hyperlink{toc}{Product Functions}}
 	\label{sec:productFunctions}
-	SafeStreet is a crowd-sourced application that intends to provide users with the possibility to notify authorities when parking violations occur. This has to be considered the main product function of the system because of its importance to obtain \textbf{crowdsourcing}. The information provided by users is what SafeStreet focuses on and what makes it able to provide services about the violations in a particular area. Thanks to mining and crossing processes, the system can retrieve filtered data about frequency, safety and suggestions for possible interventions in unsafe areas. As the subsection is structured, the product functions will be precisely described following the same order of how we have just shallowly presented: first the \textbf{notification} function then the \textbf{statistics} one and in the end \textbf{safety}. \\
+	SafeStreet is a crowd-sourced application that intends to provide users with the possibility to notify authorities when parking violations occur. This has to be considered the main product function of the system because of its importance to obtain \textbf{crowdsourcing}. The information provided by users is what SafeStreet focuses on and what makes it able to provide services about the violations in a particular area. Thanks to mining and crossing processes, the system can retrieve filtered data about frequency, safety and suggestions for possible interventions in unsafe streets. As the subsection is structured, the product functions will be precisely described following the same order of how we have just shallowly presented: first the \textbf{notification} function then the \textbf{mining} one and in the end \textbf{safety}. \\
 	
 	Before starting with the description it is important to highlight that in order to benefit of SafeStreets functionalities the customer \textbf{must} be logged in the system as he can be recognized.
 	
@@ -132,7 +132,7 @@
 			\item \textbf{Plate}\texttt{[OPTIONAL]:} this field is thought to give additional information to the functionalities provided by the IRI in order to recognize the plate of the reported vehicle. As we have already said it is the image recognition algorithm who has the last word when deciding whether to discard or not a violation: if he recognizes a number, also thanks to this information, the notification will be considered, otherwise it will not be.
 		\end{itemize}
 	
-		Once the notification is received the system first tries to retrieve the plate of the reported vehicle. If the plate's number is found it means that the violation is valid and the check for duplicates can be carried out. If no duplicate is found, the violation is ready to be stored in the system and thus notified to the authority. The \textbf{notification} works as follows: each violation that has been accepted is stored as \textbf{unread} for the authority that governs the territory that contains its street, in this way, when the authority enters the system it will be able to see all the notifications that have been reported. 
+		Once the notification is received the system first tries to retrieve the plate of the reported vehicle. If the plate's number is found it means that the violation is valid and the check for duplicates can be carried out. If no duplicate is found, the violation is ready to be stored in the system and thus notified to the authority. The \textbf{notification} works as follows: each violation that has been accepted is stored as \textbf{unread} for the authority that governs the territory that contains its street, in this way, when the authority enters the system it will be able to see all the notifications that have been reported. Once checked by the authorities the notifications will be marked as \textbf{read} and removed from the \emph{Check Unread Reports} functionality.
 
 	\subsubsection[Statistics Function]{\hyperlink{toc}{Mining Function}}
 		Data mining is used to retrieve the information about the stored data and provide the customers different ways to filter it. Thanks to the details of each infraction, in fact, the system is able to offer this service both to users and authorities. \\
@@ -149,13 +149,13 @@
 		\begin{itemize}
 			\item \textbf{Area:} there are three levels of filters defined in the area one. The widest is called \textbf{everywhere} and returns the information generally all over Italy, the second is called \textbf{city} and considers all the streets contained in the specified city, and the most specific one considers just a single \textbf{street}.
 			
-			\item \textbf{Date:} this filter is allowed only to authorities in the find reports functionality, in this way they are able to retrieve the violations in a more detailed search.
+			\item \textbf{Date:} this filter is allowed only to authorities in the \emph{find reports} functionality, in this way they are able to retrieve the violations in a more detailed search.
 			
 			\item \textbf{Time:} customers are able to filter by choosing a time lapse in which they are interested in. 
 			
 			\item \textbf{Type of vehicles:} the system stores in each notification the type of the vehicle that committed the violation. In this way this data can be filtered choosing one of the types: \textbf{trucks, cars, motorcycles...}
 			
-			\item \textbf{Type of violation:} thanks to the information about the type of the violation (provided by the user) the application allows also to filter by type. We can think of this statistic mainly for the authorities who will look for the highest type of vehicles that commit a violation in a street in order to take action; however this filter is also allowed to users who may be interested in this kind of data too.
+			\item \textbf{Type of violation:} thanks to the information about the type of the violation (provided by the user) the application allows also to filter by type. We can think of this  mainly filter for the authorities who will look for the highest type of vehicles that commit a violation in a street in order to take action; however this filter is also allowed to users who may be interested in this kind of data too.
 		\end{itemize}
 	
 		Each functionality considers only the filters that are needed to achieve its mining process. As we see in the interfaces (section \ref{sec:userInterfaces}) and in the use case diagrams (section \ref{sec:useCases}) just some of the listed filters are allowed to be selected. \\
@@ -178,9 +178,9 @@
 		The safety of each street and then the related intervention is determined each day by the system with the stored information about the previous month. Thanks to the data retrieved by the \emph{crossing} process, SafeStreets is able to provide the following functionalities:
 		
 		 \begin{itemize}
-		 	\item \textbf{Unsafe Streets:} thanks to the MI SafeStreets can use its services to retrieve the portion of an area and highlight its streets with two different colors to distinguish \emph{safe streets} colored in \textbf{GREEN} from \emph{unsafe streets} colored in \textbf{RED}. The map interface provides functions that require a set of streets and the color to be highlighted with and returns the best positioned map with the respective colors. 
+		 	\item \textbf{Unsafe Streets:} thanks to the MI SafeStreets can use its services to retrieve the portion of an area and highlight its streets with two different colors to distinguish \emph{safe streets} colored in \textbf{GREEN} from \emph{unsafe streets} colored in \textbf{RED}. The map interface provides functions that require a set of streets and the colors to be highlighted with and returns the best positioned map with the respective colors. 
 		 	
-		 	\item \textbf{Urgent Interventions:} thanks to the tresholds we always have a suggestion for a possible intervention whenever a street is considered to be unsafe. This functionality allows the customers to retrieve the possible intervention for the area in which they are interested in.
+		 	\item \textbf{Urgent Interventions:} thanks to the tresholds we always at least one suggestion for a possible intervention whenever a street is considered to be unsafe. This functionality allows the customers to retrieve the possible interventions for the area in which they are interested in.
 		 \end{itemize}
 	 
 	 	Both these functionalities in fact can be filtered in order to reduce the size of the interested area, the possible filters used in one or the other are: \textbf{city, path, street.}
@@ -241,7 +241,7 @@
 		\item \label{dom:noMaliciousPlates} No one physically and maliciously replaces license plates.
 		\item \label{dom:nosameCities} There are no cities with the same name in a given region.
 		\item \label{dom:nosameStreets} In a city there are not streets with the same name.
-		\item \label{dom:streetCity} Every street belongs to exactly one city.
+		\item \label{dom:streetCity} Every street belongs exactly to one city.
 		\item \label{dom:correctAccidents} Accidents data provided by municipalities are always correct.
 		\item \label{dom:nomultipleViolations} No multiple violations of the same vehicle occur in the same place at the same time.
 	\end{enumerate} 

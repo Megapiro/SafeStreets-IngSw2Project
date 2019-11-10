@@ -6,7 +6,7 @@
 	\label{sec:externalInterfaceRequirements}
 	\subsubsection[User Interfaces]{\hyperlink{toc}{User Interfaces}}
 	\label{sec:userInterfaces}
-	The following subsection illustrates thanks to some mockups the interfaces SafeStreets supplies to its customers in order to provide functionalities. Each picture is described only by the caption as complete and precise descriptions are given in the sections related to the definition of the functionalities and how they are managed (\ref{sec:productFunctions}, \ref{sec:useCases}).
+	The following subsection illustrates thanks to some mockups the interfaces SafeStreets supplies to its customers in order to provide the functionalities. Each picture is described only by the caption as complete and precise descriptions are given in the sections related to the definition of the functionalities and how they are managed (\ref{sec:productFunctions}, \ref{sec:useCases}).
 	
 	\begin{figure}[h]
 		\centering
@@ -110,7 +110,7 @@
 		The interfaces used by SafeStreets to benefit of services provided by external systems are precisely described in the section \ref{sec:systemInterfaces}. Internal interfaces should be also considered in order to interact with a \emph{datawarehouse} as the mining processes can be performed and the data can be structured in the best way according to the model defined (see section \ref{sec:standardCompliance}). SafeStreets does not provide APIs to external possible clients.
 		
 	\subsubsection[Communication Interfaces]{\hyperlink{toc}{Communication Interfaces}}
-		An important communication interface that must be considered while developing the system is the one that makes the system receive the accidents data provided by the municipality. We are now unable to know how the municipality will provide this information but we can start considering the most popular formats that would be used: JSON, XML, RDF... 
+		An important communication interface that must be considered while developing the system is the one that makes SafeStreets receive the accidents data provided by the municipality. We are now unable to know how the municipality will provide this information but we can start considering the most popular formats that would be used: JSON, XML, RDF... 
 
 \subsection[Functional Requirements]{\hyperlink{toc}{Functional Requirements}}
 	\label{sec:functionalRequirements}
@@ -137,7 +137,7 @@
 			\item \label{req:notifyAuthority} The system must be able to show authorities all the violation reports sent by users.
 			\item \label{req:mineData} The system must be able to mine the stored violation reports.
 			\item \label{req:cityFilter} The system must allow the customer to filter by city.
-			\item \label{req:streetFilter} The system must allow the customer to filter by city.
+			\item \label{req:streetFilter} The system must allow the customer to filter by street.
 			\item \label{req:pathFilter} The system must allow the customer to filter by path.
 			\item \label{req:violationFilter} The system must allow the customer to filter by type of violation.
 			\item \label{req:timeFilter} The system must allow the customer to filter by time slot.
@@ -189,9 +189,9 @@
 					\item \ref{dom:italy}\ The system is assumed to work in Italy.
 					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 					\item \ref{dom:nonameStreets}\ There are no streets without a name.
-					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-					\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
 					\item \ref{dom:noMaliciousPlates}\ No one physically and maliciously replaces license plates.
+					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
+					\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
 					\item \ref{dom:nomultipleViolations}\ No multiple violations of the same vehicle occur in the same place at the same time.
 				\end{description}
 					
@@ -220,7 +220,7 @@
 							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 							\item \ref{dom:nonameStreets}\ There are no streets without a name.
 							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-							\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
+							\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
 						\end{description}
 					\item \ref{goal:miningB} Users and authorities should be able to know what types of vehicle make the most violations.
 						\begin{description}
@@ -232,7 +232,6 @@
 							\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
 							\item \ref{req:mineData}\ The system must be able to mine the stored violation reports.
 							\item \ref{req:cityFilter}\ The system must allow the customer to filter by city.
-							\item \ref{req:streetFilter}\ The system must allow the customer to filter by city.
 							\item \ref{req:violationFilter}\ The system must allow the customer to filter by type of violation.
 							\item \ref{req:sortedVehicles}\ The system must be able to sort types of vehicle by number of violations they make.
 							\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
@@ -244,7 +243,7 @@
 							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 							\item \ref{dom:nonameStreets}\ There are no streets without a name.
 							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-							\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
+							\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
 						\end{description}
 					\item \ref{goal:miningC} Authorities should be able to consult every violation report sent by users.
 						\begin{description}
@@ -254,7 +253,7 @@
 							\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
 							\item \ref{req:mineData}\ The system must be able to mine the stored violation reports.
 							\item \ref{req:cityFilter}\ The system must allow the customer to filter by city.
-							\item \ref{req:streetFilter}\ The system must allow the customer to filter by city.
+							\item \ref{req:streetFilter}\ The system must allow the customer to filter by street.
 							\item \ref{req:violationFilter}\ The system must allow the customer to filter by type of violation.
 							\item \ref{req:timeFilter}\ The system must allow the customer to filter by time slot.
 							\item \ref{req:dateFilter}\ The system must allow the authority to filter by date intervals.
@@ -269,7 +268,7 @@
 							\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 							\item \ref{dom:nonameStreets}\ There are no streets without a name.
 							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-							\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
+							\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
 						\end{description}
 				\end{description}
 			\item \ref{goal:safety} Users should be able to know which streets are safe and which ones are not.
@@ -287,7 +286,7 @@
 					\item \ref{req:pathFinder} The system must find a path between two given points in a map.
 					\item \ref{req:colorMap} The system must be able to color the streets in a map according to their safety.
 					\item \ref{req:cityFilter} The system must allow the customer to filter by city.
-					\item \ref{req:streetFilter} The system must allow the customer to filter by city.
+					\item \ref{req:streetFilter} The system must allow the customer to filter by street.
 					\item \ref{req:pathFilter} The system must allow the customer to filter by path.
 					\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
 					\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
@@ -298,7 +297,7 @@
 					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 					\item \ref{dom:nonameStreets}\ There are no streets without a name.
 					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-					\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
+					\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
 					\item \ref{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.
 				\end{description}	
 			\item \ref{goal:intervention} Users and authorities should be able to know the possible interventions that could be done in a city.
@@ -323,7 +322,7 @@
 					\item \ref{dom:italyMaps}\ The system knows maps of Italy and they’re always complete and up to date.
 					\item \ref{dom:nonameStreets}\ There are no streets without a name.
 					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-					\item \ref{dom:streetCity}\ Every street belongs to exactly one city.
+					\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
 					\item \ref{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.	
 				\end{description}		
 		\end{description}
