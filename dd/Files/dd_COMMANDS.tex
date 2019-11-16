@@ -1,0 +1,46 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[nottoc,numbib]{tocbibind}
+
+% Todos
+\usepackage[colorinlistoftodos]{todonotes}
+
+% define the header and footer file
+\usepackage{fancyhdr}
+\fancypagestyle{SE2}{
+	\pagestyle{fancy}
+	\cfoot{} % get rid of the page number
+	\fancyfoot[L]{\emph{SafeStreets}\quad \textbf{D}esign \textbf{D}ocument}
+	\fancyfoot[R]{\thepage}
+	\renewcommand{\headrulewidth}{0.4pt}
+	\renewcommand{\footrulewidth}{0.4pt}	
+}
+\pagestyle{SE2}
+
+% graphics
+\usepackage{graphicx}
+\usepackage{pifont}
+\newcommand{\xmark}{\textcolor{black}{\ding{56}}}
+\graphicspath{{img/}}
+
+% tables
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage[section]{placeins}	% maybe a better way to solve float ?
+
+% others
+\usepackage[toc,page]{appendix}
+\newcommand{\RomanNumber}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=black
+}
+\usepackage{listings}
+\usepackage{enumitem}
