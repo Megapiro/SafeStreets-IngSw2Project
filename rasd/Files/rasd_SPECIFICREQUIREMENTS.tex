@@ -4,102 +4,146 @@
 
 \subsection[External Interface Requirements]{\hyperlink{toc}{External Interface Requirements}}
 	\label{sec:externalInterfaceRequirements}
-	\subsubsection[User Interfaces]{\hyperlink{toc}{User Interfaces}}
-	\label{sec:userInterfaces}
-	The following subsection illustrates thanks to some mockups the interfaces SafeStreets supplies to its customers in order to provide the functionalities. Each picture is described only by the caption as complete and precise descriptions are given in the sections related to the definition of the functionalities and how they are managed (\ref{sec:productFunctions}, \ref{sec:useCases}).
+	
+	\subsubsection[Customer Interfaces]{\hyperlink{toc}{Customer Interfaces}}
+	\label{sec:customerInterfaces}
+	
+	The following interfaces are meant to give a first description of how the functionalities will be offered in practice to the customers of SafeStreets. A precise description of how each mockup precisely reflects one functionality of SafeStreets is given in the Design Document \cite{DD}. It is sufficient for now to start with their illustration as we can understand the relation with the goals (section \ref{sec:goals}) and use cases (section \ref{sec:useCases}) described in this document.\\
+	
+	First are shown the interfaces of the \textbf{Mobile App} for the users, then the ones of the \textbf{Web App} for the authorities.
+	
+	\vspace{1cm}
+	 
+	\begin{figure}[h!]
+		\centering
+		\begin{minipage}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth]{/mockups/user/loginApp.png}
+			\caption{Login Mobile App}
+		\end{minipage}\hfill
+		\begin{minipage}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth]{/mockups/user/registrationApp.png}
+			\caption{Registration Mobile App}
+		\end{minipage}
+	\end{figure}
+
+	\begin{figure}[ht!]
+		\centering
+		\begin{minipage}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth]{/mockups/user/homeApp.png}
+			\caption{Home Page Mobile App}
+		\end{minipage}\hfill
+		\begin{minipage}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth]{/mockups/user/notificationApp.png}
+			\caption{Notification Mobile App}
+		\end{minipage}
+	\end{figure}
+
+	\begin{figure}[h]
+		\centering
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth]{/mockups/user/violationsFrequencyApp.png}
+			\caption{Violations Frequency Mobile App}
+		\end{minipage}\hfill
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth]{/mockups/user/dangerousVehiclesApp.png}
+			\caption{Dangerous Vehicles Mobile App}
+		\end{minipage}
+	\end{figure}
+
+	\begin{figure}[h]
+		\centering
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth]{/mockups/user/urgentInterventionsApp.png}
+			\caption{Urgent Interventions Mobile App}
+		\end{minipage}\hfill
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth]{/mockups/user/interventionsFoundApp.png}
+			\caption{Interventions Found Mobile App}
+		\end{minipage}
+	\end{figure}
+
+	\begin{figure}[h]
+		\centering
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth]{/mockups/user/unsafeStreetsApp.png}
+			\caption{Unsafe Streets Mobile App}
+		\end{minipage}
+	\end{figure}
 	
 	\begin{figure}[h]
 		\centering
-		\begin{minipage}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.45\textwidth]{/mockups/login.png}
-			\caption{Login Interface}
-		\end{minipage}\hfill
-		\begin{minipage}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.45\textwidth]{/mockups/userRegistration.png}
-			\caption{Register User Interface}
-		\end{minipage}
+		\includegraphics[scale=0.4]{/mockups/authority/loginWeb.png}
+		\caption{Login Web App}
 	\end{figure}
 
 	\begin{figure}[h]
 		\centering
-		\begin{minipage}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.45\textwidth]{/mockups/authorityRegistration.png}
-			\caption{Register Authority Interface}
-		\end{minipage}\hfill
-		\begin{minipage}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.45\textwidth]{/mockups/userHome.png}
-			\caption{User Home Interface}
-		\end{minipage}
+		\includegraphics[scale=0.4]{/mockups/authority/registrationWeb.png}
+		\caption{Registration Web App}
 	\end{figure}
 
 	\begin{figure}[h]
 		\centering
-		\begin{minipage}{0.45\textwidth}
-			\centering
-			\includegraphics[width=0.7\textwidth]{/mockups/authorityHome.png}
-			\caption{Authority Home Interface}
-		\end{minipage}\hfill
-		\begin{minipage}{0.45\textwidth}
-			\centering
-			\includegraphics[width=0.7\textwidth]{/mockups/notification.png}
-			\caption{Report Violation Interface}
-		\end{minipage}
+		\includegraphics[scale=0.4]{/mockups/authority/homeWeb.png}
+		\caption{Home Page Web App}
 	\end{figure}
+ 
+ 	\begin{figure}[h]
+ 		\centering
+ 		\includegraphics[scale=0.4]{/mockups/authority/unreadReportsWeb.png}
+ 		\caption{Unread Reports Web App}
+ 	\end{figure}
+ 
+ 	\begin{figure}[h]
+ 		\centering
+ 		\includegraphics[scale=0.4]{/mockups/authority/findReportsWeb.png}
+ 		\caption{Find Reports Web App}
+ 	\end{figure}
+ 
+ 	\begin{figure}[h]
+ 		\centering
+ 		\includegraphics[scale=0.4]{/mockups/authority/reportsFoundWeb.png}
+ 		\caption{Reports Found Web App}
+ 	\end{figure}
+ 
+ 	\begin{figure}[h]
+ 		\centering
+ 		\includegraphics[scale=0.4]{/mockups/authority/violationsFrequencyWeb.png}
+ 		\caption{Violations Frequency Web App}
+ 	\end{figure}
+ 
+ 	\begin{figure}[h]
+ 		\centering
+ 		\includegraphics[scale=0.4]{/mockups/authority/dangerousVehiclesWeb.png}
+ 		\caption{Dangerous Vehicles Web App}
+ 	\end{figure}
+ 
+ 	\begin{figure}[h]
+ 		\centering
+ 		\includegraphics[scale=0.4]{/mockups/authority/urgentInterventionsWeb.png}
+ 		\caption{Urgent Interventions Web App}
+ 	\end{figure}
+ 
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.4]{/mockups/authority/interventionsFoundWeb.png}
+		\caption{Interventions Found Web App}
+	\end{figure} 
 
 	\begin{figure}[h]
 		\centering
-		\begin{minipage}{0.45\textwidth}
-			\centering
-			\includegraphics[width=0.7\textwidth]{/mockups/violationsFrequency.png}
-			\caption{Streets With Most Violations Interface}
-		\end{minipage}\hfill
-		\begin{minipage}{0.45\textwidth}
-			\centering
-			\includegraphics[width=0.7\textwidth]{/mockups/dangerousVehicles.png}
-			\caption{Dangerous Vehicles Interface}
-		\end{minipage}
+		\includegraphics[scale=0.4]{/mockups/authority/unsafeStreetsWeb.png}
+		\caption{Unsafe Streets Web App}
 	\end{figure}
-
-	\begin{figure}[h]
-		\centering
-		\begin{minipage}{0.48\textwidth}
-			\centering
-			\includegraphics[width=0.7\textwidth]{/mockups/findReports.png}
-			\caption{Find Reports Interface}
-		\end{minipage}\hfill
-		\begin{minipage}{0.48\textwidth}
-			\centering
-			\includegraphics[width=0.7\textwidth]{/mockups/reportsFound.png}
-			\caption{Reports Found Interface}
-		\end{minipage}
-	\end{figure}
-
-	\begin{figure}[h]
-		\centering
-		\begin{minipage}{0.48\textwidth}
-			\centering
-			\includegraphics[width=0.7\textwidth]{/mockups/urgentInterventions.png}
-			\caption{Urgent Interventions Interface}
-		\end{minipage}\hfill
-		\begin{minipage}{0.48\textwidth}
-			\centering
-			\includegraphics[width=0.7\textwidth]{/mockups/interventionsFound.png}
-			\caption{Intervention Found Interface Result}
-		\end{minipage}
-	\end{figure}
-	 
-	 \begin{figure}[h]
-	 	\centering
-	 	\begin{minipage}{0.7\textwidth}
-	 		\centering
-	 		\includegraphics[width=0.7\textwidth]{/mockups/unsafeStreets.png}
-	 		\caption{Streets Safety Interface}
-	 	\end{minipage}
-	 \end{figure} 
  
 	\FloatBarrier
 	
@@ -107,10 +151,10 @@
 		Hardware interfaces have to be considered on the clients' software in order to interact with the camera and the GPS modules. As described in the section \ref{sec:notificationFunction} in fact, a user must always take at least one picture and enable the GPS in order to report a violation. 
 		
 	\subsubsection[Software Interfaces]{\hyperlink{toc}{Software Interfaces}}
-		The interfaces used by SafeStreets to benefit of services provided by external systems are precisely described in the section \ref{sec:systemInterfaces}. Internal interfaces should be also considered in order to interact with a \emph{datawarehouse} as the mining processes can be performed and the data can be structured in the best way according to the model defined (see section \ref{sec:standardCompliance}). SafeStreets does not provide APIs to external possible clients.
+		The interfaces used by SafeStreets to benefit of services provided by external systems are precisely described in the section \ref{sec:systemInterfaces}. Internal interfaces instead are needed in particular to manage the DBMS of the system; as described in the section \ref{sec:standardCompliance} we will need to manage all the information with different logical models in order to store the different kind of data that the application has to deal with. SafeStreets does not provide APIs to external possible clients.
 		
 	\subsubsection[Communication Interfaces]{\hyperlink{toc}{Communication Interfaces}}
-		An important communication interface that must be considered while developing the system is the one that makes SafeStreets receive the accidents data provided by the municipality. We are now unable to know how the municipality will provide this information but we can start considering the most popular formats that would be used: JSON, XML, RDF... 
+		An important communication interface that must be considered while developing the system is the one that makes SafeStreets receive the accidents data provided by the municipality. As we described in the global external interface of the authorities we expect to have a system where all of them can publish their accidents as our system will be able to retrieve them.
 
 \subsection[Functional Requirements]{\hyperlink{toc}{Functional Requirements}}
 	\label{sec:functionalRequirements}
@@ -374,20 +418,20 @@
 		\paragraph{User}
 		\begin{enumerate}
 			\item \textbf{User Registration} 
-				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\begin{longtable}{p{0.26\linewidth}p{0.75\linewidth}}
 					\toprule
 					\textbf{Name} & \textbf{User Registration} \\
 					\midrule
 					\textbf{Actors} & User \\
 					\midrule
-					\textbf{Entry conditions} & The application has started \\
+					\textbf{Entry conditions} & The mobile application has started \\
 					\midrule
 					\textbf{Flow of events} & 
 					\begin{enumerate}
 						\item The user chooses the sign up option
-						\item The user selects the 'user' registration type
 						\item The user chooses a username and a password
 						\item The user inserts his name, surname and address
+						\item The user accepts the \emph{Terms and Conditions} of SafeStreets
 						\item The user submits the form
 						\item The system checks the username to be unique
 						\item The system saves the user data
@@ -411,20 +455,20 @@
 				
 				\FloatBarrier
 			\item \textbf{User Login}
-				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\begin{longtable}{p{0.26\linewidth}p{0.75\linewidth}}
 					\toprule
 					\textbf{Name} & \textbf{User Login} \\
 					\midrule
 					\textbf{Actors} & User \\
 					\midrule
-					\textbf{Entry conditions} & The application has started \\
+					\textbf{Entry conditions} & The mobile application has started \\
 					\midrule
 					\textbf{Flow of events} & 
 					\begin{enumerate}
 						\item The user chooses the login option
-						\item The user chooses the 'user' login type
 						\item The user inserts his username
 						\item The user inserts his password
+						\item The user decides whether to be remembered or not
 						\item The user submits the form
 						\item The system checks the username to be existing
 						\item The system checks the password to be right for that username
@@ -449,8 +493,9 @@
 				\end{figure}
 			
 				\FloatBarrier
+				\newpage
 			\item \textbf{Report Violation}
-				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\begin{longtable}{p{0.26\linewidth}p{0.75\linewidth}}
 					\toprule
 					\textbf{Name} & \textbf{Report violation} \\
 					\midrule
@@ -480,7 +525,7 @@
 					\textbf{Exceptions} & 
 					\begin{itemize}
 						\item If the system fails to retrieve the GPS location, the user is notified and the application shows the home page
-						\item If the system fails to read the license plate, or what it reads does not match the information provided by the user, the field will be left empty
+						\item If the system fails to read the license plate, or what it reads does not match the information provided by the user, the notification will be discarded
 					\end{itemize} \\
 					\bottomrule
 					\caption{\emph{Report violation} use case description}
@@ -488,13 +533,13 @@
 			
 				\begin{figure}[h]
 					\centering 
-					\includegraphics[scale=0.2, angle=90]{/diagrams/sequence/reportViolation.png}
+					\includegraphics[scale=0.26]{/diagrams/sequence/reportViolation.png}
 					\caption{Report Violation sequence diagram}
 				\end{figure}
 			
 				\FloatBarrier
 			\item \textbf{Find streets with the highest number of violations}
-				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\begin{longtable}{p{0.26\linewidth}p{0.75\linewidth}}
 					\toprule
 					\textbf{Name} & \textbf{Find streets with the highest number of violations} \\
 					\midrule
@@ -528,13 +573,13 @@
 			
 				\begin{figure}[h]
 					\centering
-					\includegraphics[scale=0.26]{/diagrams/sequence/highestViolations.png}
+					\includegraphics[scale=0.3]{/diagrams/sequence/highestViolations.png}
 					\caption{Highest Number of Violations sequence diagram}
 				\end{figure}
 			
 				\FloatBarrier
 			\item \textbf{Find Most Dangerous Vehicles}
-				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\begin{longtable}{p{0.26\linewidth}p{0.75\linewidth}}
 					\toprule
 					\textbf{Name} & \textbf{Find dangerous vehicles} \\
 					\midrule
@@ -563,13 +608,13 @@
 			
 				\begin{figure}[h]
 					\centering
-					\includegraphics[scale=0.23]{/diagrams/sequence/dangerousVehicles.png}
+					\includegraphics[scale=0.24]{/diagrams/sequence/dangerousVehicles.png}
 					\caption{Dangerous Vehicles sequence diagram}
 				\end{figure}
 			
 				\FloatBarrier
 			\item \textbf{Find Urgent Interventions}
-				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\begin{longtable}{p{0.26\linewidth}p{0.75\linewidth}}
 					\toprule
 					\textbf{Name} & \textbf{Find urgent interventions} \\
 					\midrule
@@ -592,15 +637,17 @@
 					\caption{\emph{Find urgent interventions} use case description}
 				\end{longtable}
 			
+				\newpage
+			
 				\begin{figure}[hbtp]
 					\centering
-					\includegraphics[scale=0.26]{/diagrams/sequence/urgentInterventions.png}
+					\includegraphics[scale=0.28]{/diagrams/sequence/urgentInterventions.png}
 					\caption{Urgent Interventions sequence diagram}
 				\end{figure}
 			
 				\FloatBarrier
 			\item \textbf{Find Unsafe Streets}
-				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\begin{longtable}{p{0.26\linewidth}p{0.75\linewidth}}
 					\toprule
 					\textbf{Name} & \textbf{Find unsafe streets} \\
 					\midrule
@@ -629,34 +676,36 @@
 				\end{longtable}
 		\end{enumerate}
 		
-		\begin{figure}[h]
+		\begin{figure}[h!]
 			\centering
-			\includegraphics[scale=0.26, angle=90]{/diagrams/sequence/unsafeStreets.png}
+			\includegraphics[scale=0.28]{/diagrams/sequence/unsafeStreets.png}
 			\caption{Unsafe Streets sequence diagram}
 		\end{figure}
 			
 		\FloatBarrier
+		\newpage
 			
 		\paragraph{Authority}
 		\begin{enumerate}
 			\item \textbf{Authority Registration}
-				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\begin{longtable}{p{0.26\linewidth}p{0.75\linewidth}}
 					\toprule
 					\textbf{Name} & \textbf{Registration} \\
 					\midrule
 					\textbf{Actors} & Authority \\
 					\midrule
-					\textbf{Entry conditions} & The application has started \\
+					\textbf{Entry conditions} & The web application has started \\
 					\midrule
 					\textbf{Flow of events} & 
 					\begin{enumerate}
 						\item The authority chooses the sign up option
-						\item The authority selects the 'authority' registration type
 						\item The authority chooses the region and the city of competence
 						\item The authority inserts its PEC address
 						\item The system checks that PEC address matches the chosen city
 						\item The system sends a confirmation code to the PEC address
 						\item The authority enters the confirmation code in a text box
+						\item The authority chooses the password
+						\item The authority accepts the \emph{Terms and Conditions} of SafeStreets
 						\item The authority submits the form
 						\item The system checks the entered code to match the sent one
 						\item The system saves the authority's data
@@ -682,13 +731,13 @@
 			
 				\FloatBarrier
 			\item \textbf{Authority Login}
-				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\begin{longtable}{p{0.26\linewidth}p{0.75\linewidth}}
 					\toprule
 					\textbf{Name} & \textbf{Authority Login} \\
 					\midrule
 					\textbf{Actors} & Authority\\
 					\midrule
-					\textbf{Entry conditions} & The application has started \\
+					\textbf{Entry conditions} & The web application has started \\
 					\midrule
 					\textbf{Flow of events} & 
 					\begin{enumerate}
@@ -696,6 +745,7 @@
 						\item The authority chooses the 'authority' login type
 						\item The authority inserts its PEC address as username
 						\item The authority inserts its password
+						\item The authority decides whether to be remembered or not
 						\item The authority submits the form
 						\item The system checks the username to be registered
 						\item The system checks the password to be right for that username
@@ -714,7 +764,7 @@
 				\end{longtable}
 			
 			\item \textbf{Check Unread Reports}
-				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\begin{longtable}{p{0.26\linewidth}p{0.75\linewidth}}
 					\toprule
 					\textbf{Name} & \textbf{Check unread reports} \\
 					\midrule
@@ -737,13 +787,14 @@
 				
 				\begin{figure}[h]
 					\centering
-					\includegraphics[scale=0.25]{/diagrams/sequence/unreadReports.png}
+					\includegraphics[scale=0.34]{/diagrams/sequence/unreadReports.png}
 					\caption{Unread Reports sequence diagram}
 				\end{figure}
 				
 				\FloatBarrier
+				\newpage
 			\item \textbf{Find Reports}
-				\begin{longtable}{p{0.25\linewidth}p{0.75\linewidth}}
+				\begin{longtable}{p{0.26\linewidth}p{0.75\linewidth}}
 					\toprule
 					\textbf{Name} & \textbf{Find reports} \\
 					\midrule
@@ -774,7 +825,7 @@
 	
 				\begin{figure}[hbtp]
 					\centering
-					\includegraphics[scale=0.25]{/diagrams/sequence/findReports.png}
+					\includegraphics[scale=0.31]{/diagrams/sequence/findReports.png}
 					\caption{Find Reports sequence diagram}
 				\end{figure}
 		\end{enumerate}
@@ -966,12 +1017,14 @@
 	\FloatBarrier
 	
 	\subsection[Performance Requirements]{\hyperlink{toc}{Performance Requirements}}
-		SafeStreets is a system that provides to serve all mobile devices that have the possibility to take pictures and to retrieve the position thanks to the GPS. All the computation will take place on the servers of the system thus we expect a light weight application that can be accessed by both the users and authorities. Interaction with modules of the device have to be considered, in particular with the camera and the GPS in order to provide all mandatory data while reporting a violation. The notification functionality requires a quick response to each violation in order to store it in the system for the authorities as soon as possible. Further considerations about responsiveness have to be considered for the basic and advanced functionalities that require mining and crossing processes in order to obtain a result. To accomplish this problem we will give a possible solution in the further section of how to organize the design in order to run algorithms that allow to mine and cross the data. Technical support for installation is not required as the result is a simple device application each customer can download from the store; moreover it is important to highlight that the registration process for the authority needs to provide a verification code and thus a quick interaction needs to be considered once again.
+		\label{sec:performanceRequirements}
+	
+		SafeStreets is a system that provides to serve all mobile devices that have the possibility to take pictures and to retrieve the position thanks to the GPS and the terminals of the recognized authorities. All the computation will take place on the servers of the system thus we expect a light weight application that can be accessed by both the users and authorities. Interaction with modules of the device have to be considered for what concerns the mobile application, in particular with the camera and the GPS in order to provide all mandatory data while reporting a violation. The notification functionality requires a quick response to each violation in order to store it in the system for the authorities as soon as possible. Further considerations about responsiveness have to be considered for the basic and advanced functionalities that require mining and crossing processes in order to obtain a result. To accomplish this problem we will give a possible solution in the further section of how to organize the design in order to run algorithms that allow to mine and cross the data. Technical support for installation is not required as the result is a simple device application each user can download from the store and authorities can reach with a browser; moreover it is important to highlight that the registration process for the authority needs to provide a verification code and thus a quick interaction needs to be considered again.
 	
 	\subsection[Design Constraints]{\hyperlink{toc}{Design Constraints}}
 		\subsubsection[Standards Compliance]{\hyperlink{toc}{Standards Compliance}}
 			\label{sec:standardCompliance}
-			The most important standard that needs to be considered in a crowd-sourced system and in particular for the functionalities that SafeStreets intends to provide is the \emph{data mining} process. As we are going to expect to receive big amounts of data the approach to consider a \emph{datawarehouse} would be the correct solution paired with a data mining engine working with the data already stored. Considering the system to follow the standard process of data mining we can give a further detail based on how the definition of the model has been carried out: the classification technique seems in fact the better one in order to respect the classification described for the violations (largest instances we expect to manage). 
+			The most important standard that needs to be highlighted here is the one related to the interaction with the databases. Hence it will be mandatory for the system to interact with a DBMS in order to benefit of the services that allows it to manage the big amount of data we expect to manage. As already said, SafeStreets is a crowd-sourced application that enables also to mine the data provided by the users. This consideration highlights even better the fact that the interaction with the databases is going to be crucial and thus a lot of modules will be needed to deal with this very important aspect.
 		\subsubsection[Hardware Limitations]{\hyperlink{toc}{Hardware Limitations}}
 			Hardware limitations would be critical in devices that do not provide a camera or a GPS module. As described in the section \ref{sec:notificationFunction} in fact a user must provide at least one picture and enable his GPS in order to report a violation. No further considerations have to be considered as we have also specified that the image recognition algorithms will be helped by the information provided by the users; this can make us not to require high definition pictures of the infractions reported and thus nor the newest cameras for the devices.
 		\subsubsection[Any other Constraint]{\hyperlink{toc}{Any other Constraint}}
@@ -986,6 +1039,6 @@
 		\subsubsection[Security]{\hyperlink{toc}{Security}}
 			SafeStreets needs to deal with security to store the information of a user while registering but also to ensure the correct registration of an authority. The recognition of a customer is the most important feature to consider in order to ensure providing the correct level visibility of the data they query. The recognition process considers to send a verification code to the PEC address of the registering authority, this deals with all security problems avoiding more complex technologies that each authority would not posses.
 		\subsubsection[Maintainability]{\hyperlink{toc}{Maintainability}}
-			The software needs to take in account the possibility to encounter bugs even if a high test coverage should be considered in the developing process in particular in the query definition that may lead to critical aspects related to the management of the datawarehouse together with the data mining engine. Talking about the capability to meet new requirements the system is thought to be extensible in particular for the additional types of violations that may be considered. 
+			The software needs to take in account the possibility to encounter bugs even if a high test coverage should be considered in the developing process in particular in the query definition that may lead to critical aspects related to the request that have to be performed with the DBMS APIs. Talking about the capability to meet new requirements the system is thought to be extensible in particular for the additional types of violations that may be considered. 
 		\subsubsection[Portability]{\hyperlink{toc}{Portability}}
-			The client side of the system would be developed in a native way in order to accomplish a better interaction with the system for both the most used device OSs. The server side instead would consider the possibility to use different mining engines rather than how to store the data in the datawarehouse where a proprietary software would be possibly considered.
+			We expect to have a mobile application for the users while a web app for the authorities; hence, portability on the clients would not be a big issue if a native approach is chosen for the mobile application. The server side instead needs always to consider the fact that the data management is a crucial issue for the system. Thus design of the modules that are thought to interact with the APIs of the DBMS need to focus on the standards in particular of the query formulation in order to be ready for a DBMS replacement if the non-functional requirements of the system would change.
