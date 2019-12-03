@@ -87,8 +87,6 @@
 			\end{itemize}
 		
 			\paragraph{Data Interfaces} These last interface instead are separated from the initial ones because they provide a way to the system to access external data he needs to use in order to provide its functionalities. As we can see in the right hand-side of the diagram we only have the \textbf{Authority Common Interface} that provides the methods to retrieve all the data of the accidents that took place in a certain city and the list of all the PEC addresses of the authorities.
-			
-			\newpage
 		
 	\subsection[Component View]{\hyperlink{toc}{Component View}}
 		\label{sec:componentView}
@@ -99,35 +97,155 @@
 			\caption{\label{fig:highLevelComp} High Level Component Diagram}
 		\end{figure}
 	
+		With the high-level description of the system provided in the previous sections we are now able to determine which are the components that will be considered in the architecture in order to accomplish the functionalities that each of the modules identified are going to provide. In fact it is straightforward the mapping between the component diagram (\autoref{fig:compositionDiagram}) and the picture above (\autoref{fig:serverComp}). The \textbf{communication interfaces} area is mapped with all the interfaces provided by the components that provide or receive services from the outside; the \textbf{business logic} is realized by the server component where all the computation to provide the functionalities of the system takes place, while the \textbf{data interfaces} are the ones that allow the system with both the DBMS and the authority common interface.\\
+		
+		Before describing in detail the most important components of the system it is now the moment to precisely describe what are the components presented in this picture and what are the services provided by the interfaces:
+		
+		\begin{itemize}
+			\item \textbf{Server:} it is the business logic of the entire system. Inside this component, that will be precisely described in the next section, takes place all the computation that allows to provide the customers the functionalities that SafeStreets has defined as its goals. The two interfaces provided by this components are the ones that allow the client systems to benefit of these functionalities, considering to have both a mobile application and a web app we need one interface directly for the mobile software while another interface for the web server that will provide to the browser of the authority the functionalities offered.
+			
+			\item \textbf{Web Interface:} it is the interface that allows the web server to access the methods that provide the functionalities once a request arrives from an authority.
+			
+			\item \textbf{Web Server:} it is the component that deals with all the issues related to the realization of a web app that needs to be displayed on the browser of the authority. In fact it provides and interface that  represents the endpoint where the browsers can access the system's functionalities.
+			
+			\item \textbf{Web App Interface:} it is the interface that allows the browsers to benefit of the services of SafeStreets with a web app technology.
+			
+			\item \textbf{Authority Web App:} it is the component that represents the browser used by the authority whenever it decides to access the system.
+			
+			\item \textbf{Mobile App Interface:} it is the interface that allows the mobile applications to access the functionalities provided by our system.
+			
+			\item \textbf{User App:} it is the component that represents the mobile software installed in the users' devices which accesses the services of SafeStreets thanks to the interface just presented.
+			
+			\item \textbf{MI API:} it is the interface that provides the methods to the system in order to deal with the map and geographical issues:
+				\begin{itemize}
+					\item Allows to retrieve the street providing a GPS position
+					\item Allows to retrieve the best possible path between two positions
+					\item Allows to display the colored map for the safety functionality
+				\end{itemize}
+			
+			\item \textbf{IRI API:} it is the interface that provides the methods to the system in order to deal with the recognition of the plate of a vehicle. Remember that the algorithms accessible from this API can be helped with the information provided by the user about the plate's number and, more important, they always "have the last word": this means that whenever a result is found for the plate it will be considered correct and storable by the system; in all the cases when no result is found by the algorithms the notification will be discarded.
+			
+			\item \textbf{Email API:} it is the interface that provides the methods to the system in order to deal with the minimal email sending and receiving needed. An email system in fact is necessary both for the process of code verification to recognize the authorities and also for the credential recovery of both the customers
+			
+			\item \textbf{Authority Common Interface:} it is the interface that provides the methods to the system in order to deal with the PEC addresses and the accidents receiving. This interface is thought to be provided by a common system used by every authority where:
+			
+			\begin{itemize}
+				\item we can retrieve all the PEC addresses of each authority, in order to do the checks in the recognition process
+				\item we can retrieve all the accidents that took place in the area of an authority's competence. It is assumed that the exchange of the accidents' data develops in this way: each authority publishes its accidents on the common system as we can periodically try to retrieve thanks to this interface all the accidents that has occurred until our last check.
+			\end{itemize}
+		
+			\item \textbf{DBMS API:} it is the interface that provides the methods to the system in order to deal with the data management process. Starting from the access one, the notification process and all the others that need to require or store information from the databases of the system (in the following section it will be clear which are the components that necessarily need to access the DBMS interface).
+			 
+		\end{itemize}
+	
 		\subsubsection[Server Component]{\hyperlink{toc}{Server Component}}
 			\label{sec:serverComponent}
 			
-			\begin{figure}[ht]
+			From now on we are going to blow up the high-level component view just presented, starting with the most complex component that is the server and continuing first with its internal ones and in the end with the others that we have to take in account while defining the architecture of our system (WebServer and UserApp). In all the diagrams we are going to illustrate now the interaction between the components and the interfaces provided is carried on by means of the lollipop-socket notation. We will then continue by precisely describing each of these components to understand how they allow to obtain the functionalities of the system by providing and using the interfaces identified.\\
+			
+			The diagram of the next page highlights all the components that compose the server and describes both their internal and external interaction: we can see in fact the interfaces that we defined in the previous section how are provided or used by these components and how new interfaces are needed to make them interact.
+			
+			\begin{figure}[hbtp]
 				\centering
 				\includegraphics[scale=0.16, angle=90]{/diagrams/components/server.png}
 				\caption{\label{fig:serverComp} Server Component Diagram}
-			\end{figure}
+			\end{figure} 
 		
 		\subsubsection[Client Handler Component]{\hyperlink{toc}{Client Handler Component}}
 			\label{sec:clientHandlerComponent}
 			
-			\begin{figure}[ht]
+			The \emph{ClientHandler} (\autoref{fig:clientHandlerComp}) is the component that manages all the requests coming from the customers. As we see two interfaces are provided, one for the mobile application (\textbf{MobileAppInterface}) and the other for the web server that manages the web application (\textbf{WebInterface}). These two interfaces are the ones that provide the result of each request once it has been managed by the logic of the system that starts to compute in this component.
+			
+			\begin{figure}[h!]
 				\centering
-				\includegraphics[scale=0.2]{/diagrams/components/clientHandler.png}
+				\includegraphics[scale=0.15]{/diagrams/components/clientHandler.png}
 				\caption{\label{fig:clientHandlerComp} Client Handler Component Diagram}
 			\end{figure}
+			
+			The components that allow the \emph{ClientHandler} to process a request, first receiving it and then dispatching it to the related functionality are:
+			
+			\begin{itemize}
+				\item \textbf{WebRequestManager:} it is the component that manages all the requests that come from the web application, hence from the web server that uses the \textbf{WebInterface} realized by this component.
+				
+				\item \textbf{AppRequestManager:} it is the component that manages all the requests that come from the mobile application, hence from the device that uses the \textbf{MobileAppInterface} realized by this component.
+				
+				\item \textbf{RequestDispatcher:} it is the component that allows to handle each type of request that comes either from the web app or the mobile one. In fact, thanks to the \textbf{HandleRequest Interface} the components previously described can deploy the request to this one that, depending on the type of the request will need to use different services in order to provide the functionality it is requiring. In fact, as we can see there are several interfaces that are used by this component:
+				
+				\begin{itemize}
+					\item \textbf{Mining Interface:} allows to benefit of the methods provided by the \emph{QueryManager} component that is the one which manages all the queries related to the basic and the advanced functionalities.
+					
+					\item \textbf{Notification Interface:} it is the interface that allows to manage the notification process once a request to report a parking violation is received by a user.
+					
+					\item \textbf{Access Interface:} it is the interface that allows to deal with all the issues related to the access to the system. This means: the login, the registration, the credential recovery, the recognition of the authorities...
+					
+					\item \textbf{WebResponse Interface:} it is the interface that allows to process the information received from the logic of the system as it can be used by the \emph{WebServer} to be displayed on the web app.
+					
+					\item \textbf{MobileResponse Interface:} it is the interface that allows to process the information received from the logic of the system as it can be used by the device to be displayed on the mobile app.
+				\end{itemize}
+			\end{itemize}
 		
 		\subsubsection[Access Manager Component]{\hyperlink{toc}{Access Manager Component}}
 			\label{sec:accessManagerComponent}
 			
+			The \emph{AccessManager} (\autoref{fig:accessManagerComp}) is the component that manages all the issues related to the access of the customers to the system. As we have said several times when defining the goals and requirements of SafeStreets, in fact, it is fundamental to recognize the clients and thus to provide a registration process.\\
+			
+			The components described in the following diagram are the ones that allow to provide the access functionalities of:
+			
+			\begin{itemize}
+				\item Registration
+				\item Login
+				\item Credentials Recovery
+			\end{itemize}
+		
+			In order to provide the methods that allow to realize these functionalities through the \textbf{Access Interface}, this component has also to benefit of the external services provided by the methods of the \textbf{Email API} and \textbf{Authority API}. The interface that allows to access and manage the data stored in the system is obviously fundamental for all the checks needed and to store new customers in the application.\\
+			
+			The components that allow the \emph{AccessManager} to process an access request, meaning one of the three functionalities listed before are:
+			
+			\begin{itemize}
+				\item \textbf{Email Manager:} it is the component that uses the methods provided by the \textbf{Email API} in order to have a way to send the mails with the recognition code to the authorities and to offer the service of the credentials recovery by sending an email to the address that requests for recovering its password. This component provides the \textbf{mail Interface} that is used by the other components that realizing these functionalities have to deal with the email system.
+			
+				\item \textbf{PEC Manager:} it is the component that deals with all the issues related to the PEC addresses of the authorities. In fact it uses the methods provided by the \textbf{Authority API} in order to know which are the existing addresses of all the authorities and then uses the \textbf{mail Interface} to provide through the \textbf{PEC Interface} the methods that allow to send the verification code in the registration process.
+			\end{itemize}
+			
 			\begin{figure}[ht]
 				\centering
-				\includegraphics[scale=0.2]{/diagrams/components/accessManager}
+				\includegraphics[scale=0.16]{/diagrams/components/accessManager}
 				\caption{\label{fig:accessManagerComp} Access Manager Component Diagram}
 			\end{figure}
 		
+			\begin{itemize}
+				\item \textbf{LoginManager:} it is the component that deals with the login process. It realizes the \textbf{Access Interface} by providing the methods for the login and has always to interact with the \emph{CredentialChecker} component in order to verify the credentials of the logging customer. In this way, thanks to the \textbf{Check Interface}, this component will control the credential of either the user or the authority and decide if to authenticate them or not.
+				
+				\item \textbf{CredentialRecovery:} it is the component that deals with the credentials recovery process. It realizes the \textbf{Access Interface} by providing the methods for the recovery and thus it needs to interact with both the \emph{CredentialChecker} and the \emph{CredentialStorer:} components. Thanks to the \textbf{Check Interface} and the \textbf{Store Interface}, in fact, it will be able to control the identity of the customer who is requiring to recover its credentials and store the new information related to the customer. Obviously the \textbf{mail Interface} is also needed in order to send the email to the customer that is requiring to recover its credentials.
+				
+				\item \textbf{RegistrationManager:} it is the component that deals with the registration of the customers. It realizes the \textbf{Access Interface} by providing the methods to register both the user and the authority and thus needs to use the \textbf{Check Interface} and the \textbf{Store Interface}. In fact, this component will need to check for the new credentials to be feasible and then to store the new data related to the registering customer. The \textbf{PEC Interface} is used for the authority registration process to send the verification code and check the address.
+				
+				\item \textbf{CredentialChecker:} it is the component that deals with all the checks needed in the access functionalities previously described by providing the \textbf{Check interface}. Obviously to perform these checks it needs to access the customers database of the system and thus the methods provided by the \textbf{DataIntF Interface}.
+				
+				\item \textbf{CredentialStorer:} it is the component that deals with the storing of all the data used in the access functionalities previously described by providing the \textbf{Store Interface}.
+				Obviously in order to store the information in the database of the customers in the system it needs to use the methods provided by the \textbf{DataIntF Interface}
+			\end{itemize}
+		
 		\subsubsection[Query Manager Component]{\hyperlink{toc}{Query Manager Component}}
 			\label{sec:queryManagerComponent}
+			
+			The \emph{QueryManger} (\autoref{fig:queryManagerComp}) is the component that manages the requests related either to the basic or the advanced functionalities (see section \ref{sec:generalContext} for the precise functionalities description) coming from the customers with the realization of the \textbf{Mining Interface}. Hence, this component needs first to identify the request as it can be checked for the filters used thanks to the \textbf{Check Interface} and then, once identified the functionality, it realizes the respective query with the respective interface provided by the correct component:
+			
+			\begin{itemize}
+				\item Interventions Interface
+				\item Safety Interface
+				\item Visibility Interface
+				\item Dangerous Interface
+				\item Frequency Interface
+			\end{itemize}
+		
+			Once the query is ready it is prepared and sent to the component that will execute it through the \textbf{Send Interface} realized by the \emph{QuerySender}.\\
+			
+			The components that allow the \emph{QueryManager} to process the requests related to a functionality are:
+			
+			\begin{itemize}
+				\item \textbf{FunctionalityIdentifier:} it is the components that realizes the \textbf{Mining Interface} by providing the methods related to the processing of a request that deals with one of the basic or advanced functionalities. This component first needs to recognize which is the functionality requested as it can check it and then prepare it to be executed. Thanks to the \textbf{Check Interface} it controls if the filters in the request are feasible with the ones related to the functionality recognized and then it calls the method that builds the query from the correct interface between the ones presented before.
+			\end{itemize}
 			
 			\begin{figure}[ht]
 				\centering
@@ -135,23 +253,93 @@
 				\caption{\label{fig:queryManagerComp} Query Manager Component Diagram}
 			\end{figure}
 		
+			\begin{itemize}
+				\item \textbf{UnsafeQuery:} it is the component that manages the query related to the safety functionality. Hence it will select the correct area and retrieve the safety of all the streets required by the customer as they can be displayed on the map. This component realizes the \textbf{Safety Interface} and needs to use the methods provided by the \textbf{StreetsRetrieval Interface} as it can manage the request of the customer to find the safety of the best path between the two positions he specified.
+				
+				\item \textbf{InterventionsQuery:} it is the component that manages the query related to suggestion for possible interventions functionality. Hence it will prepare the query over the city selected and retrieve all the suggestions for it. This component realizes the \textbf{Interventions Interface} used by the \emph{FunctionalityIdentifier}.
+				
+				\item \textbf{FindREportsQuery:} it is the component that manages the query related to the functionality provided only to the authorities in order to give them the most detailed level of visibility for the reported violations. This component realizes the \textbf{Visibility Interface} used by the \emph{FunctionalityIdentifier}.
+				
+				\item \textbf{VehiclesQuery:} it is the component that manages the query related to the dangerous vehicles functionality. Hence it will prepare the query with the filters already checked and retrieve the type of dangerous vehicles. This component realizes the \textbf{Dangerous Interface} used by the \emph{FunctionalityIdentifier}.
+				
+				\item \textbf{FrequencyQuery:} it is the component that manages the query related to the violations frequency functionality. Hence it will prepare the query with the filters already checked and retrieve the streets with most violations. This component realizes the \textbf{Frequency Interface} used by the \emph{FunctionalityIdentifier}.
+				
+				\item \textbf{QuerySender:} it is the component that allows to send the query to the \emph{DataManager} component that allows to execute it and retrieve the results. Thanks to the \textbf{Send Interface}, in fact, the five components just presented will send the query they have prepared as it can be executed over the related databases.
+			\end{itemize}
+		
 		\subsubsection[Report Manager Component]{\hyperlink{toc}{Report Manager Component}}
 			\label{sec:reportManagerComponent}
 			
+			The \emph{ReportManager} (\autoref{fig:reportManagerComp}) is the component that manages the notification process of the system, hence the one that we called the core functionality of SafeStreets. We have to remark that the notification process starts when a report arrives from a user and then the methods of the \textbf{Notification Interface} are invoked and ends when all the information about the report are stored in the system. At the end of the process each notification stored is marked as unread as it can be retrieved by the competent authority whenever it requires to benefit of the check unread reports functionality.\\
+			
+			As we have already said in the description of the functionality we will need to complete the data provided by the user with some controls and additions that will be performed thanks to the three interfaces that we can see are used by this component:
+			
+			\begin{itemize}
+				\item StreetRetrieval Interface
+				\item IRI API
+				\item DataIntF Interface
+			\end{itemize}
+		
+			The components that allow the \emph{ReportManager} to handle completely the notification process, hence the report of the user and the retrieval by the authority, are:
+			
+			\begin{itemize}
+				\item \textbf{ReportValidator:} it is the main component that deals with the notification process of the user-side. Once a report is notified by a user, all the information related to it will be delivered to this component by the \emph{ClientHandler} thanks to the \textbf{Notification Interface}. Before storing the information it has to be managed in order to add the missing details and validate its content; these two further considerations are managed with the methods provided by the interfaces:
+				
+				\begin{itemize}
+					\item \textbf{HandlePosition:} it is the interface that retrieves the street providing the GPS position of where the parking violation occurred.
+					
+					\item \textbf{PlaceRecognition:} it is the interface that retrieves the plate of the reported vehicle providing the images of the infraction and the possible additional number inserted by the user. It is important to remark once more that the result of the methods provided by this interface will determine whether to discard or not the notification.
+					
+					\item \textbf{Check:} it is the interface that allows to check if there exists already the same notification in the system. As we have already said, it is useless to store twice the same notification, in the case of a duplicate the current one will be discarded.
+					
+					\item \textbf{Store:} it is the interface that allows to store the notification once the data completion and the validity have been carried out by the component.
+				\end{itemize}
+			\end{itemize}
+			
 			\begin{figure}[ht]
 				\centering
-				\includegraphics[scale=0.2]{/diagrams/components/reportManager.png}
+				\includegraphics[scale=0.16]{/diagrams/components/reportManager.png}
 				\caption{\label{fig:reportManagerComp} Report Manager Component Diagram}
 			\end{figure}
 		
+			\begin{itemize}
+				\item \textbf{Street Identifier:} it is the component that manages to retrieve the street where the violation occurred using the GPS position provided in the notification. This component realizes the \textbf{HandlePosition Interface} thanks to the methods provided by the \textbf{StreetsRetrieval Interface} which are the real ones that execute the algorithms provided by the external map management system.
+				
+				\item \textbf{PlateReader:} it is the component that runs the algorithms provided by the IRI API in order to recognize the plate of the vehicle reported. It realizes the \textbf{PlateRecognition Interface} that is used to benefit of this control, fundamental to validate the notification.
+				
+				\item \textbf{DuplicateChecker:} it is the component that manages the requests to the notification database in order to determine whether the reported notification is already present or not. It realizes the \textbf{Check Interface} which provides the methods to perform this further control before storing the notification.
+				
+				\item \textbf{ReportStorer:} it is the component that manages to store the notification once it is ready. It realizes the \textbf{Store Interface} and uses the methods provided by the \textbf{DataIntF Interface} in order to store the data relative to the reporting notification.
+				
+				\item \textbf{ReportsFinder:} it is the component that deals with the check unread reports functionality, hence the authority-side functionality of the notification process. This component is able to retrieve all the unread reports for the authority that is requesting this functionality. In order to do so it uses the methods provided by the \textbf{DataIntF Interface} providing the query that will be executed whenever an authority requires the check unread reports.
+			\end{itemize}
+		
 		\subsubsection[Map Manager Component]{\hyperlink{toc}{Map Manager Component}}
 			\label{sec:mapManagerComponent}
+			
+			The \emph{MapManager} (\autoref{fig:mapManagerComp}) is the component that deals with all the map issues related to the realization of the functionalities. We have already presented them while describing the MI API (section \ref{sec:componentView}); we are going to see now the components that manage these issues thanks to the methods provided by the external map management system. The specific issue will be managed by the other components using the methods provided by the \textbf{StreetsRetrieval Interface} realized by this component.\\
+			
+			The components that allow the \emph{MapManager} to handle all the geographical and map issues inside the system are:
+			
+			\begin{itemize}
+				\item \textbf{StreetFinder:} it is the component that allows to retrieve the street where the parking violation occurred once the GPS position is provided. It realizes the \textbf{StreetsRetrieval Interface} thanks to the methods provided by the \textbf{GPS Interface}.
+				
+				\item \textbf{GPSPositionHandler:} it is the component that runs the algorithms provided by the MI API in order to realize the \textbf{GPS Interface}.
+				
+				\item \textbf{MapRequest:} it is the component that deals both with the retrieval of the best path between two positions provided by the customer and the mapping of each street with the correspondent safety. The shortest path is managed with the methods provided by the \textbf{Path Interface} while the mapping is carried by the the methods of the \textbf{Map Interface}. It is obvious that for example a request for the unsafe functionality over a path will reflect in a double invocation of the methods realized by this component.
+				
+				\item \textbf{ShortestPathHandler:} it is the component that runs the algorithms provided by the MI API in order to realize the \textbf{Path Interface}.
+			\end{itemize}
 			
 			\begin{figure}[ht]
 				\centering
 				\includegraphics[scale=0.2]{/diagrams/components/mapManager.png}
 				\caption{\label{fig:mapManagerComp} Map Manager Component Diagram}
 			\end{figure}
+		
+			\begin{itemize}
+				\item \textbf{SafetyManager:} it is the component that runs the algorithms provided by the MI API once it has retrieved all the information about the safety of the streets requested by the customer. It realizes the \textbf{Map Interface} that allows to benefit of the methods that return the data of each street together with its safety in order to be displayed to the client.
+			\end{itemize}
 		
 		\subsubsection[Safety Manager Component]{\hyperlink{toc}{Safety Manager Component}}
 			\label{sec:safetyManagerComponent}
