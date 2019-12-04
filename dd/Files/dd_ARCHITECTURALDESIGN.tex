@@ -344,14 +344,56 @@
 		\subsubsection[Safety Manager Component]{\hyperlink{toc}{Safety Manager Component}}
 			\label{sec:safetyManagerComponent}
 			
+			The \emph{SafetyManager} (\autoref{fig:safetyManagerComp}) is the component that deals with the safety calculus that has to be carried out every day considering the previous thirty days in order to have the data for the safety functionality. As precisely described in the RASD document \cite{RASD} we have defined a clear way to determine the safety of each street. In order to carry on this calculus we have to consider this component that periodically will run its algorithms in order to update the safety.\\
+			
+			As we see no interface is provided by this component, in fact, as we have just said it is independent as it needs to run periodically by just retrieving the data over the notifications and accidents and update the safety of the streets.\\
+			
+			Hence it is important now to describe once more how the safety update works as we can also understand how the components that compose the \emph{SafetyManager} interact in order to obtain its functionality. The system dynamically change, each day the safety of the streets, considering the parking violations data relative of the previous thirty days, thanks to two different kind of tresholds. For each street if at least one treshold is exceeded it means that the street is \textbf{unsafe} otherwise it will be considered \textbf{safe}. The tresholds are:
+			
+			\begin{itemize}
+				\item \textbf{Intervention Treshold:} each intervention is defined with a treshold. On every street every intervention would be possibly chosen as a suggestion. Each type of parking violation or accident, if occurred in a certain street augment the treshold of the interventions linked with that type (hence the same violation or accident may augment at the same time two different interventions). If an intervention's treshold exceeds it means that the street is no longer \textbf{safe} and that its safety has to be updated. In this way counting each day for every street if a treshold for at least one intervention is exceeded allows to determine both the safety of a street but also the possible intervention to be suggested.
+				
+				\item \textbf{Sum Treshold:} in order to consider also the case where no accident is linked to any intervention (because of the fact we are just considering the parking violations and the accident may be caused by another reason, for example: the speed limit) for each street is also defined another singular treshold that independently from the type determines a street to be \textbf{safe} or not. This treshold augments whenever an accident or a parking violation occurs in the street and thus it is simply determined as the sum of the accidents and parking violations. In this way counting each day for every street if the sum treshold is exceeded allows to determine the safety independently from the type of the accidents that have occurred.
+			\end{itemize}
+		
+			Now that we know better how the safety process works we are able to describe the components that compose the \emph{SafetyManager} in order to provide this functionality:
+			
+			\begin{itemize}
+				\item \textbf{SafetyUpdate:} it is the core component that deals with all the computation related to the calculus of the safety that we have said to happen periodically every day. In order to determine whether an interface is exceeded or not it uses the \textbf{InterventionsSafety Interface} and the \textbf{SumSafety Interface} that allow to determine for a street if one of the tresholds have exceeded. In order to access the data of the reports and the accidents the component uses the \textbf{Reports Interface} and the \textbf{Accidents Interface} to carry out the computation. Hence every day a new block of reports and accidents will be considered in the computation and the oldest one will be discarded, once the safety has been determined the \emph{SafetyUpdate} stores the information thanks to the \textbf{Store Interface} and its functionality will be needed the next day.
+				
+				\item \textbf{InterventionsManager:} it is the component that realizes the \textbf{InterventionsSafety Interface} providing the methods to determine the safety of a street thanks to the tresholds of the interventions linked to the parking violations and the accidents that occurred in that street.
+				
+				\item \textbf{SumManager:} it is the component that realizes the \textbf{SumSafety Interface} providing the methods to determine the safety of a street thanks to its sum treshold, by counting the number of parking violations and accidents that occurred in that street.
+			\end{itemize}
+		
+			\newpage
+		
 			\begin{figure}[ht]
 				\centering
-				\includegraphics[scale=0.2]{/diagrams/components/safetyManager.png}
+				\includegraphics[scale=0.16]{/diagrams/components/safetyManager.png}
 				\caption{\label{fig:safetyManagerComp} Safety Manager Component Diagram}
 			\end{figure}
 		
+			\begin{itemize}
+				\item \textbf{ReportsData:} it is the component that allows to obtain the information about the type of the parking violations that occurred in a certain street by providing the \textbf{Reports Interface} as they can be considered for the safety update.
+				
+				\item \textbf{AccidentsData:} it is the component that allows to obtain the information about the accidents that occurred in a certain street by providing the \textbf{Accidents Interface} as they can be considered for the safety update.
+				
+				\item \textbf{SafetyStorer:} it is the component that is able to store the new information about the safety of each street once is has been updated. It realizes the \textbf{Store Interface} and needs to use the methods provided by the \textbf{DataIntF Interface} in order to complete the storing action.
+			\end{itemize}
+		
 		\subsubsection[Accidents Manager Component]{\hyperlink{toc}{Accidents Manager Component}}
 			\label{sec:accidentsManagerComponent}
+			
+			The \emph{AccidentsManager} (\autoref{fig:accidentsManagerComp}) is the component that deals just with the management of the accidents that have been stored by the authorities over the common interface. As we see only two components are needed, one that receives the accidents by using the methods provided by the \textbf{Authority API} and the other which stores the accidents that have been retrieved.\\
+			
+			The components that allow the \emph{AccidentsManager} to handle the process of receiving the accidents provided by the authorities thanks to the authority common system are:
+			
+			\begin{itemize}
+				\item \textbf{Accidents Receiver:} it is the component that uses the methods provided by the \textbf{Authority API} in order to retrieve all the accidents that each authority has published. In this way, by updating this type of data periodically as the safety updating process we will be able to have always all the information we need to determine the safety of the streets. Once the accidents data is retrieved this component is ready to store it in the database related to the accidents thanks to the \textbf{Store Interface}.
+			\end{itemize}
+		
+			\newpage
 			
 			\begin{figure}[ht]
 				\centering
@@ -359,32 +401,92 @@
 				\caption{\label{fig:accidentsManagerComp} Accidents Manager Component Diagram}
 			\end{figure}
 		
+			\begin{itemize}
+				\item \textbf{AccidentsStorer:} it is the component that deals with the storing process of the accidents. It realizes the \textbf{Store Interface} and needs to use the methods provided by the \textbf{DataIntF Interface} in order to store the accidents in the database of the system.
+			\end{itemize}
+		
 		\subsubsection[Data Manager Component]{\hyperlink{toc}{Data Manager Component}}
 			\label{sec:dataManagerComponent}
 			
+			The \emph{DataManager} (\autoref{fig:dataManagerComp}) is the component that deals with all the management of the data needed by the system in order to perform its functionalities. As we can see in the general diagram of the server (\autoref{fig:serverComp}) almost every component needs to use the interface provided by this one in order to provide its functionality.\\
+			
+			Hence the \emph{DataManager} realizes only the \textbf{DataIntF Interface} which provides the methods for the management of all the information and uses the methods provided by the \textbf{DBMS API} in order to perform on the databases the storing or requesting action needed.\\
+			
+			The components that allow the \emph{DataManager} to handle all the operations that involve the management of the data stored in the system's databases are:
+			
+			\begin{itemize}
+				\item \textbf{MapManager:} it is the component that provides all the methods that allow to manage the data relative to the map issues, realizing the \textbf{DataIntF Interface}.
+				
+				\item \textbf{CustomerManager:} it is the component that provides all the methods that allow to manage the data relative to the customers (in particular for the access process), realizing the \textbf{DataIntF Interface}. 
+				
+				\item \textbf{ReportManager:} it is the component that provides all the methods that allow to manage the data relative to the notification process,hence of all the reports too, realizing the \textbf{DatIntF Interface}.
+				
+				\item \textbf{InterventionsManager:} it is the component that provides all the methods that allow to manage the data relative to the interventions, realizing the \textbf{DataIntF Interface}.
+				
+				\item \textbf{AccidentsManagerInterface:} it is the component that provides all the methods that allow to manage the data relative to the accidents, realizing the \textbf{DataIntF Interface}.
+			\end{itemize}
+		
 			\begin{figure}[ht]
 				\centering
-				\includegraphics[scale=0.2]{/diagrams/components/dataManager.png}
+				\includegraphics[scale=0.22]{/diagrams/components/dataManager.png}
 				\caption{\label{fig:dataManagerComp} Data Manager Component Diagram}
 			\end{figure}
+		
+			\begin{itemize}
+				\item \textbf{DataRequestor:} it is the component that allows to build a query that will obtain as a result the information required by one of the managers previously described. It realizes the \textbf{Request Interface} and needs to use the \textbf{Query Interface} in order to execute the query that has been built.
+				
+				\item \textbf{DataStorer:} it is the component that allows to build a query that will store in the database involved for the information that is going to be stored the data provided. It realizes the \textbf{Store Interface} and needs to use the \textbf{Query Interface} in order to execute the query that has been built.
+				
+				\item \textbf{QueryExecutor:} it is the component that finally executes the query received either from the \emph{DataRequestor} or the \emph{DataStorer}. It realizes the \textbf{Query Interface} and needs to use the methods provided by the \textbf{DBMS API} in order to manage all the data stored inside the databases of the system.
+			\end{itemize}
 		
 		\subsubsection[Web Server Component]{\hyperlink{toc}{Web Server Component}}
 			\label{sec:webServerComponent}
 			
-			\begin{figure}[ht]
-				\centering
-				\includegraphics[scale=0.2]{/diagrams/components/webServer.png}
-				\caption{\label{fig:webServerComp} Web Server Component Diagram}
-			\end{figure}
+			The \emph{WebServer} (\autoref{fig:webServerComp}) is an independent component, out of the server, that deals with the interaction between the web app and the business logic of the system. It realizes the \textbf{WebAppInterface} in order to provide the endpoint for the authorities to access SafeStreet with the web application displayed on their browser. It needs to use the methods provided by the \textbf{WebInterface} in order to establish the interaction between the authorities and the system.\\
+			
+			The components that allow the \emph{WebServer} to handle the interaction process between the requests coming from the web app and the business logic are:
+			
+			\begin{itemize}
+				\item \textbf{Presentation:} it is the component that deals with the graphical interface that is needed to provide the authorities the access to the system. It realizes the \textbf{WebAppInterface} as it defines all the methods and scripts the browser will use to display the information. In order to manage the interaction it handles the actions performed by the authority with the \textbf{Commands Interface} and sends the requests to the system as they can be processed thanks to the \textbf{Requests Interface}.
+			\end{itemize}
+			
+				\begin{figure}[ht]
+					\centering
+					\includegraphics[scale=0.2]{/diagrams/components/webServer.png}
+					\caption{\label{fig:webServerComp} Web Server Component Diagram}
+				\end{figure}
+		
+			\begin{itemize}
+				\item \textbf{Controller:} it is the component that deals with the logic needed to handle the actions performed by the authority. By providing the \textbf{Commands Interface} it allows to manage the flow of the web application displayed on the browser of the authority.
+				
+				\item \textbf{RequestHandler:} it is the component that deals with all the requests coming from the web application. Thanks to the \textbf{Request Interface} realized, it is able to process the incoming request and send it to the business logic with the methods of the \textbf{WebInterface} as the functionality required will be displayed in the web application.
+			\end{itemize}
 		
 		\subsubsection[User App Component]{\hyperlink{toc}{User App Component}}
 			\label{sec:userAppComponent}
+			
+			The \emph{UserApp:} (\autoref{fig:userAppComp}) is the other independent component that will be installed on the device of the users in order to provide the interaction with the system. Differently from the \emph{WebServer} this is already the component that will manage the actions performed by the user as it represents the mobile software application. For this reason it only needs to use the methods provided by the \textbf{MobileAppInterface} to send the requests to the system as they can be processed.\\
+			
+			The components that allow the \emph{UserApp} to handle the interaction process between the requests coming from the mobile app and the business logic are:
+			
+			\begin{itemize}
+				\item \textbf{Presentation:} it is the component that deals with the graphical interface that is needed to provide the users the access to the system. As we have just said the realization of this component is the interface that allows the user to interact with the system; in order to do so it needs to use the methods provided by the \textbf{Commands Interface} and the \textbf{Request Interface}.
+			\end{itemize}
 			
 			\begin{figure}[ht]
 				\centering
 				\includegraphics[scale=0.2]{/diagrams/components/userApp.png}
 				\caption{\label{fig:userAppComp} User App Component Diagram}
 			\end{figure}
+		
+			\begin{itemize}
+				\item \textbf{Controller:} it is the component that deals with the logic needed to handle the actions performed by the authority. By providing the \textbf{Commands Interface} is allows to manage the flow of the mobile application displayed on the device of the user.
+				
+				\item \textbf{RequestHandler:} it is the component that deals with all the requests coming from the mobile application. Thanks to the \textbf{Request Interface} realized, it is able to process the incoming request and send it to the business logic with the methods of the \textbf{MobileAppInterface} as the functionality required will be displayed in the application.
+			\end{itemize}
+			
+			
 		
 	\subsection[Deployment View]{\hyperlink{toc}{Deployment View}}
 		\label{sec:deploymentView}
