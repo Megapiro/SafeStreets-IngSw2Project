@@ -486,14 +486,88 @@
 				\item \textbf{RequestHandler:} it is the component that deals with all the requests coming from the mobile application. Thanks to the \textbf{Request Interface} realized, it is able to process the incoming request and send it to the business logic with the methods of the \textbf{MobileAppInterface} as the functionality required will be displayed in the application.
 			\end{itemize}
 			
-			
-		
 	\subsection[Deployment View]{\hyperlink{toc}{Deployment View}}
 		\label{sec:deploymentView}
-		%todo implementations choices abbiamo la sezione apposta però ci stanno queste che metto
+
+		As we have seen in the overview (\ref{sec:overview}) and component view (\ref{sec:componentView}) sections, we have designed a system that needs to interact with many agents. In order to define a crowd-sourced application where a lot of information needs to be managed as it can be used to provide different services, we decided to use a \textbf{client-server} architectural approach. As we may have guessed in the high-level component diagram of \autoref{fig:highLevelComp} the business logic is represented by the server component while the clients are designed with two different technologies in order to have the best application software to make the customers interact with the system, depending on their characteristics.
 		
+		The client-side system is composed of:
+		
+		\begin{itemize}
+			\item \textbf{Mobile Application:} for the users
+			\item \textbf{Web Application:} for the authorities
+		\end{itemize}
+			
+		Hence, to make this decision possible we need to consider a web server that will manage all the interaction between the web application and the internal system, while we can make directly interface the mobile application with the internal system thanks to the software application installed on the devices of the users.\\
+		
+		To accomplish the considerations just presented we decided to design the \textbf{client-server} paradigm with a \textbf{four-tier architecture} in order to have a clear separation between the clients and the servers that manage them; the decoupling of the database shown in the composition diagram (\autoref{fig:compositionDiagram}) enforces once more this decision. All the communications between the system and the customers (both users and authorities) are handled via HTTP messages in a RESTful way. All the considerations just reported about some architectural and communication choices will be clearly precised in the devoted section (\ref{sec:selectedArchitecturalStylesAndPatterns}).\\
+		
+		Let's focus now on the illustration of the four-tier architecture as we can understand how the components that we have previously described are mapped with the tiers of the system. Then in the next section we first illustrate the decision tree we used while designing the system as we can later give the complete description of the deployment of the system.\\
+		
+		The following picture (\autoref{fig:fourTierArchitecture}) illustrates the tiers of the system needed in order to deploy the components identified in the previous section. 
+		
+		\vspace{0.3cm}
+		
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[scale=0.4]{fourTierArchitecture.png}
+			\caption{\label{fig:fourTierArchitecture} Four Tier Architecture Diagram}
+		\end{figure}
+	
+		\newpage
+		
+		\paragraph{Components Mapping} Now that we know which are the tiers and which are the components we are able to map them together as we can clearly understand how the design is structured before starting with the deployment diagram where we highlight instead which are the devices that run the software components identified.
+		
+		\begin{itemize}
+			\item \textbf{Client:} are the components that allow the interaction of the customers with the system in order to benefit of its functionalities
+			
+				\begin{itemize}
+					\item AuthorityWebApp
+					\item UserApp
+				\end{itemize}
+			
+			\item \textbf{Web Server:} it is the layer that allows the interaction between the web application used by the authorities and the system.
+			
+				\begin{itemize}
+					\item WebServer
+				\end{itemize}
+			
+			\item \textbf{Business Logic:} is composed of all the components that allow the computation needed to provide the functionalities of SafeStreets. Hence it is made of all the components inside the server one that are:
+			
+				\begin{itemize}
+					\item ClientHandler
+					\item AccessManager
+					\item QueryManager
+					\item ReportManager
+					\item MapManager
+					\item SafetyManager
+					\item AccidentsManager
+					\item DataManager
+				\end{itemize}
+			
+			\item \textbf{Data:} is the layer that deals with the management of all the data needed by the system in order to provide its services.
+			
+				\begin{itemize}
+					\item DBMS
+				\end{itemize}
+		\end{itemize}
+	
+		The diagram of next page (\autoref{fig:coloredComponentDiagram}) provides a graphical illustration of what we have just said by coloring with the color of the corresponding layer the components highlighted in the general component diagram already seen.
+		
+		\newpage
+		
+		\begin{figure}[htbp]
+			\centering
+			\includegraphics[scale=0.16, angle=90]{coloredComponentDiagram.png}
+			\caption{\label{fig:coloredComponentDiagram} Components Mapping Diagram}
+		\end{figure}
+	
+		\FloatBarrier
+	
 		\subsubsection[Decision Tree]{\hyperlink{toc}{Decision Tree}}
 			\label{sec:decisionTree}
+			
+			The decision tree is the decision tree.
 			
 		\subsubsection[Deployment Diagram]{\hyperlink{toc}{Deployment Diagram}}
 			\label{sec:deploymentDiagram}
@@ -507,6 +581,8 @@
 		
 	\subsection[Selected Architectural Styles and Patterns]{\hyperlink{toc}{Selected Architectural Styles and Patterns}}
 		\label{sec:selectedArchitecturalStylesAndPatterns}
+		
+		%TODO REST utilizzato per tutte e due in modo da usare la stessa tecnologia, rather than usarne due diverse
 		
 	\subsection[Other Design Decisions]{\hyperlink{toc}{Other Design Decisions}}
 		\label{sec:otherDesignDecisions}						
