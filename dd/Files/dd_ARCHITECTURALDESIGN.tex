@@ -37,7 +37,7 @@
 			Now that we know which are the systems that needed, before seeing which are the modules that will consider the communication with each of them let's understand first for which functionality they are used for. The following table lists the three types of functionalities and a tick (\xtick) is used to express that the functionality needs the external systems services in order to be realized.
 			
 			\begin{center}
-				\scalebox{0.7}{
+				\scalebox{0.64}{
 					\begin{tabular}{|c|c|c|c|c|}
 						\hline
 						\diagbox{\textbf{Functionality}}{\textbf{System}} & Image Recognition & Map Management & Email Management & Authority Common \\ \hline
@@ -93,7 +93,7 @@
 		
 		\begin{figure}[ht]
 			\centering
-			\includegraphics[scale=0.2]{/diagrams/components/highLevel.png}
+			\includegraphics[scale=0.18]{/diagrams/components/highLevel.png}
 			\caption{\label{fig:highLevelComp} High Level Component Diagram}
 		\end{figure}
 	
@@ -145,11 +145,13 @@
 			
 			The diagram of the next page highlights all the components that compose the server and describes both their internal and external interaction: we can see in fact the interfaces that we defined in the previous section how are provided or used by these components and how new interfaces are needed to make them interact.
 			
-			\begin{figure}[hbtp]
+			\begin{figure}[h!]
 				\centering
 				\includegraphics[scale=0.16, angle=90]{/diagrams/components/server.png}
 				\caption{\label{fig:serverComp} Server Component Diagram}
-			\end{figure} 
+			\end{figure}
+		
+			\FloatBarrier 
 		
 		\subsubsection[Client Handler Component]{\hyperlink{toc}{Client Handler Component}}
 			\label{sec:clientHandlerComponent}
@@ -366,8 +368,6 @@
 				\item \textbf{SumManager:} it is the component that realizes the \textbf{SumSafety Interface} providing the methods to determine the safety of a street thanks to its sum treshold, by counting the number of parking violations and accidents that occurred in that street.
 			\end{itemize}
 		
-			\newpage
-		
 			\begin{figure}[ht]
 				\centering
 				\includegraphics[scale=0.16]{/diagrams/components/safetyManager.png}
@@ -392,8 +392,6 @@
 			\begin{itemize}
 				\item \textbf{Accidents Receiver:} it is the component that uses the methods provided by the \textbf{Authority API} in order to retrieve all the accidents that each authority has published. In this way, by updating this type of data periodically as the safety updating process we will be able to have always all the information we need to determine the safety of the streets. Once the accidents data is retrieved this component is ready to store it in the database related to the accidents thanks to the \textbf{Store Interface}.
 			\end{itemize}
-		
-			\newpage
 			
 			\begin{figure}[ht]
 				\centering
@@ -489,7 +487,7 @@
 	\subsection[Deployment View]{\hyperlink{toc}{Deployment View}}
 		\label{sec:deploymentView}
 
-		As we have seen in the overview (\ref{sec:overview}) and component view (\ref{sec:componentView}) sections, we have designed a system that needs to interact with many agents. In order to define a crowd-sourced application where a lot of information needs to be managed as it can be used to provide different services, we decided to use a \textbf{client-server} architectural approach. As we may have guessed in the high-level component diagram of \autoref{fig:highLevelComp} the business logic is represented by the server component while the clients are designed with two different technologies in order to have the best application software to make the customers interact with the system, depending on their characteristics.
+		As we have seen in the overview (\ref{sec:overview}) and component view (\ref{sec:componentView}) sections, we have designed a system that needs to interact with many agents. In order to define a crowd-sourced application where a lot of information needs to be managed as it can be used to provide different services, we decided to use a \textbf{client-server} architectural approach. As we may have guessed in the high-level component diagram of \autoref{fig:highLevelComp} the business logic is represented by the server component while the clients are designed with two different technologies in order to have the best application software to make the customers interact with the system, depending on their characteristics.\\
 		
 		The client-side system is composed of:
 		
@@ -513,8 +511,6 @@
 			\includegraphics[scale=0.4]{fourTierArchitecture.png}
 			\caption{\label{fig:fourTierArchitecture} Four Tier Architecture Diagram}
 		\end{figure}
-	
-		\newpage
 		
 		\paragraph{Components Mapping} Now that we know which are the tiers and which are the components we are able to map them together as we can clearly understand how the design is structured before starting with the deployment diagram where we highlight instead which are the devices that run the software components identified.
 		
@@ -567,10 +563,30 @@
 		\subsubsection[Decision Tree]{\hyperlink{toc}{Decision Tree}}
 			\label{sec:decisionTree}
 			
-			The decision tree is the decision tree.
+			Now that we have established how our system is going to be deployed at the highest level possible, before providing the most detailed deployment diagram we present the decision tree we developed while defining the design process as we can justify the diagram of the next section. As we can see in the picture (\autoref{fig:decisionTree}) we started with a \textbf{client-server} decision and then refined with further more detailed decisions.
+			
+			\begin{figure}[h!]
+				\centering
+				\includegraphics[scale=0.33]{decisionTree.png}
+				\caption{\label{fig:decisionTree} Decision Tree}
+			\end{figure}
 			
 		\subsubsection[Deployment Diagram]{\hyperlink{toc}{Deployment Diagram}}
 			\label{sec:deploymentDiagram}
+			
+			In the diagram of the following page (\autoref{fig:deploymentDiagram}) we illustrate a precise description of how and where the components identified are deployed. We still use the colors related to the components now for the nodes that involve them.\\
+			
+			The communication is presented only between the nodes and not for the components as we already have a precise description of their interfaces that realize their interaction in the component view section (\ref{sec:componentView}). The \textbf{HTTPS} and \textbf{TCP/IP} protocols are used to connect respectively: a connection to a REST API or to a service providing system.\\
+			
+			All the motivations for the architectural styles and patterns but also the implementation choices that we can see in the picture will be clearly motivated in the devoted section (\ref{sec:selectedArchitecturalStylesAndPatterns}). 
+						
+			\begin{figure}[hbtp]
+				\centering
+				\includegraphics[scale=0.21, angle=90]{/diagrams/deployment/deploymentDiagram.png}
+				\caption{\label{fig:deploymentDiagram} Deployment Diagram}
+			\end{figure}
+		
+			\FloatBarrier
 			
 	\subsection[Runtime View]{\hyperlink{toc}{Runtime View}}
 		\label{sec:runtimeView}
