@@ -591,6 +591,127 @@
 	\subsection[Runtime View]{\hyperlink{toc}{Runtime View}}
 		\label{sec:runtimeView}
 		
+		In this section we are going to present the most important runtime views of the interactions between the customers and SafeStreets. All the methods used in the following diagrams will be precisely described in the next section (\ref{sec:componentInterfaces}) where each of them will be mapped with the respective interface that realizes it.\\
+		
+		The \emph{Runtime View Diagrams} of this section are presented first for the \textbf{users} and \textbf{authorities}, then for the common functionalities and lastly two critical views are shown in order to present how the components related to the safety calculus work in order to provide this functionality.
+		
+		\subsubsection[User]{\hyperlink{toc}{User}}
+			\label{sec:userRuntimeView}
+			
+			\begin{itemize}
+				\item \textbf{Login:} In this sequence diagram (\autoref{fig:loginRuntime}), the process of user login is shown. The authority login is not shown in the runtime view section, since it is basically the same. In fact, both users and authorities log in with a username and a password. This process is actually quite simple: the UserApp asks the server to log in by passing username and password. ClientHandler receives the request and forwards it to the AccessManager component, that will ask DataManager for a simple query in the database. If no user with that username is found, an error message is given to the client, otherwise the check of the password will be performed. If the password inserted and sent by the user is the same as the one retrieved from the database, the login will be considered as logged in and then informed.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/login.png}
+					\caption{\label{fig:loginRuntime} Login Runtime View}
+				\end{figure}
+			
+				\item \textbf{Registration:} This sequence diagram (\autoref{fig:userRegistrationRuntime}) pictures the interaction through which a user registers to SafeStreets. After UserApp has asked him all the registration data (username, password, and other information), it will hand them to the server, hidden into a User object. ClientHandler will forward the request to AccessManager, that is the same component that manages the login interactions. AccessManager will first check if there is an already existing user who registered with that same username and in case will send back an error. If not, it will ask DataManager to store the user information into the relative database.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/userRegistration.png}
+					\caption{\label{fig:userRegistrationRuntime} User Registration Runtime View}
+				\end{figure}
+			
+				\item \textbf{Report Violation:} Here (\autoref{fig:reportViolationRuntime}), it is shown how a violation is reported by users to the system. UserApp sends all the information contained in a Violation object (pictures, location, ...). ClientHandler forwards the call to ReportManager, the component designed to handle the reports. It will indeed ask IRI for the plate number, providing it with the pictures sent by the user. Then, it will ask MapManager for the name of the street of the violation. MapManager of course needs to ask the external MI to accomplish this, and it only needs the provided location. When all the information is gathered, the report is ready to be stored into the database. To do so, ReportManager will ask DataManager to interact with the DBMS and update the related table(s).
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/reportViolation.png}
+					\caption{\label{fig:reportViolationRuntime} Report Violation Runtime View}
+				\end{figure}
+			\end{itemize}
+		
+		\subsubsection[Authority]{\hyperlink{toc}{Authority}}
+			\label{sec:authorityRuntimeView}
+			
+			\begin{itemize}
+				\item \textbf{Registration:} It is now described (\autoref{fig:authorityRegistrationRuntime}) the process through which an authority registers to SafeStreets. This is a little bit more complicated process with respect to the user one, because the system requires the authority to be real and recognized. The assumption here is that there's a completely secure PEC address assigning mechanism. The ClientHandler forwards the WebApp request to AccessManager. The request contains of course all the necessary information for the registration. AccessManager will then check whether there is already an authority registered for the city contained in the registration request. If a authority already exists, the request is rejected and an error message is sent back to the client, otherwise AccessManager will check whether the specified PEC address actually corresponds to the authority of the city contained in the request. This is to avoid that an authority registers for a different city. To do that, it needs to ask the Authority Common Interface that is external with respect to SafeStreets. If the addresses do not match, an error message is sent to the client and the procedure is aborted. If the specified address is correct for that city, SafeStreets needs now to verify that the actual person that is making the request through the WebApp is able to access the PEC address and actually read the received emails. In order to do that, AccessManager generates a code that will be sent by PEC through EmailAPI. AccessManager now waits for the authority to insert, through the WebApp, the received code. Then, it will check that the generated code and the inserted one coincide. If they do not coincide, an error is sent to the WebApp and the registration is aborted. If the inserted code is correct, AccessManager will ask DataManager to store the information into the database.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/authorityRegistration.png}
+					\caption{\label{fig:authorityRegistrationRuntime} Authority Registration Runtime View}
+				\end{figure}
+			
+				\item \textbf{Check Unread Reports:} In this sequence diagram (\autoref{fig:unreadReportsRuntime}), it is shown how an authority is able to retrieve all the unread reports sent by users to SafeStreets. The WebApp will ask ClientHandler to forward the request to the right component, that in this case is again QueryManager. In fact, its job is to call the right method of DataManager to obtain only the reports that have the "read" flag set to false. DataManager will as usual execute the actual query into the DBMS. Finally, QueryManager will send the result back to the WebApp.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/unreadReports.png}
+					\caption{\label{fig:unreadReportsRuntime} Check Unread Reports Runtime View}
+				\end{figure}
+			
+				\item \textbf{Find Reports:} Here (\autoref{fig:findReportsRuntime}) it is described the interactions through the components when the authority asks for some past reports applying some filters. The request is made by the WebApp and is forwarded to QueryManager by ClientHandler. After having checked if the specified filters are correct and eventually returning an error to the WebApp, QueryManager will ask DataManager to interact with the DBMS and execute the query that will return all the reports located in the authority’s city that match the specified filters.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/findReports.png}
+					\caption{\label{fig:findReportsRuntime} Find Reports Runtime View}
+				\end{figure}
+			\end{itemize}
+		
+		\subsubsection[Common Functionalities]{\hyperlink{toc}{Common Functionalities}}
+			\label{sec:commonFunctionalitiesRuntime}
+			
+			\begin{itemize}
+				\item \textbf{Find Streets With Highest Number of Violations:} It is now shown (\autoref{fig:violationsFrequencyRuntime}) how a possible query for the streets with the highest number of violations is made. The filterList object represents all the filters that are selected by the user, like time slots and types of violation. These filters are widely described in the RASD. The component designed to handle these queries is of course QueryManager. It will check the correctness of all the used filters (e.g. at least a type of violation must be included). If some constraint is not fulfilled, an error is sent to the user, otherwise QueryManager will prepare the query and forward it to DataManager, that will actually execute it on the DBMS. The result is then back propagated through the involved components and to the UserApp.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/violationsFrequency.png}
+					\caption{\label{fig:violationsFrequencyRuntime} Violations Frequency Runtime View}
+				\end{figure}
+			
+				\item \textbf{Find Dangerous Vehicles:} This interaction (\autoref{fig:dangerousVehiclesRuntime}) is basically the same as the previous one, thus it won't be explained again here. The only difference is that the query designed by QueryManager will be specific for finding the types of vehicle that made the most violations.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/dangerousVehicles.png}
+					\caption{\label{fig:dangerousVehiclesRuntime} Dangerous Vehicles Runtime View}
+				\end{figure}
+			
+				\item \textbf{Find Unsafe Streets:} In this interaction both client and server processes are shown. The request made by the UserApp is forwarded by ClientHandler to QueryManager. Depending on the option selected by the user, three different methods could be called: the one with a city as input, the one with starting and ending points, or the one with a single street. In the first case, QueryManager will look for all the streets of the selected city in the DBMS, going through DataManager. In the second case, a path needs to be generated, thus QueryManager will ask MI through MapManager for a path, that will include a certain number of streets. In the last case, no action is required. Then, for all the gathered streets, QueryManager will search in the database for their safety, asking DataManager to execute the actual query. All this data is finally sent back to the UserApp again that will pass them to the "local" MapManager component, which will ask MapInterface for the generation of the map. The map will of course show the path calculated by the server and will colour the streets according to their safety, using the safety data handed by the server. The map will be finally shown to the user.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/unsafeStreets.png}
+					\caption{\label{fig:unsafeStreetsRuntime} Unsafe Streets Runtime View}
+				\end{figure}
+			
+				\item \textbf{Fin Urgent Interventions:} This interaction (\autoref{fig:urgentInterventionsRuntime
+				}) is basically the same as "find streets with highest number of violations", thus it won't be explained again here. The only difference is that the query designed by QueryManager will be specific for urgent interventions.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/urgentInterventions.png}
+					\caption{\label{fig:urgentInterventionsRuntime} Urgent Interventions Runtime View}
+				\end{figure}
+			\end{itemize}
+		
+		\subsubsection[Safety Manager]{\hyperlink{toc}{Safety Manager}}
+			\label{sec.safetyManagerRuntime}
+			
+			\begin{itemize}
+				\item \textbf{Update Safety:} This  (\autoref{fig:safetyUpdateRuntime}) is the description of the process of updating the safety estimation of every registered street. The component designed to do this operation is SafetyManager. It asks DataManager to get all the violations and accidents information from the DBMS. Then it will calculate the safety estimation as described in RASD. Finally, it will store this estimation in the database, so that it will be possible to retrieve always the most updated information without actually calculating it for every request that is made.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/safetyUpdate.png}
+					\caption{\label{fig:safetyUpdateRuntime} Update Safety Runtime View}
+				\end{figure}
+			
+				\item \textbf{Update Accidents:} Here (\autoref{fig:accidentsUpdateRuntime}) it is described how SafeStreets uses the Authority Common Interface to retrieve data about accidents. For every city with a registered authority, AccidentsManager will ask ACI for these data and then will ask DataManager to store them into the database.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.16]{/diagrams/sequence/accidentsUpdate.png}
+					\caption{\label{fig:accidentsUpdateRuntime} Update Accidents Runtime View}
+				\end{figure}
+			\end{itemize}
+		
 	\subsection[Component Interfaces]{\hyperlink{toc}{Component Interfaces}}
 		\label{sec:componentInterfaces}
 		%todo all the APIs go here!
