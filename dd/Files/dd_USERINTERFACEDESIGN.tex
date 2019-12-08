@@ -1,12 +1,41 @@
-\section[User Interface Design]{\hyperlink{toc}{User Interface Design}} \todo{Think of new pages for each section in this case, it would become much clear -> sbatti di floating, this section may be redesigned}
+\section[User Interface Design]{\hyperlink{toc}{User Interface Design}}
 	\label{sec:userInterfaceDesign}
 	
-	This section describes precisely the mockups already presented in the \emph{SafeStreets: Requirements Analytics and Specification Document} \cite{RASD} in order to understand how the main functionalities will be offered.\\
+	This section describes precisely the mockups already presented in the \emph{SafeStreets: Requirements Analytics and Specification Document} \cite{RASD} in order to understand how the main functionalities will be offered. The first subsection focuses on the illustration of the flow of both the mobile and the web applications designed for the users and the authorities by using two \textbf{UX diagrams}.\\
 	
 	As the design of the application defines two different interfaces, one for the users and one for the authorities, the following subsections will present each the related interfaces. These mockups are meant to precisely define how the customers will interact with the system to benefit of its functionalities, their design is still minimal not to reduce too much the style and fantasy of the developers. In fact it has to be considered that the \textbf{Mobile Application} for the users will possibly have two different styles related to the \emph{Android} and \emph{Apple} layouts while the \textbf{Web Application} can be designed with any kind of technology preferred.\\
 	
 	Both the interactions are structured over a \emph{Client-Server} paradigm, hence all the actions performed by a client are managed by the respective logic that allows to display the graphical interface and whenever a request is needed, its execution will be deployed to the server. Once the answer is received back, the modules for the presentation will display its information to the customers.
 	
+	\subsection[UX Diagrams]{\hyperlink{toc}{UX Diagrams}}
+		\label{sec:uxDiagrams}
+		
+		Before going deep in details that describe the interfaces of the applications designed for both the users and the authorities, it is very useful to first understand how these interfaces interact one with the others by means of a flow graph that leads from one mockup to the other. Thanks to this kind of diagrams, called UX diagrams, we are now able to understand in which way either the user or the authority will have to interact with the application in order to benefit of the services provided by SafeStreets.
+		
+		\newpage
+		
+		\subsubsection[User Mobile Application]{\hyperlink{toc}{User Mobile Application}}
+			\label{sec:userUXDiagram}
+		
+			\begin{figure}[ht!]
+				\centering
+				\includegraphics[scale=0.16, angle=90]{/diagrams/UX/userAppFlow.png}
+				\caption{\label{fig:userAppFlow} Mobile Application UX Diagram}
+			\end{figure}
+		
+			\FloatBarrier
+		
+		\subsubsection[Authority Web Application]{\hyperlink{toc}{Authority Web Application}}
+			\label{sec:authorityUXDiagram}
+			
+			\begin{figure}[ht!]
+				\centering
+				\includegraphics[scale=0.12, angle=90]{/diagrams/UX/authorityWebFlow.png}
+				\caption{\label{fig:authorityAppFlow} Web Application UX Diagram}
+			\end{figure}
+		
+			\FloatBarrier
+			
 	\subsection[User Mobile App]{\hyperlink{toc}{User Mobile App}}
 		\label{sec:userMobileApp}
 		
@@ -33,16 +62,17 @@
 				\centering
 				\begin{minipage}{0.5\textwidth}
 					\centering
-					\includegraphics[width=0.6\textwidth]{/mockups/user/loginApp.png}
+					\includegraphics[width=0.8\textwidth]{/mockups/user/loginApp.png}
 					\caption{\label{fig:loginApp} User Login}
 				\end{minipage}\hfill
 				\begin{minipage}{0.5\textwidth}
 					\centering
-					\includegraphics[width=0.6\textwidth]{/mockups/user/registrationApp.png}
+					\includegraphics[width=0.8\textwidth]{/mockups/user/registrationApp.png}
 					\caption{\label{fig:registrationApp} User Registration}
 				\end{minipage}
 			\end{figure}
 		
+			\FloatBarrier
 		\subsubsection[Home Page]{\hyperlink{toc}{Home Page}}
 			\label{sec:userHomePage}
 			
@@ -60,9 +90,11 @@
 			
 			\begin{figure}[ht!]
 				\centering
-				\includegraphics[scale=0.31]{/mockups/user/homeApp.png}
+				\includegraphics[scale=0.4]{/mockups/user/homeApp.png}
 				\caption{\label{fig:homeApp} User Home}
 			\end{figure}
+		
+			\FloatBarrier
 
 		\subsubsection[Report Violation]{\hyperlink{toc}{Report Violation}}
 			\label{sec:userReportViolation}
@@ -73,11 +105,9 @@
 			
 			The entire data received whenever a user performs a report is the one that needs to be processed by the system before storing it. In fact it is necessary that no incorrect parking violation is taken into account by the system that wants to notify the authority whenever a new one is received.
 			
-			\newpage
-			
 			\begin{figure}[ht!]
 				\centering
-				\includegraphics[scale=0.31]{/mockups/user/notificationApp.png}
+				\includegraphics[scale=0.35]{/mockups/user/notificationApp.png}
 				\caption{\label{fig:notificationApp} User Notification}
 			\end{figure}
 		
@@ -119,12 +149,12 @@
 				\centering
 				\begin{minipage}{0.5\textwidth}
 					\centering
-					\includegraphics[width=0.6\textwidth]{/mockups/user/violationsFrequencyApp.png}
+					\includegraphics[width=0.7\textwidth]{/mockups/user/violationsFrequencyApp.png}
 					\caption{\label{fig:violationsFrequencyApp} User Violations Frequency}
 				\end{minipage}\hfill
 				\begin{minipage}{0.5\textwidth}
 					\centering
-					\includegraphics[width=0.6\textwidth]{/mockups/user/dangerousVehiclesApp.png}
+					\includegraphics[width=0.7\textwidth]{/mockups/user/dangerousVehiclesApp.png}
 					\caption{\label{fig:dangerousVechiclesApp} User Dangerous Vehicles}
 				\end{minipage}
 			\end{figure}
@@ -146,11 +176,9 @@
 		
 			Once the user has chosen the area to highlight the safety and pressed the \textbf{Confirm} button, the map will be updated focusing on either the street or the path or the city, in this last case it will be displayed the view of the city with a high scale; in this last case a high view of the city will be displayed and the user will be able to zoom in and out to select the places it prefers.
 			
-			\vspace{0.6cm}
-			
 			\begin{figure}[ht!]
 				\centering
-				\includegraphics[scale=0.31]{/mockups/user/unsafeStreetsApp.png}
+				\includegraphics[scale=0.32]{/mockups/user/unsafeStreetsApp.png}
 				\caption{\label{fig:unsafeStreetsApp} User Unsafe Streets}
 			\end{figure}
 		
