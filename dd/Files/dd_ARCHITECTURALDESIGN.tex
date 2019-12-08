@@ -707,7 +707,7 @@
 			\label{sec.safetyManagerRuntime}
 			
 			\begin{itemize}
-				\item \textbf{Update Safety:} This  (\autoref{fig:safetyUpdateRuntime}) is the description of the process of updating the safety estimation of every registered street. The component designed to do this operation is SafetyManager. It asks DataManager to get all the violations and accidents information from the DBMS. Then it will calculate the safety estimation as described in RASD. Finally, it will store this estimation in the database, so that it will be possible to retrieve always the most updated information without actually calculating it for every request that is made.
+				\item \textbf{Update Safety:} This  (\autoref{fig:safetyUpdateRuntime}) is the description of the process of updating the safety estimation of every registered street, along with the suggested possible interventions. The component designed to do this operation is SafetyManager. It asks DataManager to get all the violations and accidents information from the DBMS. Then it will calculate the safety estimation and all the possible interventions for that street as described in RASD. Finally, it will store safety estimation and all those possible interventions in the database, so that it will be possible to always retrieve the most updated information without actually calculating it for every request that is made.
 				
 				\begin{figure}[h!]
 					\centering
