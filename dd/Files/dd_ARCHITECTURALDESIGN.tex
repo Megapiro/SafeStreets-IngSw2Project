@@ -602,7 +602,7 @@
 		
 		In this section we are going to present the most important runtime views of the interactions between the customers and SafeStreets. All the methods used in the following diagrams will be precisely described in the next section (\ref{sec:componentInterfaces}) where each of them will be mapped with the respective interface that realizes it.\\
 		
-		The \emph{Runtime View Diagrams} of this section are presented first for the \textbf{users} and \textbf{authorities}, then for the common functionalities where we decided to show only the interaction between the UserApp and the system to keep the diagrams as clearest as possible (the ones for the authorities would need an additional interaction with the WebServer before interfacing with the system) and lastly two critical views are shown in order to present how the components related to the safety calculus work.
+		The \emph{Runtime View Diagrams} of this section are presented first for the \textbf{users} and \textbf{authorities}, then for the common functionalities where we decided to show only the interaction between the UserApp and the system to keep the diagrams as clearest as possible (the ones for the authorities would need an additional interaction with the WebServer before interfacing with the system) and lastly two critical managers are shown in order to present how the components related to the safety and the map issues work.
 		
 		\subsubsection[User]{\hyperlink{toc}{User}}
 			\label{sec:userRuntimeView}
@@ -610,26 +610,33 @@
 			\begin{itemize}
 				\item \textbf{Login:} In this sequence diagram (\autoref{fig:loginRuntime}), the process of user login is shown. The authority login is not shown in the runtime view section, since it is basically the same. In fact, both users and authorities log in with a username and a password. This process is actually quite simple: the UserApp asks the server to log in by passing username and password. ClientHandler receives the request and forwards it to the AccessManager component, that will ask DataManager for a simple query in the database. If no user with that username is found, an error message is given to the client, otherwise the check of the password will be performed. If the password inserted and sent by the user is the same as the one retrieved from the database, the login will be considered as logged in and then informed.
 				The difference for the authorities is that their login requests will come from  the AuthorityWebApp, instead of using the UserApp, thus the WebServer will be involved too, between the AuthorityWebApp and the ClientHandler.
+	
+				\item \textbf{Registration:} This sequence diagram (\autoref{fig:userRegistrationRuntime}) pictures the interaction through which a user registers to SafeStreets. After UserApp has asked him all the registration data (username, password, and other information), it will hand them to the server, hidden into a User object. ClientHandler will forward the request to AccessManager, that is the same component that manages the login interactions. AccessManager will first check if there is an already existing user who registered with that same username and in case will send back an error. If not, it will ask DataManager to store the user information into the database of the system.
+				
+				\newpage
 				
 				\begin{figure}[h!]
 					\centering
-					\includegraphics[scale=0.16]{/diagrams/sequence/login.png}
+					\includegraphics[scale=0.15]{/diagrams/sequence/login.png}
 					\caption{\label{fig:loginRuntime} Login Runtime View}
 				\end{figure}
 			
-				\item \textbf{Registration:} This sequence diagram (\autoref{fig:userRegistrationRuntime}) pictures the interaction through which a user registers to SafeStreets. After UserApp has asked him all the registration data (username, password, and other information), it will hand them to the server, hidden into a User object. ClientHandler will forward the request to AccessManager, that is the same component that manages the login interactions. AccessManager will first check if there is an already existing user who registered with that same username and in case will send back an error. If not, it will ask DataManager to store the user information into the database of the system.
+				\vspace{2cm}
 				
 				\begin{figure}[h!]
 					\centering
-					\includegraphics[scale=0.16]{/diagrams/sequence/userRegistration.png}
+					\includegraphics[scale=0.21]{/diagrams/sequence/userRegistration.png}
 					\caption{\label{fig:userRegistrationRuntime} User Registration Runtime View}
 				\end{figure}
+			
+				\FloatBarrier
+				\newpage
 			
 				\item \textbf{Report Violation:} Here (\autoref{fig:reportViolationRuntime}), it is shown how a violation is reported by users to the system. UserApp sends all the information contained in a Violation object (pictures, location, ...). ClientHandler forwards the call to ReportManager, the component designed to handle the reports. It will indeed ask IRI for the plate number, providing it with the pictures sent by the user. Then, it will ask MapManager for the name of the street of the violation. MapManager of course needs to ask the external MI to accomplish this, and it only needs the provided location. When all the information is gathered, the report is ready to be stored into the database. To do so, ReportManager will ask DataManager to interact with the DBMS and update the related table(s).
 				
 				\begin{figure}[h!]
 					\centering
-					\includegraphics[scale=0.16]{/diagrams/sequence/reportViolation.png}
+					\includegraphics[scale=0.15]{/diagrams/sequence/reportViolation.png}
 					\caption{\label{fig:reportViolationRuntime} Report Violation Runtime View}
 				\end{figure}
 			\end{itemize}
@@ -644,7 +651,7 @@
 				
 				\begin{figure}[h!]
 					\centering
-					\includegraphics[scale=0.16]{/diagrams/sequence/authorityRegistration.png}
+					\includegraphics[scale=0.14]{/diagrams/sequence/authorityRegistration.png}
 					\caption{\label{fig:authorityRegistrationRuntime} Authority Registration Runtime View}
 				\end{figure}
 			
@@ -652,7 +659,7 @@
 				
 				\begin{figure}[h!]
 					\centering
-					\includegraphics[scale=0.16]{/diagrams/sequence/unreadReports.png}
+					\includegraphics[scale=0.17]{/diagrams/sequence/unreadReports.png}
 					\caption{\label{fig:unreadReportsRuntime} Check Unread Reports Runtime View}
 				\end{figure}
 			
@@ -660,7 +667,7 @@
 				
 				\begin{figure}[h!]
 					\centering
-					\includegraphics[scale=0.16]{/diagrams/sequence/findReports.png}
+					\includegraphics[scale=0.17]{/diagrams/sequence/findReports.png}
 					\caption{\label{fig:findReportsRuntime} Find Reports Runtime View}
 				\end{figure}
 			\end{itemize}
@@ -681,27 +688,32 @@
 				
 				\begin{figure}[h!]
 					\centering
-					\includegraphics[scale=0.16]{/diagrams/sequence/dangerousVehicles.png}
+					\includegraphics[scale=0.17]{/diagrams/sequence/dangerousVehicles.png}
 					\caption{\label{fig:dangerousVehiclesRuntime} Dangerous Vehicles Runtime View}
 				\end{figure}
 			
-				\item \textbf{Find Unsafe Streets:} In this interaction (\autoref{fig:unsafeStreetsRuntime}) it is shown how the UserApp requests maps with coloured streets. The request made by the UserApp is forwarded by ClientHandler to QueryManager. Depending on the option selected by the user, three different methods could be called: the one with a city as input, the one with starting and ending points, or the one with a single street. In the first case, QueryManager will look for all the streets of the selected city in the DBMS, going through DataManager. In the second case, a path needs to be generated, thus QueryManager will ask MI through MapManager for a path, that will include a certain number of streets. In the last case, no action is required. Then, for all the gathered streets, QueryManager will search in the database for their safety, asking DataManager to execute the actual query. Then QueryManager will ask MapManager for the generation of the map that, according to the gathered infomation about the safety of the involved streets, will be coloured as described in RASD. This map will be finally sent back to the UserApp and displayed.		
+				\item \textbf{Find Unsafe Streets:} In this interaction (\autoref{fig:unsafeStreetsRuntime}) it is shown how the UserApp requests maps with coloured streets. The request made by the UserApp is forwarded by ClientHandler to QueryManager. Depending on the option selected by the user, three different methods could be called: the one with a city as input, the one with starting and ending points, or the one with a single street. In the first case, QueryManager will look for all the streets of the selected city in the DBMS, going through DataManager. In the second case, a path needs to be generated, thus QueryManager will ask MI through MapManager for a path, that will include a certain number of streets. In the last case, no action is required. Then, for all the gathered streets, QueryManager will search in the database for their safety, asking DataManager to execute the actual query. Then QueryManager will ask MapManager for the generation of the map that, according to the gathered infomation about the safety of the involved streets, will be coloured as described in RASD. This map will be finally sent back to the UserApp and displayed.
+				
+				\vspace{1cm}		
 		
 				\begin{figure}[h!]
 					\centering
-					\includegraphics[scale=0.16]{/diagrams/sequence/unsafeStreets.png}
+					\includegraphics[scale=0.17]{/diagrams/sequence/unsafeStreets.png}
 					\caption{\label{fig:unsafeStreetsRuntime} Unsafe Streets Runtime View}
 				\end{figure}
 			
-				\item \textbf{Fin Urgent Interventions:} This interaction (\autoref{fig:urgentInterventionsRuntime
-				}) is basically the same as "find streets with highest number of violations", thus it won't be explained again here. The only difference is that the query designed by QueryManager will be specific for urgent interventions.
+				\newpage
+			
+				\item \textbf{Find Urgent Interventions:} This interaction (\autoref{fig:urgentInterventionsRuntime}) is basically the same as "find streets with highest number of violations", thus it won't be explained again here. The only difference is that the query designed by QueryManager will be specific for urgent interventions.
 				
 				\begin{figure}[h!]
 					\centering
-					\includegraphics[scale=0.16]{/diagrams/sequence/urgentInterventions.png}
+					\includegraphics[scale=0.17]{/diagrams/sequence/urgentInterventions.png}
 					\caption{\label{fig:urgentInterventionsRuntime} Urgent Interventions Runtime View}
 				\end{figure}
 			\end{itemize}
+		
+			\FloatBarrier
 		
 		\subsubsection[Safety Manager]{\hyperlink{toc}{Safety Manager}}
 			\label{sec.safetyManagerRuntime}
@@ -711,7 +723,7 @@
 				
 				\begin{figure}[h!]
 					\centering
-					\includegraphics[scale=0.16]{/diagrams/sequence/safetyUpdate.png}
+					\includegraphics[scale=0.21]{/diagrams/sequence/safetyUpdate.png}
 					\caption{\label{fig:safetyUpdateRuntime} Update Safety Runtime View}
 				\end{figure}
 			
@@ -719,22 +731,38 @@
 				
 				\begin{figure}[h!]
 					\centering
-					\includegraphics[scale=0.16]{/diagrams/sequence/accidentsUpdate.png}
+					\includegraphics[scale=0.21]{/diagrams/sequence/accidentsUpdate.png}
 					\caption{\label{fig:accidentsUpdateRuntime} Update Accidents Runtime View}
 				\end{figure}
 			\end{itemize}
 		
+			\FloatBarrier
+		
 		\subsubsection[Map Manager]{\hyperlink{toc}{Map Manager}}
-		\label{sec.safetyManagerRuntime}
+		\label{sec:mapManagerRuntime}
 		
-		\begin{itemize}
-			\item \textbf{Update map:} This is the description of the map updating process. The component designed to do this operation is MapManager. It asks the external MapInterface for an updated map of the whole territory considered by SafeStreets and then stores it in the database. What is stored is actually a simpler version of the map: all the system needs is in fact the collection of cities and streets and the relationships among them.
+		The map manager has to deal with a particular component that deals with the updating of the information related to the maps it has stored in the databases. This is the diagram (\autoref{fig:mapUpdateRuntime}) describes the updating process of the map thanks to the component designed for this operation: the \emph{MapManager}. It asks the external MapInterface for an updated map of the whole territory considered by SafeStreets and then stores it in the database. What is stored is actually a simpler version of the map: all the system needs is in fact the collection of cities and streets and the relationships among them.
+		
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[scale=0.24]{/diagrams/sequence/mapUpdate.png}
+			\caption{\label{fig:mapUpdateRuntime} Update Map Runtime View}
+		\end{figure}
 						
-		\end{itemize}
-		
+	
 	\subsection[Component Interfaces]{\hyperlink{toc}{Component Interfaces}}
 		\label{sec:componentInterfaces}
-		%todo all the APIs go here!
+		% todo qui ci va una bella introduzione per sto diagramma, almeno dire come mai basta che lasciamo il diagramma senza dare neanche una descrizione dei metodi
+		
+		\newpage
+		
+		\begin{figure}[hbtp]
+			\centering
+			\includegraphics[scale=0.33, angle=90]{componentInterfaces.png}
+			\caption{\label{fig:componentInterfaces} Component Interfaces Diagram}
+		\end{figure}
+	
+		\FloatBarrier
 		
 	\subsection[Selected Architectural Styles and Patterns]{\hyperlink{toc}{Selected Architectural Styles and Patterns}}
 		\label{sec:selectedArchitecturalStylesAndPatterns}
