@@ -93,7 +93,7 @@
 		
 		\begin{figure}[ht]
 			\centering
-			\includegraphics[scale=0.18]{/diagrams/components/highLevel.png}
+			\includegraphics[scale=0.16]{/diagrams/components/highLevel.png}
 			\caption{\label{fig:highLevelComp} High Level Component Diagram}
 		\end{figure}
 	
@@ -121,6 +121,7 @@
 					\item Allows to retrieve the street providing a GPS position
 					\item Allows to retrieve the best possible path between two positions
 					\item Allows to display the colored map for the safety functionality
+					\item Allows to store in the system all the streets and cities
 				\end{itemize}
 			
 			\item \textbf{IRI API:} it is the interface that provides the methods to the system in order to deal with the recognition of the plate of a vehicle. Remember that the algorithms accessible from this API can be helped with the information provided by the user about the plate's number and, more important, they always "have the last word": this means that whenever a result is found for the plate it will be considered correct and storable by the system; in all the cases when no result is found by the algorithms the notification will be discarded.
@@ -236,7 +237,7 @@
 			\begin{itemize}
 				\item Interventions Interface
 				\item Safety Interface
-				\item Visibility Interface
+				\item Reports Interface
 				\item Dangerous Interface
 				\item Frequency Interface
 			\end{itemize}
@@ -260,7 +261,15 @@
 				
 				\item \textbf{InterventionsQuery:} it is the component that manages the query related to suggestion for possible interventions functionality. Hence it will prepare the query over the city selected and retrieve all the suggestions for it. This component realizes the \textbf{Interventions Interface} used by the \emph{FunctionalityIdentifier}.
 				
-				\item \textbf{FindREportsQuery:} it is the component that manages the query related to the functionality provided only to the authorities in order to give them the most detailed level of visibility for the reported violations. This component realizes the \textbf{Visibility Interface} used by the \emph{FunctionalityIdentifier}.
+				\item \textbf{ReportsRetrieverQuery:} it is the component that manages all the functionalities that require to retrieve the reports from a request made by an authority. For this reason it handles both the \emph{Check Unread Reports} and \emph{Find Reports} functionalities provided to the authorities, that are nothing more than a query over the violations in the database. 
+				
+				\begin{itemize}
+					\item \textbf{Check Unread Reports:} it is the functionality that allows the authority to be notified of new parking violations. Thanks to the unread flag that is stored in the system whenever a new notification is accepted we are able to retrieve for every authority its notifications and display them for this functionality.
+					
+					\item \textbf{Find Reports:} it is the functionality that provides the authority with a different level of visibility to retrieve the notifications. In fact, while the user is able to see only some statistics thanks to the basic functionalities, in this way the authorities are able to see in detail each of the reports of their competence.
+				\end{itemize}
+			
+				This component realizes the \textbf{Reports Interface} used by the \emph{FunctionalityIdentifier}.
 				
 				\item \textbf{VehiclesQuery:} it is the component that manages the query related to the dangerous vehicles functionality. Hence it will prepare the query with the filters already checked and retrieve the type of dangerous vehicles. This component realizes the \textbf{Dangerous Interface} used by the \emph{FunctionalityIdentifier}.
 				
@@ -282,7 +291,7 @@
 				\item DataIntF Interface
 			\end{itemize}
 		
-			The components that allow the \emph{ReportManager} to handle completely the notification process, hence the report of the user and the retrieval by the authority, are:
+			The components that allow the \emph{ReportManager} to handle the notification process are:
 			
 			\begin{itemize}
 				\item \textbf{ReportValidator:} it is the main component that deals with the notification process of the user-side. Once a report is notified by a user, all the information related to it will be delivered to this component by the \emph{ClientHandler} thanks to the \textbf{Notification Interface}. Before storing the information it has to be managed in order to add the missing details and validate its content; these two further considerations are managed with the methods provided by the interfaces:
@@ -300,7 +309,7 @@
 			
 			\begin{figure}[ht]
 				\centering
-				\includegraphics[scale=0.16]{/diagrams/components/reportManager.png}
+				\includegraphics[scale=0.17]{/diagrams/components/reportManager.png}
 				\caption{\label{fig:reportManagerComp} Report Manager Component Diagram}
 			\end{figure}
 		
@@ -311,15 +320,13 @@
 				
 				\item \textbf{DuplicateChecker:} it is the component that manages the requests to the notification database in order to determine whether the reported notification is already present or not. It realizes the \textbf{Check Interface} which provides the methods to perform this further control before storing the notification.
 				
-				\item \textbf{ReportStorer:} it is the component that manages to store the notification once it is ready. It realizes the \textbf{Store Interface} and uses the methods provided by the \textbf{DataIntF Interface} in order to store the data relative to the reporting notification.
-				
-				\item \textbf{ReportsFinder:} it is the component that deals with the check unread reports functionality, hence the authority-side functionality of the notification process. This component is able to retrieve all the unread reports for the authority that is requesting this functionality. In order to do so it uses the methods provided by the \textbf{DataIntF Interface} providing the query that will be executed whenever an authority requires the check unread reports.
+				\item \textbf{ReportStorer:} it is the component that manages to store the notification once it is ready (remember the unread flag). It realizes the \textbf{Store Interface} and uses the methods provided by the \textbf{DataIntF Interface} in order to store the data relative to the reporting notification.
 			\end{itemize}
 		
 		\subsubsection[Map Manager Component]{\hyperlink{toc}{Map Manager Component}}
 			\label{sec:mapManagerComponent}
 			
-			The \emph{MapManager} (\autoref{fig:mapManagerComp}) is the component that deals with all the map issues related to the realization of the functionalities. We have already presented them while describing the MI API (section \ref{sec:componentView}); we are going to see now the components that manage these issues thanks to the methods provided by the external map management system. The specific issue will be managed by the other components using the methods provided by the \textbf{StreetsRetrieval Interface} realized by this component.\\
+			The \emph{MapManager} (\autoref{fig:mapManagerComp}) is the component that deals with all the map issues. We have already presented them while describing the MI API (section \ref{sec:componentView}); we are going to see now the components that manage these issues thanks to the methods provided by the external map management system. The functionalities of SafeStreets will be managed by the other components using the methods provided by the \textbf{StreetsRetrieval Interface} realized by this component.\\
 			
 			The components that allow the \emph{MapManager} to handle all the geographical and map issues inside the system are:
 			
@@ -328,9 +335,11 @@
 				
 				\item \textbf{GPSPositionHandler:} it is the component that runs the algorithms provided by the MI API in order to realize the \textbf{GPS Interface}.
 				
-				\item \textbf{MapRequest:} it is the component that deals both with the retrieval of the best path between two positions provided by the customer and the mapping of each street with the correspondent safety. The shortest path is managed with the methods provided by the \textbf{Path Interface} while the mapping is carried by the the methods of the \textbf{Map Interface}. It is obvious that for example a request for the unsafe functionality over a path will reflect in a double invocation of the methods realized by this component.
-				
+				\item \textbf{MapRequest:} it is the component that deals both with the retrieval of the best path between two positions provided by the customer and the mapping of each street with the correspondent safety. The shortest path is managed with the methods provided by the \textbf{Path Interface} while the mapping is carried by the the methods of the \textbf{Map Interface}. The result of the invocation of the methods that return the map for the \emph{Unsafe Functionality} will be a FILE that contains all the information needed by the logic of the presentation components in order to display the map.
+							
 				\item \textbf{ShortestPathHandler:} it is the component that runs the algorithms provided by the MI API in order to realize the \textbf{Path Interface}.
+				
+				\item \textbf{MapUpdater:} it is the component that allows the system to have the information of all the streets and cities it has to manage inside its database. Thanks to this information provided by the MI API, this component will periodically ask if some updates have occurred on the maps and in case store them inside the database thanks to the interaction with the \textbf{DataIntF Interface}.
 			\end{itemize}
 			
 			\begin{figure}[ht]
@@ -413,11 +422,11 @@
 			The components that allow the \emph{DataManager} to handle all the operations that involve the management of the data stored in the system's databases are:
 			
 			\begin{itemize}
-				\item \textbf{MapManager:} it is the component that provides all the methods that allow to manage the data relative to the map issues, realizing the \textbf{DataIntF Interface}.
+				\item \textbf{SafetyManager:} it is the component that provides all the methods that allow to manage the data relative to the mapping of the safety on the streets required, realizing the \textbf{DataIntF Interface}.
 				
-				\item \textbf{CustomerManager:} it is the component that provides all the methods that allow to manage the data relative to the customers (in particular for the access process), realizing the \textbf{DataIntF Interface}. 
+				\item \textbf{CustomersManager:} it is the component that provides all the methods that allow to manage the data relative to the customers (in particular for the access process), realizing the \textbf{DataIntF Interface}. 
 				
-				\item \textbf{ReportManager:} it is the component that provides all the methods that allow to manage the data relative to the notification process,hence of all the reports too, realizing the \textbf{DatIntF Interface}.
+				\item \textbf{ViolationManager:} it is the component that provides both methods that allow to manage the data relative to the notification process and the ones relative to the basic functionalities, realizing the \textbf{DatIntF Interface}.
 				
 				\item \textbf{InterventionsManager:} it is the component that provides all the methods that allow to manage the data relative to the interventions, realizing the \textbf{DataIntF Interface}.
 				
@@ -426,7 +435,7 @@
 		
 			\begin{figure}[ht]
 				\centering
-				\includegraphics[scale=0.22]{/diagrams/components/dataManager.png}
+				\includegraphics[scale=0.2]{/diagrams/components/dataManager.png}
 				\caption{\label{fig:dataManagerComp} Data Manager Component Diagram}
 			\end{figure}
 		
@@ -593,7 +602,7 @@
 		
 		In this section we are going to present the most important runtime views of the interactions between the customers and SafeStreets. All the methods used in the following diagrams will be precisely described in the next section (\ref{sec:componentInterfaces}) where each of them will be mapped with the respective interface that realizes it.\\
 		
-		The \emph{Runtime View Diagrams} of this section are presented first for the \textbf{users} and \textbf{authorities}, then for the common functionalities and lastly two critical views are shown in order to present how the components related to the safety calculus work in order to provide this functionality.
+		The \emph{Runtime View Diagrams} of this section are presented first for the \textbf{users} and \textbf{authorities}, then for the common functionalities where we decided to show only the interaction between the UserApp and the system to keep the diagrams as clearest as possible (the ones for the authorities would need an additional interaction with the WebServer before interfacing with the system) and lastly two critical views are shown in order to present how the components related to the safety calculus work.
 		
 		\subsubsection[User]{\hyperlink{toc}{User}}
 			\label{sec:userRuntimeView}
@@ -719,7 +728,68 @@
 	\subsection[Selected Architectural Styles and Patterns]{\hyperlink{toc}{Selected Architectural Styles and Patterns}}
 		\label{sec:selectedArchitecturalStylesAndPatterns}
 		
-		%TODO REST utilizzato per tutte e due in modo da usare la stessa tecnologia, rather than usarne due diverse
+		In this section we are going to describe precisely which are the architectural choices we did while designing the system and why we decided to choose them. As we saw in the deployment view section (\ref{sec:deploymentView}) we started with a \textbf{client-server} approach and then realized it with a \textbf{four-tier architecture}. We now need to describe why we decided these two styles that work good together but also how the elements that really deploy the system can communicate, hence we want also to describe precisely the communications that we highlighted in red in the deployment diagram (\autoref{fig:deploymentDiagram}).
+		
+		\subsubsection[Client-Server]{\hyperlink{toc}{Client-Server}}
+			\label{sec:clientServerDecision}
+			
+			Our system, as described in the context viewpoint of \autoref{fig:contextViewpoint}, needs to interact with several external systems. It is true that in general SafeStreets needs to interact with systems that provide him services in order to realize its functionalities, but it is also true that SafeStreets aims to be a \textbf{crowd-sourced} system that is going to manage interactions with several users (who provide him the data) and several authorities. Thanks to these considerations, after considering different alternatives, we decided to choose a \textbf{client-server} architectural approach in order to manage easily the interaction with the mobile application of the users and to have a centralized server that is able to provide the services of the system to any customer that requires them.
+			
+			\begin{figure}[h!]
+				\centering
+				\includegraphics[scale=0.6]{clientServer.png}
+				\caption{\label{fig:clientServerArchitecture} Client Server Architecture}
+			\end{figure}
+
+			Thanks to the client-server approach we also simplify the way in which we communicate with the external clients taking the decision of using the same technology of communication. In fact, as we will describe precisely in the further section \ref{sec:RESTDecision}, we are going to build our system in a RESTful way as we can have a simple communication protocol with HTTPS for the \textbf{Web Application} and we can integrate it with the \textbf{Mobile Application} communication in order to have the same APIs. This decision has several motivations even if it may not look the best choice to manage the interaction with the mobile application; one is the one just presented related to the development and interfacing to a single API technology, another is connected with an implementation and integration aspect (as we will see in section \ref{sec:selectedArchitecturalStylesAndPatterns}) that is: as we can see in the plan identified by the diagram of \autoref{fig:useRelationHierarchy} the implementation and integration (obviously testing too) of the \textbf{User App} and \textbf{Web Server} will take place in parallel. In this way, as we will need at this moment to define also the interfaces that provide the communication, we will develop first a common REST API on which the two different interfaces related one to the app and the other on the web server will specialize in order to connect to the related device.\\
+			
+			 The communications with the other systems depend on the services they provide, as we can see in the deployment diagram (\autoref{fig:deploymentDiagram}) some of the services are still provided in a RESTful way while others, related in particular to the interaction with the \emph{database server} and the \emph{email server} consider instead a classic interfacing because they are related to the management of data and the using of an email service.
+			
+		\subsubsection[Four Tier Architecture]{\hyperlink{toc}{Four Tier Architecture}}
+			\label{sec:fourTierArchitectureDecision}
+			
+			Selected the \textbf{client-server} approach we needed to decide how to manage the layers of our system. We chose a multilayered architecture first to benefit of its advantages such as: decoupling, reuse, flexibility, migration... Second to have a way to realize a centralized business logic that allows to manage all the complex management of the data we need to take care of. Thanks to the different layers on which our system is designed we also separate the data as it can be managed more easily rather than having its complexity added inside our principal server. A multilayered architecture has allows also to adopt the \textbf{thin-client} approach by letting only the presentation layer to be managed on the devices of the clients.\\
+			
+			For SafeStreets we decide to choose a \textbf{Four Tier Architecture} as we need to take into account (as we see from the devices highlighted in the deployment diagram of \autoref{fig:deploymentDiagram}) two different approaches for the client interaction: \textbf{mobile application} for the users and \textbf{web application} for the authorities. Hence the necessity of a Web Server needs also to be considered in order to manage the web side of the clients. For this first architectural decision of the client's separation and to maintain the \textbf{thin-client} approach we need to have two different tiers to handle the \textbf{Presentation Layer}. In order to consider the management of the information (fundamental resource for our crowd source based system) we also need to separate the business logic from the data. The two remaining layers will be separated, hence one tier is needed to deal with the \textbf{Logic Layer} and another for the \textbf{Data Layer}.\\
+			
+			We now present once more the picture of our four tier system as we can easier compare it with what we have just said.
+			
+			\begin{figure}[h!]
+				\centering
+				\includegraphics[scale=0.4]{fourTierArchitecture.png}
+				\caption{Four Tier Architecture}
+			\end{figure}
+		
+			To be completely precise, our system would also need an additional tier, on which the \textbf{script engine server} would be running, that allows to manage the dynamic generation of  the web pages for the authority web app. To focus on the most critical aspects of the design process we decided not to represent also this layer to keep quite simple diagrams and descriptions. However we should not completely overlook this consideration as it may be needed in particular for the generation of the map in the \emph{Unsafe Streets} functionality.
+			
+		\subsubsection[RESTful Architecture]{\hyperlink{toc}{RESTful Architecture}}
+			\label{sec:RESTDecision}
+			
+			We have already motivated the choice of this approach in the client-server section (\ref{sec:clientServerDecision}) in particular for how our system is going to provide its services to the clients. The communications with the external services do not need a precise motivation as we would be able to decide how they are established, we only need to stick with the decisions of the system that is providing the functionality and adapt our communication modules.\\
+			
+			Now we want to present some further motivations and advantages that the RESTful architecture allows us to obtain to justify even more our decision. The principle on which REST is based, that is the stateless interaction of requests between the clients and server, is really helpful to us in order to manage the huge amount of data we expect to receive for the notification process. As we have already said, in this way, we will be also able to manage both the requests coming from the users and the authorities with one single interface that is adapted for the \textbf{mobile application} side and the \textbf{web application} side.\\
+			
+			In conclusion this communication architecture based on HTTP is perfectly embraced in our four tier architecture and allows also an easier way to manage the information in a precise standard. In particular we will decide to stick with the format used by the results provided by the \textbf{Map Interface} when it provides us the data relative to the map that has to be displayed to our clients for the \emph{Unsafe Streets} functionality.
+			
+			%todo qua ci starebbe un bel json d esempio di risposta della MI
 		
 	\subsection[Other Design Decisions]{\hyperlink{toc}{Other Design Decisions}}
 		\label{sec:otherDesignDecisions}						
+		
+		In this subsection we want to provide additional details on what we have presented in the entire section. In particular we will focus on the motivations for the \textbf{relational database} chosen and on a brief description of the two approaches used to realize a \textbf{native mobile application}.
+		
+		\subsubsection[Relational Database Approach]{\hyperlink{toc}{Relational Database Approach}}
+			\label{sec:relationaldbApproach}
+			
+			We decided to consider a relational approach in particular for the way in which the data has to be managed because of the functionalities of the system. In fact, without focusing on the clients that can be managed in a relational database without any problem, we have seen how several relations are established between the entities that compose our system. In particular the most important are the ones related to the safety calculus: first the relations between the interventions and the streets and also between the accidents and the streets allow to determine the safety; second the relations between the \textbf{safety} and the street allows us to process this data and send it to the clients as it can be highlighted for the \emph{Unsafe Streets} functionality.\\
+			
+			Considering now some more implementation aspects, as we can also see in the decision tree (\autoref{fig:decisionTree}), we decided to choose MySQL as the DBMS to interact with because it is the most popular relational one and provides a complete and clear documentation on how to benefit of its services.
+			
+		\subsubsection[Native Application Approach]{\hyperlink{toc}{Native Application Approach}}
+			\label{sec:nativeAppApproach}
+			
+			We deiced to consider a native approach for the development of the \textbf{mobile application} for the users in order to provide a better experience of interaction with the system but also to obtain the best communication and responsiveness between the client and the server. Nowadays the mobile applications are developed with two different languages depending on the OS of the device: for \textbf{Android} we will use \emph{Android Studio} while for \textbf{IOS} the native language \textbf{Swift}.
+			
+			\paragraph{Android Studio} it is the official IDE for Google's Android operating system, designed specifically for Android development. It is available for every operating system and perfectly documented with a huge community. In addition it is based on \emph{Gradle} that helps a lot in the dependency management and thus makes our result more extensible. In fact, it is important to remark that we are designing an extensible system: as we saw in the \textbf{class-diagram} of the RASD document \cite{RASD} the most expected extension we expect is the possibility to report not just parking violations but also other kinds of the general traffic violations.
+			
+			\paragraph{Swift} it is the official programming language developed by Apple in order to replace the old Objective-C paradigm on which all the IOS applications were based on. It is designed to work with the most popular Apple's frameworks and provides several performances and safety trade-offs. We choose it as the native approach to develop a mobile application for IOS as it is still highly documented and its community is getting bigger and bigger.
