@@ -2223,7 +2223,7 @@
 											"top": 327,
 											"width": 188,
 											"height": 13,
-											"text": "«execution environment»"
+											"text": "«executionEnvironment»"
 										},
 										{
 											"_type": "LabelView",
@@ -9415,7 +9415,7 @@
 							}
 						}
 					],
-					"stereotype": "execution environment"
+					"stereotype": "executionEnvironment"
 				},
 				{
 					"_type": "UMLComponent",

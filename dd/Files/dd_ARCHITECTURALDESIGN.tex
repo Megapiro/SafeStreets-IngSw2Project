@@ -135,7 +135,7 @@
 				\item we can retrieve all the accidents that took place in the area of an authority's competence. It is assumed that the exchange of the accidents' data develops in this way: each authority publishes its accidents on the common system as we can periodically try to retrieve thanks to this interface all the accidents that has occurred until our last check.
 			\end{itemize}
 		
-			\item \textbf{DBMS API:} it is the interface that provides the methods to the system in order to deal with the data management process. Starting from the access one, the notification process and all the others that need to require or store information from the databases of the system (in the following section it will be clear which are the components that necessarily need to access the DBMS interface).
+			\item \textbf{DBMS API:} it is the interface that provides the methods to the system in order to deal with the data management process. Starting from the access one, the notification process and all the others that need to require or store information from the s of the system (in the following section it will be clear which are the components that necessarily need to access the DBMS interface).
 			 
 		\end{itemize}
 	
@@ -223,10 +223,10 @@
 				
 				\item \textbf{RegistrationManager:} it is the component that deals with the registration of the customers. It realizes the \textbf{Access Interface} by providing the methods to register both the user and the authority and thus needs to use the \textbf{Check Interface} and the \textbf{Store Interface}. In fact, this component will need to check for the new credentials to be feasible and then to store the new data related to the registering customer. The \textbf{PEC Interface} is used for the authority registration process to send the verification code and check the address.
 				
-				\item \textbf{CredentialChecker:} it is the component that deals with all the checks needed in the access functionalities previously described by providing the \textbf{Check interface}. Obviously to perform these checks it needs to access the customers database of the system and thus the methods provided by the \textbf{DataIntF Interface}.
+				\item \textbf{CredentialChecker:} it is the component that deals with all the checks needed in the access functionalities previously described by providing the \textbf{Check interface}. Obviously to perform these checks it needs to access the database of the system and thus the methods provided by the \textbf{DataIntF Interface}.
 				
 				\item \textbf{CredentialStorer:} it is the component that deals with the storing of all the data used in the access functionalities previously described by providing the \textbf{Store Interface}.
-				Obviously in order to store the information in the database of the customers in the system it needs to use the methods provided by the \textbf{DataIntF Interface}
+				Obviously in order to store the information in the of the customers in the system it needs to use the methods provided by the \textbf{DataIntF Interface}
 			\end{itemize}
 		
 		\subsubsection[Query Manager Component]{\hyperlink{toc}{Query Manager Component}}
@@ -261,7 +261,7 @@
 				
 				\item \textbf{InterventionsQuery:} it is the component that manages the query related to suggestion for possible interventions functionality. Hence it will prepare the query over the city selected and retrieve all the suggestions for it. This component realizes the \textbf{Interventions Interface} used by the \emph{FunctionalityIdentifier}.
 				
-				\item \textbf{ReportsRetrieverQuery:} it is the component that manages all the functionalities that require to retrieve the reports from a request made by an authority. For this reason it handles both the \emph{Check Unread Reports} and \emph{Find Reports} functionalities provided to the authorities, that are nothing more than a query over the violations in the database. 
+				\item \textbf{ReportsRetrieverQuery:} it is the component that manages all the functionalities that require to retrieve the reports from a request made by an authority. For this reason it handles both the \emph{Check Unread Reports} and \emph{Find Reports} functionalities provided to the authorities, that are nothing more than a query over the database retrieving the violations. 
 				
 				\begin{itemize}
 					\item \textbf{Check Unread Reports:} it is the functionality that allows the authority to be notified of new parking violations. Thanks to the unread flag that is stored in the system whenever a new notification is accepted we are able to retrieve for every authority its notifications and display them for this functionality.
@@ -275,7 +275,7 @@
 				
 				\item \textbf{FrequencyQuery:} it is the component that manages the query related to the violations frequency functionality. Hence it will prepare the query with the filters already checked and retrieve the streets with most violations. This component realizes the \textbf{Frequency Interface} used by the \emph{FunctionalityIdentifier}.
 				
-				\item \textbf{QuerySender:} it is the component that allows to send the query to the \emph{DataManager} component that allows to execute it and retrieve the results. Thanks to the \textbf{Send Interface}, in fact, the five components just presented will send the query they have prepared as it can be executed over the related databases.
+				\item \textbf{QuerySender:} it is the component that allows to send the query to the \emph{DataManager} component that allows to execute it and retrieve the results. Thanks to the \textbf{Send Interface}, in fact, the five components just presented will send the query they have prepared to the \emph{DataManager} who will execute it over the database of the system.
 			\end{itemize}
 		
 		\subsubsection[Report Manager Component]{\hyperlink{toc}{Report Manager Component}}
@@ -318,7 +318,7 @@
 				
 				\item \textbf{PlateReader:} it is the component that runs the algorithms provided by the IRI API in order to recognize the plate of the vehicle reported. It realizes the \textbf{PlateRecognition Interface} that is used to benefit of this control, fundamental to validate the notification.
 				
-				\item \textbf{DuplicateChecker:} it is the component that manages the requests to the notification database in order to determine whether the reported notification is already present or not. It realizes the \textbf{Check Interface} which provides the methods to perform this further control before storing the notification.
+				\item \textbf{DuplicateChecker:} it is the component that manages to check whether the reported violation is already stored in the database or not. It realizes the \textbf{Check Interface} which provides the methods to perform this additional control before storing the notification.
 				
 				\item \textbf{ReportStorer:} it is the component that manages to store the notification once it is ready (remember the unread flag). It realizes the \textbf{Store Interface} and uses the methods provided by the \textbf{DataIntF Interface} in order to store the data relative to the reporting notification.
 			\end{itemize}
@@ -399,7 +399,7 @@
 			The components that allow the \emph{AccidentsManager} to handle the process of receiving the accidents provided by the authorities thanks to the authority common system are:
 			
 			\begin{itemize}
-				\item \textbf{Accidents Receiver:} it is the component that uses the methods provided by the \textbf{Authority API} in order to retrieve all the accidents that each authority has published. In this way, by updating this type of data periodically as the safety updating process we will be able to have always all the information we need to determine the safety of the streets. Once the accidents data is retrieved this component is ready to store it in the database related to the accidents thanks to the \textbf{Store Interface}.
+				\item \textbf{Accidents Receiver:} it is the component that uses the methods provided by the \textbf{Authority API} in order to retrieve all the accidents that each authority has published. In this way, by updating this type of data periodically as the safety updating process we will be able to have always all the information we need to determine the safety of the streets. Once the accidents data is retrieved this component is ready to store it in the database thanks to the \textbf{Store Interface}.
 			\end{itemize}
 			
 			\begin{figure}[ht]
@@ -417,9 +417,9 @@
 			
 			The \emph{DataManager} (\autoref{fig:dataManagerComp}) is the component that deals with all the management of the data needed by the system in order to perform its functionalities. As we can see in the general diagram of the server (\autoref{fig:serverComp}) almost every component needs to use the interface provided by this one in order to provide its functionality.\\
 			
-			Hence the \emph{DataManager} realizes only the \textbf{DataIntF Interface} which provides the methods for the management of all the information and uses the methods provided by the \textbf{DBMS API} in order to perform on the databases the storing or requesting action needed.\\
+			Hence the \emph{DataManager} realizes only the \textbf{DataIntF Interface} which provides the methods for the management of all the information and uses the methods provided by the \textbf{DBMS API} in order to perform on the database the storing or requesting actions needed.\\
 			
-			The components that allow the \emph{DataManager} to handle all the operations that involve the management of the data stored in the system's databases are:
+			The components that allow the \emph{DataManager} to handle all the operations that involve the management of the data stored in the system's database are:
 			
 			\begin{itemize}
 				\item \textbf{SafetyManager:} it is the component that provides all the methods that allow to manage the data relative to the mapping of the safety on the streets required, realizing the \textbf{DataIntF Interface}.
@@ -442,9 +442,9 @@
 			\begin{itemize}
 				\item \textbf{DataRequestor:} it is the component that allows to build a query that will obtain as a result the information required by one of the managers previously described. It realizes the \textbf{Request Interface} and needs to use the \textbf{Query Interface} in order to execute the query that has been built.
 				
-				\item \textbf{DataStorer:} it is the component that allows to build a query that will store in the database involved for the information that is going to be stored the data provided. It realizes the \textbf{Store Interface} and needs to use the \textbf{Query Interface} in order to execute the query that has been built.
+				\item \textbf{DataStorer:} it is the component that allows to build a query that will store in the database the data provided by the component that invokes its methods. It realizes the \textbf{Store Interface} and needs to use the \textbf{Query Interface} in order to execute the query that has been built.
 				
-				\item \textbf{QueryExecutor:} it is the component that finally executes the query received either from the \emph{DataRequestor} or the \emph{DataStorer}. It realizes the \textbf{Query Interface} and needs to use the methods provided by the \textbf{DBMS API} in order to manage all the data stored inside the databases of the system.
+				\item \textbf{QueryExecutor:} it is the component that finally executes the query received either from the \emph{DataRequestor} or the \emph{DataStorer}. It realizes the \textbf{Query Interface} and needs to use the methods provided by the \textbf{DBMS API} in order to manage all the data stored inside the database of the system.
 			\end{itemize}
 		
 		\subsubsection[Web Server Component]{\hyperlink{toc}{Web Server Component}}
@@ -616,7 +616,7 @@
 					\caption{\label{fig:loginRuntime} Login Runtime View}
 				\end{figure}
 			
-				\item \textbf{Registration:} This sequence diagram (\autoref{fig:userRegistrationRuntime}) pictures the interaction through which a user registers to SafeStreets. After UserApp has asked him all the registration data (username, password, and other information), it will hand them to the server, hidden into a User object. ClientHandler will forward the request to AccessManager, that is the same component that manages the login interactions. AccessManager will first check if there is an already existing user who registered with that same username and in case will send back an error. If not, it will ask DataManager to store the user information into the relative database.
+				\item \textbf{Registration:} This sequence diagram (\autoref{fig:userRegistrationRuntime}) pictures the interaction through which a user registers to SafeStreets. After UserApp has asked him all the registration data (username, password, and other information), it will hand them to the server, hidden into a User object. ClientHandler will forward the request to AccessManager, that is the same component that manages the login interactions. AccessManager will first check if there is an already existing user who registered with that same username and in case will send back an error. If not, it will ask DataManager to store the user information into the database of the system.
 				
 				\begin{figure}[h!]
 					\centering
