@@ -1,3 +1,80 @@
 \section[Requirements Traceability]{\hyperlink{toc}{Requirements Traceability}}
 	\label{sec:requirementsTraceability}
 	%todo here the section can be split in functional and non-functional requirements
+	
+	\subsubsection[Requirements]{\hyperlink{toc}{Requirements}}
+	In this section it is shown how the requirements specified in the RASD are mapped
+	to the components defined in this document.
+	
+	\begin{enumerate}[label=\textbf{R\arabic*}]
+		\item \label{req:userReg} The system must allow users to register.\\
+		\textbf{AccessManager}
+		\item \label{req:authorityReg} The system must allow authorities to register.\\
+		\textbf{AccessManager}
+		\item \label{req:userLogin} The system must allow the user to log in.\\
+		\textbf{AccessManager}
+		\item \label{req:authorityLogin} The system must allow authorities to log in.\\
+		\textbf{AccessManager}
+		\item \label{req:uniqueName} The system must guarantee that each username is unique.\\
+		\textbf{AccessManager}
+		\item \label{req:saveRegData} The system must save the customers registration data.\\
+		\textbf{AccessManager}
+		\item \label{req:specialCharacters} The system must prevent users to use special characters in their username.\\
+		\textbf{AccessManager}
+		\item \label{req:takePictures} The system must allow users to take pictures of the violation they want to report.\\
+		\textbf{UserApp}
+		\item \label{req:dateTime} The system must retrieve date and time while the user reports a violation.\\
+		\textbf{UserApp}
+		\item \label{req:gpsPosition} The system must retrieve the GPS position while the user reports a violation.\\
+		\textbf{UserApp}
+		\item \label{req:violationType} The system must allow users to insert the type of violation they’re reporting.\\
+		\textbf{UserApp}
+		\item \label{req:vehicleType} The system must allow users to insert the type of the vehicles they’re reporting.\\
+		\textbf{UserApp}
+		\item \label{req:plateNumber} The system must allow users to insert the license plate number of the vehicle they are reporting.\\
+		\textbf{UserApp}
+		\item \label{req:readPlate} The system must read the license plate from every picture sent by the user.\\
+		\textbf{ReportManager, IRI}
+		\item \label{req:storeViolation} The system must store the data received along with the name of the street where the violation occurred.\\
+		\textbf{ReportManager, MapManager, MapInterface}
+		\item \label{req:streetName} The system must be able to retrieve the name of the street from the GPS coordinates.\\
+		\textbf{MapManager, MapInterface}
+		\item \label{req:notifyAuthority} The system must be able to show authorities all the violation reports sent by users.\\
+		\textbf{ReportManager}
+		\item \label{req:mineData} The system must be able to mine the stored violation reports.\\
+		\textbf{QueryManager}
+		\item \label{req:cityFilter} The system must allow the customer to filter by city.\\
+		\textbf{QueryManager}
+		\item \label{req:streetFilter} The system must allow the customer to filter by street.\\
+		\textbf{QueryManager}
+		\item \label{req:pathFilter} The system must allow the customer to filter by path.\\
+		\textbf{QueryManager}
+		\item \label{req:violationFilter} The system must allow the customer to filter by type of violation.\\
+		\textbf{QueryManager}
+		\item \label{req:timeFilter} The system must allow the customer to filter by time slot.\\
+		\textbf{QueryManager}
+		\item \label{req:dateFilter} The system must allow the authority to filter by date intervals.\\
+		\textbf{QueryManager}
+		\item \label{req:vehicleFilter} The system must allow the customer to filter by type of vehicle.\\
+		\textbf{QueryManager}
+		\item \label{req:sortedResult} The system must be able to sort streets by number of violations.\\
+		\textbf{QueryManager}
+		\item \label{req:sortedVehicles} The system must be able to sort types of vehicle by number of violations they make.\\
+		\textbf{QueryManager}
+		\item \label{req:visibility} The system must be able to provide different levels of visibility.\\
+		\textbf{AccessManager}
+		\item \label{req:accidentsData} The system must be able to store and manage data about accidents, if provided by the authority.\\
+		\textbf{AccidentsManager}
+		\item \label{req:crossData} The system must be able to cross accidents data with violations one.\\
+		\textbf{AccidentsManager}
+		\item \label{req:safeStreet} The system must be able to determine whether a street is safe or not.\\
+		\textbf{SafetyManager}
+		\item \label{req:cityStreets} The system must be able to access all the available maps.\\
+		\textbf{MapManager}
+		\item \label{req:pathFinder} The system must find a path between two given points in a map.\\
+		\textbf{MapManager, MapInterface}
+		\item \label{req:colorMap} The system must be able to color the streets in a map according to their safety.\\
+		\textbf{MapManager, MapInterface}
+		\item \label{req:interventions} The system must be able to determine the most urgent interventions in a street.	\\
+		\textbf{SafetyManager}
+	\end{enumerate}
