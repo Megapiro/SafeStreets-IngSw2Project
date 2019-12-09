@@ -1,9 +1,9 @@
 \section[Architectural Design]{\hyperlink{toc}{Architectural Design}}
 	\label{sec:architecturalDesign}
 	
-	In the following section we describe precisely the architecture of our system. Starting with the highest possible view we first give an illustration of all the systems that SafeStreets is going to interact with. Differently than how we did in the RASD \cite{RASD} document here we need to precise which are the systems that provide the interfaces already mentioned in order to obtain a clear description of the communication between each system and the one we are designing.\\
+	In the following section we describe precisely the architecture of our system. Starting with the highest possible view we first give an illustration of all the systems that SafeStreets is going to interact with. Differently than how we did in the RASD \cite{RASD} document we need here to precise the rule of the systems in order to obtain a clear description of the communication between with the one we are designing.\\
 	
-	After the first global description we start focusing on the system, first with a clear listing of all the components needed to obtain the functionalities of the application and then with their deployment (\blueRef{sec:deploymentDiagram}) and runtime (\blueRef{sec:runtimeView}) utilization.\\
+	After a first global description we start focusing on the system, initially with a clear listing of all the components needed to obtain the functionalities of the application and then with their deployment (\blueRef{sec:deploymentDiagram}) and runtime (\blueRef{sec:runtimeView}) utilization.\\
 	
 	The section concludes first with the precise definition of the architectural patterns used to deploy all the components identified and finally with other design decisions (\blueRef{sec:otherDesignDecisions}) that have been chosen in the architectural design process.	
 	
@@ -13,12 +13,12 @@
 		\subsubsection[General Context]{\hyperlink{toc}{General Context}}
 			\label{sec:generalContext}
 			
-			Let's start this huge and dense section with the highest level of visibility possible of our system in order to first understand which are the other systems it needs to interact with. SafeStreets is a crowd-sourced application that intends to provide services to two typologies of customers: \textbf{users} and \textbf{authorities}. Hence the crowd is composed by the users who provide the system information thanks to the core functionality offered that is the \emph{notification of a traffic violation}.\\
+			To get involved in the problem, we start in section with the highest level of visibility possible of our system in order to understand which are the other systems it needs to interact with. SafeStreets is a crowd-sourced application that intends to provide services to two types of customers: \textbf{users} and \textbf{authorities}. Hence the crowd is composed by the users who provide the system information thanks to the core functionality offered: the \emph{notification of a traffic violation}.\\
 			
-			To understand which systems are involved in each of the functionalities offered by SafeStreets that will now be called as already mentioned in the RASD document \cite{RASD}:
+			To understand which systems are involved in each of the functionalities offered by SafeStreets, that will now be called as already mentioned in the RASD document \cite{RASD}, we need to focus on their definitions:
 			
 			\begin{itemize}
-				\item \textbf{Access Functionality:} service that allows customers to register to the system in order to be recognized
+				\item \textbf{Access Functionality:} service that allows customers to register and login to the system in order to be recognized.
 				\item \textbf{Core Functionality:} service provided only to the users to allow them to notify a traffic violation.
 				\item \textbf{Basic Functionalities:} mining services over the information provided by the users redistributed to the customers with different levels of visibility.
 				\item \textbf{Advanced Functionalities:} services that provide the safety of an area chosen by the customers and some suggestions for possible interventions for the streets that are found to be dangerous.
@@ -34,14 +34,14 @@
 				\caption{\label{fig:contextViewpoint} Context Viewpoint}
 			\end{figure}
 		
-			Now that we know which are the systems that needed, before seeing which are the modules that will consider the communication with each of them let's understand first for which functionality they are used for. The following table lists the three types of functionalities and a tick (\xtick) is used to express that the functionality needs the external systems services in order to be realized.
+			Now that we know which are the systems needed, before dealing with the modules that will consider the communication with each of them let's understand first for which functionality they are needed for. The following table lists the three types of functionalities and a tick (\xtick) is used to express that the functionality needs the external systems services in order to be realized.
 			
 			\begin{center}
 				\scalebox{0.64}{
 					\begin{tabular}{|c|c|c|c|c|}
 						\hline
 						\diagbox{\textbf{Functionality}}{\textbf{System}} & Image Recognition & Map Management & Email Management & Authority Common \\ \hline
-						Access & & & \xtick & \\ \hline
+						Access & & & \xtick & \xtick \\ \hline
 						Core & \xtick & \xtick & & \\ \hline
 						Basic & & \xtick & & \\ \hline
 						Advanced & & \xtick & & \xtick \\ \hline
@@ -52,7 +52,7 @@
 		\subsubsection[Composition Diagram]{\hyperlink{toc}{Composition Diagram}}
 			\label{sec:compositionDiagram}
 			
-			With the definition of the systems used by SafeStreets we are now able to highlight the modules used by our system in order to benefit of their services. In the following diagram we divide the system in three different types of areas, each one containing the modules considered critical for that competence.
+			With the definition of the systems used by SafeStreets we are now able to highlight the modules used in order to benefit of their services. In the following diagram (\blueAutoref{fig:compositionDiagram}) we divide the system in three different types of areas, each one containing the modules considered critical for that competence.
 			
 			\newpage
 			
@@ -62,19 +62,19 @@
 				\caption{\label{fig:compositionDiagram} Composition Diagram}
 			\end{figure}
 		
-			As we see can see in the picture above, the system is composed of three areas, each one specialized on a particular behaviors.
+			As we see can see in the picture above, the system is composed of three areas, each one specialized on a particular behavior.
 			
 			\paragraph{Communication Interfaces} Are the interfaces that allows our system to interact with externally active agents or systems that provide services needed by the business logic. In fact, as we notice in the left hand-side of the diagram we have:
 			
 			\begin{itemize}
-				\item \textbf{Image Recognition System:} provides thanks to an interface the methods to deal with the recognition of the plate of the vehicles
-				\item \textbf{Map Management System:} provides thanks to an interface the methods to deal with all the issues related to the geographical positioning and map interaction
+				\item \textbf{Image Recognition System:} provides the methods to deal with the recognition of the plate of the vehicles
+				\item \textbf{Map Management System:} provides the methods to deal with all the issues related to the geographical positioning and map interaction
 				\item \textbf{Email Management System:} provides the minimal email services that SafeStreets needs to consider in order to provide the recovery of the credentials and more important the recognition of the authorities
-				\item \textbf{User Client:} is the client used by a user in order to benefit of SafeStreets functionalities
-				\item \textbf{Authority Client:} is the client used by an authority in order to benefit of SafeStreets functionalities
+				\item \textbf{User Client:} is the client used by a user in order to benefit of SafeStreets' functionalities
+				\item \textbf{Authority Client:} is the client used by an authority in order to benefit of SafeStreets' functionalities
 			\end{itemize}
 		
-			All the modules defined here will bring inside the system all the services and requests coming from the outside as the ones in the business modules can process them and provide the functionalities of SafeStreets
+			All the modules defined here will bring inside the system all the services and requests coming from the outside as the ones in the business logic can process them and provide the functionalities.
 			
 			\paragraph{Business Logic} Now we have the modules that are thought to deal with the functionalities that the system has to provide. As we can see also in this case, we have a correspondence between the functionalities described in the previous section and the modules now listed:
 			
@@ -86,7 +86,7 @@
 				\item Advanced Functionality Handler
 			\end{itemize}
 		
-			\paragraph{Data Interfaces} These last interface instead are separated from the initial ones because they provide a way to the system to access external data he needs to use in order to provide its functionalities. As we can see in the right hand-side of the diagram we only have the \textbf{Authority Common Interface} that provides the methods to retrieve all the data of the accidents that took place in a certain city and the list of all the PEC addresses of the authorities.
+			\paragraph{Data Interfaces} The last interfaces instead are separated from the initial ones because they provide a way to the system to access the external data he needs to use in order to provide its functionalities. As we can see in the right hand-side of the diagram we only have the \textbf{Authority Common Interface}: it provides the methods to retrieve the data of the accidents that took place in a certain city and the list of all the PEC addresses of the authorities.
 		
 	\subsection[Component View]{\hyperlink{toc}{Component View}}
 		\label{sec:componentView}
@@ -97,16 +97,16 @@
 			\caption{\label{fig:highLevelComp} High Level Component Diagram}
 		\end{figure}
 	
-		With the high-level description of the system provided in the previous sections we are now able to determine which are the components that will be considered in the architecture in order to accomplish the functionalities that each of the modules identified are going to provide. In fact it is straightforward the mapping between the component diagram (\blueAutoref{fig:compositionDiagram}) and the picture above (\blueAutoref{fig:serverComp}). The \textbf{communication interfaces} area is mapped with all the interfaces provided by the components that provide or receive services from the outside; the \textbf{business logic} is realized by the server component where all the computation to provide the functionalities of the system takes place, while the \textbf{data interfaces} are the ones that allow the system with both the DBMS and the authority common interface.\\
+		With the high-level description of the system provided in the previous sections we are now able to determine which are the components that will be considered in the architecture in order to accomplish the functionalities that each of the modules identified are going to provide. In fact it is straightforward the mapping between the component diagram (\blueAutoref{fig:compositionDiagram}) and the picture above (\blueAutoref{fig:highLevelComp}). The \textbf{communication interfaces} area is mapped with all the interfaces provided by the components that provide or receive services from the outside; the \textbf{business logic} is realized by the server component where all the computation to provide the functionalities of the system takes place, while the \textbf{data interfaces} are the ones that brings to the system both the DBMS and the authority common interface's services.\\
 		
-		Before describing in detail the most important components of the system it is now the moment to precisely describe what are the components presented in this picture and what are the services provided by the interfaces:
+		Before describing in detail the most important components of the system it is now the moment to precisely describe what are the components presented in this picture and what are the services provided by their interfaces:
 		
 		\begin{itemize}
-			\item \textbf{Server:} it is the business logic of the entire system. Inside this component, that will be precisely described in the next section, takes place all the computation that allows to provide the customers the functionalities that SafeStreets has defined as its goals. The two interfaces provided by this components are the ones that allow the client systems to benefit of these functionalities, considering to have both a mobile application and a web app we need one interface directly for the mobile software while another interface for the web server that will provide to the browser of the authority the functionalities offered.
+			\item \textbf{Server:} it is the business logic of the entire system. Inside this component, that will be precisely described in the next section, takes place all the computation that allows to provide the customers the functionalities that SafeStreets has defined as its goals. The two interfaces provided by this components are the ones that allow the client systems to benefit of these functionalities; considering to have both a mobile application and a web app we need one interface directly for the mobile software while another interface for the web server that will provide to the browser of the authority the functionalities offered.
 			
 			\item \textbf{Web Interface:} it is the interface that allows the web server to access the methods that provide the functionalities once a request arrives from an authority.
 			
-			\item \textbf{Web Server:} it is the component that deals with all the issues related to the realization of a web app that needs to be displayed on the browser of the authority. In fact it provides and interface that  represents the endpoint where the browsers can access the system's functionalities.
+			\item \textbf{Web Server:} it is the component that deals with all the issues related to the realization of a web app that needs to be displayed on the browser of the authority. In fact it provides the interface that  represents the endpoint where the browsers can access the system's functionalities.
 			
 			\item \textbf{Web App Interface:} it is the interface that allows the browsers to benefit of the services of SafeStreets with a web app technology.
 			
@@ -124,27 +124,27 @@
 					\item Allows to store in the system all the streets and cities
 				\end{itemize}
 			
-			\item \textbf{IRI API:} it is the interface that provides the methods to the system in order to deal with the recognition of the plate of a vehicle. Remember that the algorithms accessible from this API can be helped with the information provided by the user about the plate's number and, more important, they always "have the last word": this means that whenever a result is found for the plate it will be considered correct and storable by the system; in all the cases when no result is found by the algorithms the notification will be discarded.
+			\item \textbf{IRI API:} it is the interface that provides the methods to the system in order to deal with the recognition of a vehicle's plate. Remember that the algorithms accessible from this API can be helped with the information provided by the user about the plate's number and, more important, they always "have the last word": this means that whenever a result is found for the plate it will be considered correct and storable by the system; in all the cases when no result is found by the algorithms the notification will be discarded.
 			
-			\item \textbf{Email API:} it is the interface that provides the methods to the system in order to deal with the minimal email sending and receiving needed. An email system in fact is necessary both for the process of code verification to recognize the authorities and also for the credential recovery of both the customers
+			\item \textbf{Email API:} it is the interface that provides the methods to the system in order to deal with the minimal email sending and receiving services needed. An email system in fact is necessary both for the process of code verification to recognize the authorities and also for the credential recovery of both the customers.
 			
-			\item \textbf{Authority Common Interface:} it is the interface that provides the methods to the system in order to deal with the PEC addresses and the accidents receiving. This interface is thought to be provided by a common system used by every authority where:
+			\item \textbf{Authority Common Interface:} it is the interface that provides the methods to the system in order to deal with the PEC addresses and the accidents receiving. This interface is thought to be provided by a common system used by every authority, where:
 			
 			\begin{itemize}
 				\item we can retrieve all the PEC addresses of each authority, in order to do the checks in the recognition process
-				\item we can retrieve all the accidents that took place in the area of an authority's competence. It is assumed that the exchange of the accidents' data develops in this way: each authority publishes its accidents on the common system as we can periodically try to retrieve thanks to this interface all the accidents that has occurred until our last check.
+				\item we can retrieve all the accidents that took place in the area of an authority's competence. It is assumed that the exchange of the accidents' data develops in this way: each authority publishes its accidents on the common system as we can periodically try to retrieve them.
 			\end{itemize}
 		
-			\item \textbf{DBMS API:} it is the interface that provides the methods to the system in order to deal with the data management process. Starting from the access one, the notification process and all the others that need to require or store information from the s of the system (in the following section it will be clear which are the components that necessarily need to access the DBMS interface).
+			\item \textbf{DBMS API:} it is the interface that provides the methods to the system in order to deal with the data management process. Starting from the access one, the notification process and all the others that need to require or store information from the database of the system (in the following section it will be clear which are the components that necessarily need to access the DBMS interface).
 			 
 		\end{itemize}
 	
 		\subsubsection[Server Component]{\hyperlink{toc}{Server Component}}
 			\label{sec:serverComponent}
 			
-			From now on we are going to blow up the high-level component view just presented, starting with the most complex component that is the server and continuing first with its internal ones and in the end with the others that we have to take in account while defining the architecture of our system (WebServer and UserApp). In all the diagrams we are going to illustrate now the interaction between the components and the interfaces provided is carried on by means of the lollipop-socket notation. We will then continue by precisely describing each of these components to understand how they allow to obtain the functionalities of the system by providing and using the interfaces identified.\\
+			From now on we are going to blow up the high-level component view just presented, starting with the most complex component that is the server and continuing first with its internal ones and in the end with the others that we have to take into account while defining the architecture of our system (WebServer and UserApp). In all the diagrams we are going to illustrate, the interaction between the components and the interfaces provided is carried on by means of the lollipop-socket notation. We will then continue by precisely describing each of these components to understand how they allow to obtain the functionalities of the system by providing and using the interfaces identified.\\
 			
-			The diagram of the next page highlights all the components that compose the server and describes both their internal and external interaction: we can see in fact the interfaces that we defined in the previous section how are provided or used by these components and how new interfaces are needed to make them interact.
+			The diagram of the next page (\blueAutoref{fig:serverComp}) highlights all the components that compose the server and describes both their internal and external interactions: we can see in fact the interfaces that we defined in the previous section how are provided or used by these components and how new interfaces are needed to make them interact.
 			
 			\begin{figure}[h!]
 				\centering
@@ -157,7 +157,7 @@
 		\subsubsection[Client Handler Component]{\hyperlink{toc}{Client Handler Component}}
 			\label{sec:clientHandlerComponent}
 			
-			The \emph{ClientHandler} (\blueAutoref{fig:clientHandlerComp}) is the component that manages all the requests coming from the customers. As we see two interfaces are provided, one for the mobile application (\textbf{MobileAppInterface}) and the other for the web server that manages the web application (\textbf{WebInterface}). These two interfaces are the ones that provide the result of each request once it has been managed by the logic of the system that starts to compute in this component.
+			The \emph{ClientHandler} (\blueAutoref{fig:clientHandlerComp}) is the component that manages all the requests coming from the customers. As we see two interfaces are provided, one for the mobile application (\textbf{MobileAppInterface}) and the other for the web server, that manages the web application (\textbf{WebInterface}). These two interfaces are the ones that provide the result of each request once it has been managed by the logic of the system which starts its computation in this component.
 			
 			\begin{figure}[h!]
 				\centering
@@ -172,12 +172,12 @@
 				
 				\item \textbf{AppRequestManager:} it is the component that manages all the requests that come from the mobile application, hence from the device that uses the \textbf{MobileAppInterface} realized by this component.
 				
-				\item \textbf{RequestDispatcher:} it is the component that allows to handle each type of request that comes either from the web app or the mobile one. In fact, thanks to the \textbf{HandleRequest Interface} the components previously described can deploy the request to this one that, depending on the type of the request will need to use different services in order to provide the functionality it is requiring. In fact, as we can see there are several interfaces that are used by this component:
+				\item \textbf{RequestDispatcher:} it is the component that allows to handle each type of request that comes either from the web app or the mobile one. In fact, thanks to the \textbf{HandleRequest Interface} the components previously described can deploy the request to this one that, depending on the type of the request, will need to use different services in order to provide the functionality required. As a consequence, we can see several interfaces that are used by this component:
 				
 				\begin{itemize}
 					\item \textbf{Mining Interface:} allows to benefit of the methods provided by the \emph{QueryManager} component that is the one which manages all the queries related to the basic and the advanced functionalities.
 					
-					\item \textbf{Notification Interface:} it is the interface that allows to manage the notification process once a request to report a parking violation is received by a user.
+					\item \textbf{Notification Interface:} it is the interface that allows to manage the notification process once a request to report a parking violation is sent by a user.
 					
 					\item \textbf{Access Interface:} it is the interface that allows to deal with all the issues related to the access to the system. This means: the login, the registration, the credential recovery, the recognition of the authorities...
 					
@@ -190,7 +190,7 @@
 		\subsubsection[Access Manager Component]{\hyperlink{toc}{Access Manager Component}}
 			\label{sec:accessManagerComponent}
 			
-			The \emph{AccessManager} (\blueAutoref{fig:accessManagerComp}) is the component that manages all the issues related to the access of the customers to the system. As we have said several times when defining the goals and requirements of SafeStreets, in fact, it is fundamental to recognize the clients and thus to provide a registration process.\\
+			The \emph{AccessManager} (\blueAutoref{fig:accessManagerComp}) is the component that manages all the issues related to the access of the customers. As we have said several times when defining the goals and requirements of SafeStreets, in fact, it is fundamental to recognize the clients and thus to provide a registration process.\\
 			
 			The components described in the following diagram are the ones that allow to provide the access functionalities of:
 			
@@ -200,14 +200,14 @@
 				\item Credentials Recovery
 			\end{itemize}
 		
-			In order to provide the methods that allow to realize these functionalities through the \textbf{Access Interface}, this component has also to benefit of the external services provided by the methods of the \textbf{Email API} and \textbf{Authority API}. The interface that allows to access and manage the data stored in the system is obviously fundamental for all the checks needed and to store new customers in the application.\\
+			In order to provide the methods that allow to realize these functionalities through the \textbf{Access Interface}, this component has also to benefit of the external services provided by the \textbf{Email API} and the \textbf{Authority API}. The interface that allows to access and manage the data stored in the system is obviously fundamental for all the checks needed and to store new customers in the application.\\
 			
 			The components that allow the \emph{AccessManager} to process an access request, meaning one of the three functionalities listed before are:
 			
 			\begin{itemize}
-				\item \textbf{Email Manager:} it is the component that uses the methods provided by the \textbf{Email API} in order to have a way to send the mails with the recognition code to the authorities and to offer the service of the credentials recovery by sending an email to the address that requests for recovering its password. This component provides the \textbf{mail Interface} that is used by the other components that realizing these functionalities have to deal with the email system.
+				\item \textbf{Email Manager:} it is the component that uses the methods provided by the \textbf{Email API} in order to have a way to send the emails with the recognition code and to offer the service of the credentials recovery. This component provides the \textbf{mail Interface} to expose the methods related to its service.
 			
-				\item \textbf{PEC Manager:} it is the component that deals with all the issues related to the PEC addresses of the authorities. In fact it uses the methods provided by the \textbf{Authority API} in order to know which are the existing addresses of all the authorities and then uses the \textbf{mail Interface} to provide through the \textbf{PEC Interface} the methods that allow to send the verification code in the registration process.
+				\item \textbf{PEC Manager:} it is the component that deals with all the issues related to the PEC addresses. In fact it uses the methods provided by the \textbf{Authority API} in order to know which are the existing addresses of all the authorities and then uses the \textbf{mail Interface} to provide through the \textbf{PEC Interface} the methods that allow to send the verification code in the registration process.
 			\end{itemize}
 			
 			\begin{figure}[ht]
@@ -219,20 +219,20 @@
 			\begin{itemize}
 				\item \textbf{LoginManager:} it is the component that deals with the login process. It realizes the \textbf{Access Interface} by providing the methods for the login and has always to interact with the \emph{CredentialChecker} component in order to verify the credentials of the logging customer. In this way, thanks to the \textbf{Check Interface}, this component will control the credential of either the user or the authority and decide if to authenticate them or not.
 				
-				\item \textbf{CredentialRecovery:} it is the component that deals with the credentials recovery process. It realizes the \textbf{Access Interface} by providing the methods for the recovery and thus it needs to interact with both the \emph{CredentialChecker} and the \emph{CredentialStorer:} components. Thanks to the \textbf{Check Interface} and the \textbf{Store Interface}, in fact, it will be able to control the identity of the customer who is requiring to recover its credentials and store the new information related to the customer. Obviously the \textbf{mail Interface} is also needed in order to send the email to the customer that is requiring to recover its credentials.
+				\item \textbf{CredentialRecovery:} it is the component that deals with the credentials recovery process. It realizes the \textbf{Access Interface} by providing the methods for the recovery and thus it needs to interact with both the \emph{CredentialChecker} and the \emph{CredentialStorer} components. Thanks to the \textbf{Check Interface} and the \textbf{Store Interface}, in fact, it will be able to control the identity of the customer who is requiring to recover its credentials and store its possible new information. Obviously the \textbf{mail Interface} is also needed in order to send the email to the client that is requiring to recover its credentials.
 				
 				\item \textbf{RegistrationManager:} it is the component that deals with the registration of the customers. It realizes the \textbf{Access Interface} by providing the methods to register both the user and the authority and thus needs to use the \textbf{Check Interface} and the \textbf{Store Interface}. In fact, this component will need to check for the new credentials to be feasible and then to store the new data related to the registering customer. The \textbf{PEC Interface} is used for the authority registration process to send the verification code and check the address.
 				
-				\item \textbf{CredentialChecker:} it is the component that deals with all the checks needed in the access functionalities previously described by providing the \textbf{Check interface}. Obviously to perform these checks it needs to access the database of the system and thus the methods provided by the \textbf{DataIntF Interface}.
+				\item \textbf{CredentialsChecker:} it is the component that deals with all the checks needed in the access functionalities previously described by providing the \textbf{Check interface}. Obviously to perform these checks it needs to access the database of the system and thus the methods provided by the \textbf{DataIntF Interface}.
 				
-				\item \textbf{CredentialStorer:} it is the component that deals with the storing of all the data used in the access functionalities previously described by providing the \textbf{Store Interface}.
-				Obviously in order to store the information in the of the customers in the system it needs to use the methods provided by the \textbf{DataIntF Interface}
+				\item \textbf{CredentialStorer:} it is the component that deals with the storing of all the data used in the access functionalities by providing the \textbf{Store Interface}.
+				Obviously in order to store the information in the database it needs to use the methods provided by the \textbf{DataIntF Interface}.
 			\end{itemize}
 		
 		\subsubsection[Query Manager Component]{\hyperlink{toc}{Query Manager Component}}
 			\label{sec:queryManagerComponent}
 			
-			The \emph{QueryManger} (\blueAutoref{fig:queryManagerComp}) is the component that manages the requests related either to the basic or the advanced functionalities (see section \blueRef{sec:generalContext} for the precise functionalities description) coming from the customers with the realization of the \textbf{Mining Interface}. Hence, this component needs first to identify the request as it can be checked for the filters used thanks to the \textbf{Check Interface} and then, once identified the functionality, it realizes the respective query with the respective interface provided by the correct component:
+			The \emph{QueryManger} (\blueAutoref{fig:queryManagerComp}) is the component that manages the requests related either to the basic or the advanced functionalities (see section \blueRef{sec:generalContext} for the precise functionalities description) coming from the customers with the realization of the \textbf{Mining Interface}. Hence, this component needs first to identify the request, then it checks its filters with the \textbf{Check Interface} and finally, once identified the functionality, it realizes the respective query with the relative interface provided by the correct component:
 			
 			\begin{itemize}
 				\item Interventions Interface
@@ -257,16 +257,16 @@
 			\end{figure}
 		
 			\begin{itemize}
-				\item \textbf{UnsafeQuery:} it is the component that manages the query related to the safety functionality. Hence it will select the correct area and retrieve the safety of all the streets required by the customer as they can be displayed on the map. This component realizes the \textbf{Safety Interface} and needs to use the methods provided by the \textbf{StreetsRetrieval Interface} as it can manage the request of the customer to find the safety of the best path between the two positions he specified.
+				\item \textbf{UnsafeQuery:} it is the component that manages the query related to the safety functionality. Hence it will select the correct area and retrieve the safety of all the streets required by the customer as they can be displayed on the map. This component realizes the \textbf{Safety Interface} and needs to use the methods provided by the \textbf{StreetsRetrieval Interface}. The path retrieval and the JSON file that will be used to display the map are the result of an invocation of one of the methods of the last interface presented.
 				
-				\item \textbf{InterventionsQuery:} it is the component that manages the query related to suggestion for possible interventions functionality. Hence it will prepare the query over the city selected and retrieve all the suggestions for it. This component realizes the \textbf{Interventions Interface} used by the \emph{FunctionalityIdentifier}.
+				\item \textbf{InterventionsQuery:} it is the component that manages the query related to the suggestion for possible interventions functionality. Hence it will prepare the query over the city selected and retrieve all the suggestions for it. This component realizes the \textbf{Interventions Interface} used by the \emph{FunctionalityIdentifier}.
 				
 				\item \textbf{ReportsRetrieverQuery:} it is the component that manages all the functionalities that require to retrieve the reports from a request made by an authority. For this reason it handles both the \emph{Check Unread Reports} and \emph{Find Reports} functionalities provided to the authorities, that are nothing more than a query over the database retrieving the violations. 
 				
 				\begin{itemize}
 					\item \textbf{Check Unread Reports:} it is the functionality that allows the authority to be notified of new parking violations. Thanks to the unread flag that is stored in the system whenever a new notification is accepted we are able to retrieve for every authority its notifications and display them for this functionality.
 					
-					\item \textbf{Find Reports:} it is the functionality that provides the authority with a different level of visibility to retrieve the notifications. In fact, while the user is able to see only some statistics thanks to the basic functionalities, in this way the authorities are able to see in detail each of the reports of their competence.
+					\item \textbf{Find Reports:} it is the functionality that provides the authority with a different level of visibility the retrieval of the notifications. In fact, while the user is able to see only some statistics thanks to the basic functionalities, in this way the authorities are able to see in detail each of the reports of their competence.
 				\end{itemize}
 			
 				This component realizes the \textbf{Reports Interface} used by the \emph{FunctionalityIdentifier}.
@@ -275,7 +275,7 @@
 				
 				\item \textbf{FrequencyQuery:} it is the component that manages the query related to the violations frequency functionality. Hence it will prepare the query with the filters already checked and retrieve the streets with most violations. This component realizes the \textbf{Frequency Interface} used by the \emph{FunctionalityIdentifier}.
 				
-				\item \textbf{QuerySender:} it is the component that allows to send the query to the \emph{DataManager} component that allows to execute it and retrieve the results. Thanks to the \textbf{Send Interface}, in fact, the five components just presented will send the query they have prepared to the \emph{DataManager} who will execute it over the database of the system.
+				\item \textbf{QuerySender:} it is the component that allows to send the query to the \emph{DataManager}. Thanks to the \textbf{Send Interface}, in fact, the five components just presented will send the query they have prepared to the \emph{DataManager} who will execute it over the database of the system.
 			\end{itemize}
 		
 		\subsubsection[Report Manager Component]{\hyperlink{toc}{Report Manager Component}}
@@ -294,7 +294,7 @@
 			The components that allow the \emph{ReportManager} to handle the notification process are:
 			
 			\begin{itemize}
-				\item \textbf{ReportValidator:} it is the main component that deals with the notification process of the user-side. Once a report is notified by a user, all the information related to it will be delivered to this component by the \emph{ClientHandler} thanks to the \textbf{Notification Interface}. Before storing the information it has to be managed in order to add the missing details and validate its content; these two further considerations are managed with the methods provided by the interfaces:
+				\item \textbf{ReportValidator:} it is the main component that deals with the notification process of the user-side. Once a report is notified by a user, all the information related to it will be delivered to this component by the \emph{ClientHandler} thanks to the \textbf{Notification Interface}. Before storing the information, it has to be managed in order to add the missing details and validate its content; these two further considerations are managed with the methods provided by these interfaces:
 				
 				\begin{itemize}
 					\item \textbf{HandlePosition:} it is the interface that retrieves the street providing the GPS position of where the parking violation occurred.
@@ -303,7 +303,7 @@
 					
 					\item \textbf{Check:} it is the interface that allows to check if there exists already the same notification in the system. As we have already said, it is useless to store twice the same notification, in the case of a duplicate the current one will be discarded.
 					
-					\item \textbf{Store:} it is the interface that allows to store the notification once the data completion and the validity have been carried out by the component.
+					\item \textbf{Store:} it is the interface that allows to store the notification once the data completion and the validity have been carried out by the components.
 				\end{itemize}
 			\end{itemize}
 			
@@ -314,9 +314,9 @@
 			\end{figure}
 		
 			\begin{itemize}
-				\item \textbf{Street Identifier:} it is the component that manages to retrieve the street where the violation occurred using the GPS position provided in the notification. This component realizes the \textbf{HandlePosition Interface} thanks to the methods provided by the \textbf{StreetsRetrieval Interface} which are the real ones that execute the algorithms provided by the external map management system.
+				\item \textbf{Street Identifier:} it is the component that manages to retrieve the street where the violation occurred using the GPS position provided in the notification. This component realizes the \textbf{HandlePosition Interface} thanks to the methods provided by the \textbf{StreetsRetrieval Interface}. These are the real ones that execute the algorithms provided by the external map management system.
 				
-				\item \textbf{PlateReader:} it is the component that runs the algorithms provided by the IRI API in order to recognize the plate of the vehicle reported. It realizes the \textbf{PlateRecognition Interface} that is used to benefit of this control, fundamental to validate the notification.
+				\item \textbf{PlateReader:} it is the component that runs the algorithms provided by the IRI API in order to recognize the plate of the vehicle reported. It realizes the \textbf{PlateRecognition Interface} that is used to benefit of this result, fundamental to validate the notification.
 				
 				\item \textbf{DuplicateChecker:} it is the component that manages to check whether the reported violation is already stored in the database or not. It realizes the \textbf{Check Interface} which provides the methods to perform this additional control before storing the notification.
 				
@@ -335,11 +335,11 @@
 				
 				\item \textbf{GPSPositionHandler:} it is the component that runs the algorithms provided by the MI API in order to realize the \textbf{GPS Interface}.
 				
-				\item \textbf{MapRequest:} it is the component that deals both with the retrieval of the best path between two positions provided by the customer and the mapping of each street with the correspondent safety. The shortest path is managed with the methods provided by the \textbf{Path Interface} while the mapping is carried by the the methods of the \textbf{Map Interface}. The result of the invocation of the methods that return the map for the \emph{Unsafe Functionality} will be a FILE that contains all the information needed by the logic of the presentation components in order to display the map.
+				\item \textbf{MapRequest:} it is the component that deals both with the retrieval of the best path between two positions provided by the customer and the mapping of each street with the correspondent safety. The shortest path is managed with the methods provided by the \textbf{Path Interface} while the mapping is carried by the the methods of the \textbf{Map Interface}. 
 							
 				\item \textbf{ShortestPathHandler:} it is the component that runs the algorithms provided by the MI API in order to realize the \textbf{Path Interface}.
 				
-				\item \textbf{MapUpdater:} it is the component that allows the system to have the information of all the streets and cities it has to manage inside its database. Thanks to this information provided by the MI API, this component will periodically ask if some updates have occurred on the maps and in case store them inside the database thanks to the interaction with the \textbf{DataIntF Interface}.
+				\item \textbf{MapUpdater:} it is the component that allows the system to have the information of all the streets and cities it has to manage inside its database. It Thanks to this information provided by the MI API, this component will periodically ask if some updates have occurred on the maps and in case store them inside the database thanks to the interaction with the \textbf{DataIntF Interface}.
 			\end{itemize}
 			
 			\begin{figure}[ht]
@@ -349,7 +349,7 @@
 			\end{figure}
 		
 			\begin{itemize}
-				\item \textbf{SafetyManager:} it is the component that runs the algorithms provided by the MI API once it has retrieved all the information about the safety of the streets requested by the customer. It realizes the \textbf{Map Interface} that allows to benefit of the methods that return the data of each street together with its safety in order to be displayed to the client.
+				\item \textbf{SafetyMapper:} it is the component that runs the algorithms provided by the MI API once it has retrieved all the information about the safety of the streets requested by the customer. It realizes the \textbf{Map Interface} that allows to benefit of the methods that return the data of each street together with its safety in order to be displayed to the client. Hence, this is the component that receives the JSON file containing all the information needed to display a map. It parses this data and stores as it is precisely described in the data view section (\blueRef{sec:databaseView}).
 			\end{itemize}
 		
 		\subsubsection[Safety Manager Component]{\hyperlink{toc}{Safety Manager Component}}
@@ -357,24 +357,24 @@
 			
 			The \emph{SafetyManager} (\blueAutoref{fig:safetyManagerComp}) is the component that deals with the safety calculus that has to be carried out every day considering the previous thirty days in order to have the data for the safety functionality. As precisely described in the RASD document \cite{RASD} we have defined a clear way to determine the safety of each street. In order to carry on this calculus we have to consider this component that periodically will run its algorithms in order to update the safety.\\
 			
-			As we see no interface is provided by this component, in fact, as we have just said it is independent as it needs to run periodically by just retrieving the data over the notifications and accidents and update the safety of the streets.\\
+			As we see, no interface is provided by this component, as we have just said in fact it is independent as it needs to run periodically by just retrieving the data over the notifications and accidents and update the safety of the streets.\\
 			
-			Hence it is important now to describe once more how the safety update works as we can also understand how the components that compose the \emph{SafetyManager} interact in order to obtain its functionality. The system dynamically change, each day the safety of the streets, considering the parking violations data relative of the previous thirty days, thanks to two different kind of tresholds. For each street if at least one treshold is exceeded it means that the street is \textbf{unsafe} otherwise it will be considered \textbf{safe}. The tresholds are:
+			It is important now to describe once more how the safety update works as we can also understand how the components that compose the \emph{SafetyManager} interact in order to obtain this functionality. The system dynamically changes day per day the safety of the streets, considering the parking violations data relative of the previous thirty days, thanks to two different kind of thresholds. For each street if at least one threshold is exceeded it means that it is \textbf{unsafe} otherwise it will be considered \textbf{safe}. The thresholds are:
 			
 			\begin{itemize}
-				\item \textbf{Intervention Treshold:} each intervention is defined with a treshold. On every street every intervention would be possibly chosen as a suggestion. Each type of parking violation or accident, if occurred in a certain street augment the treshold of the interventions linked with that type (hence the same violation or accident may augment at the same time two different interventions). If an intervention's treshold exceeds it means that the street is no longer \textbf{safe} and that its safety has to be updated. In this way counting each day for every street if a treshold for at least one intervention is exceeded allows to determine both the safety of a street but also the possible intervention to be suggested.
+				\item \textbf{Intervention Threshold:} each intervention is defined with a threshold. On every street, every intervention would be possibly chosen as a suggestion. Each type of parking violation or accident, if occurred in a certain street, augment the threshold of the interventions linked with that type (hence the same violation or accident may augment at the same time two different interventions). If an intervention's threshold exceeds it means that the street is no longer \textbf{safe} and that its safety has to be updated. In this way counting each day for every street if a threshold for at least one intervention is exceeded allows to determine both the safety of a street and also the possible interventions to be suggested.
 				
-				\item \textbf{Sum Treshold:} in order to consider also the case where no accident is linked to any intervention (because of the fact we are just considering the parking violations and the accident may be caused by another reason, for example: the speed limit) for each street is also defined another singular treshold that independently from the type determines a street to be \textbf{safe} or not. This treshold augments whenever an accident or a parking violation occurs in the street and thus it is simply determined as the sum of the accidents and parking violations. In this way counting each day for every street if the sum treshold is exceeded allows to determine the safety independently from the type of the accidents that have occurred.
+				\item \textbf{Sum Threshold:} in order to consider also the case when no accident is linked to any intervention (because of the fact we are just considering the parking violations and the accident may be caused by another reason, e.g.: the speed limit) for each street is also defined another threshold that independently from the type determines a street to be \textbf{safe} or not. This threshold augments whenever an accident or a parking violation occurs in the street and thus it is simply determined as the sum of the accidents and parking violations. In this way, counting each day for every street if the sum threshold is exceeded, it allows to determine the safety independently from the type of the accidents that have occurred.
 			\end{itemize}
 		
 			Now that we know better how the safety process works we are able to describe the components that compose the \emph{SafetyManager} in order to provide this functionality:
 			
 			\begin{itemize}
-				\item \textbf{SafetyUpdate:} it is the core component that deals with all the computation related to the calculus of the safety that we have said to happen periodically every day. In order to determine whether an interface is exceeded or not it uses the \textbf{InterventionsSafety Interface} and the \textbf{SumSafety Interface} that allow to determine for a street if one of the tresholds have exceeded. In order to access the data of the reports and the accidents the component uses the \textbf{Reports Interface} and the \textbf{Accidents Interface} to carry out the computation. Hence every day a new block of reports and accidents will be considered in the computation and the oldest one will be discarded, once the safety has been determined the \emph{SafetyUpdate} stores the information thanks to the \textbf{Store Interface} and its functionality will be needed the next day.
+				\item \textbf{SafetyUpdate:} it is the core component that deals with all the computation related to the calculation of the safety that we have said to happen periodically every day. In order to determine whether an interface is exceeded or not it uses the \textbf{InterventionsSafety Interface} and the \textbf{SumSafety Interface} that allow to determine for a street if one of the thresholds have exceeded. In order to access the data of the reports and the accidents the component uses the \textbf{Reports Interface} and the \textbf{Accidents Interface} to carry out the computation. Hence every day a new block of reports and accidents will be considered in the computation and the oldest one will be discarded; once the safety has been determined, the \emph{SafetyUpdate} stores the information thanks to the \textbf{Store Interface} and its functionality will be needed the next day.
 				
-				\item \textbf{InterventionsManager:} it is the component that realizes the \textbf{InterventionsSafety Interface} providing the methods to determine the safety of a street thanks to the tresholds of the interventions linked to the parking violations and the accidents that occurred in that street.
+				\item \textbf{InterventionsManager:} it is the component that realizes the \textbf{InterventionsSafety Interface} providing the methods to determine the safety of a street thanks to the thresholds of the interventions linked to the parking violations and the accidents that occurred in that street.
 				
-				\item \textbf{SumManager:} it is the component that realizes the \textbf{SumSafety Interface} providing the methods to determine the safety of a street thanks to its sum treshold, by counting the number of parking violations and accidents that occurred in that street.
+				\item \textbf{SumManager:} it is the component that realizes the \textbf{SumSafety Interface} providing the methods to determine the safety of a street thanks to its sum threshold; it counts the number of parking violations and accidents that occurred in that street.
 			\end{itemize}
 		
 			\begin{figure}[ht]
@@ -388,18 +388,18 @@
 				
 				\item \textbf{AccidentsData:} it is the component that allows to obtain the information about the accidents that occurred in a certain street by providing the \textbf{Accidents Interface} as they can be considered for the safety update.
 				
-				\item \textbf{SafetyStorer:} it is the component that is able to store the new information about the safety of each street once is has been updated. It realizes the \textbf{Store Interface} and needs to use the methods provided by the \textbf{DataIntF Interface} in order to complete the storing action.
+				\item \textbf{SafetyStorer:} it is the component that is able to store the new information about the safety of each street once it has been updated. It realizes the \textbf{Store Interface} and needs to use the methods provided by the \textbf{DataIntF Interface} in order to complete the storing action.
 			\end{itemize}
 		
 		\subsubsection[Accidents Manager Component]{\hyperlink{toc}{Accidents Manager Component}}
 			\label{sec:accidentsManagerComponent}
 			
-			The \emph{AccidentsManager} (\blueAutoref{fig:accidentsManagerComp}) is the component that deals just with the management of the accidents that have been stored by the authorities over the common interface. As we see only two components are needed, one that receives the accidents by using the methods provided by the \textbf{Authority API} and the other which stores the accidents that have been retrieved.\\
+			The \emph{AccidentsManager} (\blueAutoref{fig:accidentsManagerComp}) is the component that deals just with the management of the accidents that have been stored by the authorities onto the common interface. As we see only, two components are needed: one that receives the accidents by using the methods provided by the \textbf{Authority API} and the other which stores the accidents that have been retrieved.\\
 			
-			The components that allow the \emph{AccidentsManager} to handle the process of receiving the accidents provided by the authorities thanks to the authority common system are:
+			The components that allow the \emph{AccidentsManager} to handle the process of receiving the accidents provided by the authorities are:
 			
 			\begin{itemize}
-				\item \textbf{Accidents Receiver:} it is the component that uses the methods provided by the \textbf{Authority API} in order to retrieve all the accidents that each authority has published. In this way, by updating this type of data periodically as the safety updating process we will be able to have always all the information we need to determine the safety of the streets. Once the accidents data is retrieved this component is ready to store it in the database thanks to the \textbf{Store Interface}.
+				\item \textbf{Accidents Receiver:} it is the component that uses the methods provided by the \textbf{Authority API} in order to retrieve all the accidents that each authority has published. In this way, by updating this type of data periodically we will be able to have always all the information we need to determine the safety of the streets. Once the accidents data is retrieved, this component is ready to store it in the database thanks to the \textbf{Store Interface}.
 			\end{itemize}
 			
 			\begin{figure}[ht]
@@ -415,7 +415,7 @@
 		\subsubsection[Data Manager Component]{\hyperlink{toc}{Data Manager Component}}
 			\label{sec:dataManagerComponent}
 			
-			The \emph{DataManager} (\blueAutoref{fig:dataManagerComp}) is the component that deals with all the management of the data needed by the system in order to perform its functionalities. As we can see in the general diagram of the server (\blueAutoref{fig:serverComp}) almost every component needs to use the interface provided by this one in order to provide its functionality.\\
+			The \emph{DataManager} (\blueAutoref{fig:dataManagerComp}) is the component that deals with all the management of the data needed by the system in order to perform its functionalities. As we can see in the general diagram of the server (\blueAutoref{fig:serverComp}), almost every component needs to use the interface provided by this one.\\
 			
 			Hence the \emph{DataManager} realizes only the \textbf{DataIntF Interface} which provides the methods for the management of all the information and uses the methods provided by the \textbf{DBMS API} in order to perform on the database the storing or requesting actions needed.\\
 			
@@ -455,7 +455,7 @@
 			The components that allow the \emph{WebServer} to handle the interaction process between the requests coming from the web app and the business logic are:
 			
 			\begin{itemize}
-				\item \textbf{Presentation:} it is the component that deals with the graphical interface that is needed to provide the authorities the access to the system. It realizes the \textbf{WebAppInterface} as it defines all the methods and scripts the browser will use to display the information. In order to manage the interaction it handles the actions performed by the authority with the \textbf{Commands Interface} and sends the requests to the system as they can be processed thanks to the \textbf{Requests Interface}.
+				\item \textbf{Presentation:} it is the component that deals with the graphical interface that is needed to provide the authorities the access to the system. It realizes the \textbf{WebAppInterface} as it defines all the methods and scripts the browser will use to display the information. In order to manage the interaction, it handles the actions performed by the authority with the \textbf{Commands Interface} and sends the requests to the system as they can be processed thanks to the \textbf{Requests Interface}.
 			\end{itemize}
 			
 				\begin{figure}[ht]
@@ -473,7 +473,7 @@
 		\subsubsection[User App Component]{\hyperlink{toc}{User App Component}}
 			\label{sec:userAppComponent}
 			
-			The \emph{UserApp:} (\blueAutoref{fig:userAppComp}) is the other independent component that will be installed on the device of the users in order to provide the interaction with the system. Differently from the \emph{WebServer} this is already the component that will manage the actions performed by the user as it represents the mobile software application. For this reason it only needs to use the methods provided by the \textbf{MobileAppInterface} to send the requests to the system as they can be processed.\\
+			The \emph{UserApp} (\blueAutoref{fig:userAppComp}) is the other independent component that will be installed on the device of the users in order to provide the interaction with the system. Differently from the \emph{WebServer} this is already the component that will manage the actions performed by the user as it represents the mobile software application. For this reason it only needs to use the methods provided by the \textbf{MobileAppInterface} to send the requests to the system as they can be processed.\\
 			
 			The components that allow the \emph{UserApp} to handle the interaction process between the requests coming from the mobile app and the business logic are:
 			
@@ -488,7 +488,7 @@
 			\end{figure}
 		
 			\begin{itemize}
-				\item \textbf{Controller:} it is the component that deals with the logic needed to handle the actions performed by the authority. By providing the \textbf{Commands Interface} is allows to manage the flow of the mobile application displayed on the device of the user.
+				\item \textbf{Controller:} it is the component that deals with the logic needed to handle the actions performed by the authority. By providing the \textbf{Commands Interface} it allows to manage the flow of the mobile application displayed on the device of the user.
 				
 				\item \textbf{RequestHandler:} it is the component that deals with all the requests coming from the mobile application. Thanks to the \textbf{Request Interface} realized, it is able to process the incoming request and send it to the business logic with the methods of the \textbf{MobileAppInterface} as the functionality required will be displayed in the application.
 			\end{itemize}
@@ -501,11 +501,11 @@
 		As we can see in the picture (\blueAutoref{fig:classDiagramModel}) some classes and relations have been updated, in particular for what concerns the maps issues and the safety ones. In particular:
 		
 		\begin{itemize}
-			\item The classes that we are going to use to store the position issues have been updated. We removed the \textbf{Position} class as it is not relevant anymore while we added the \textbf{Cross} class that is important for the transportation of the data relative to a map to be highlighted. The \textbf{Path} class has also been updated to consider a possible way to store the information relative to a path provided by the MI. The \textbf{Street} and \textbf{City} classes are still considered as we have said that we need to store in our system their information in order to deal with the functionalities the system has tp provide.
+			\item The classes that we are going to use to store the position issues have been updated. We removed the \textbf{Position} class as it is not relevant anymore while we added the \textbf{Cross} class that is important for the transportation of the data relative to a map to be highlighted. The \textbf{Path} class has also been updated to consider a possible way to store the information relative to a path provided by the MI. The \textbf{Street} and \textbf{City} classes are still considered as we have said that we need to store in our system their information in order to deal with the functionalities the system has to provide.
 			
 			\item The most important update is the \textbf{Map} class. This class is the result of the invocation of the methods that deal with the \emph{UnsafeStreets} functionality. What happens, in fact, when a request of this type arrives to the business logic is: first retrieve in the database all the requested streets and their safety, second, provide them to the methods of the MI that will return the JSON file containing all the relevant information for a map to be displayed. Thanks to this class, we will easily parse the file and store its values in the class attributes.
 			
-			\item The \textbf{Safety} class has also been removed as it was used in the initial class diagram to define more precisely which were the relations that allowed to determine its value for the streets stored in the system. We decided now to simplify the safety considerations, even to reduce the complexity of the algorithms that will determine the safety, to store in each street a value that is \emph{true} if the street is safe, otherwise \emph{false}.		
+			\item The \textbf{Safety} class has also been removed as it was used in the initial class diagram to define more precisely which were the relations that allowed to determine its value for the streets stored in the system. We decided now to simplify the safety considerations, even to reduce the complexity of the algorithms that will determine it, by storing in each street a value that is \emph{true} if the street is safe, otherwise \emph{false}.		
 		\end{itemize}
 		
 		\newpage
@@ -518,7 +518,7 @@
 	
 		\FloatBarrier
 		
-		To conclude with this section that aims to provide an overview of which type of data will flow inside our system, we want to give a practical example of how the objects of the \textbf{Map} class will be instantiated once we receive as a result a JSON file from the MI. What we want to achieve is a one to one correspondence between the file and the class as we can store all the information with just one method of some parsing library. Hence, what we aim to is something like presented in the following picture (\blueAutoref{fig:jsonMapping}):
+		To conclude with this section that aims to provide an overview of which type of data will flow inside our system, we want to give a practical example of how the objects of the \textbf{Map} class will be instantiated once we receive as a result the JSON file from the MI. What we want to achieve is a one to one correspondence between the file and the class as we can store all the information with just one method invocation of some parsing library. Hence, what we aim to is something like presented in the following picture:
 		
 		\begin{figure}[h!]
 			\centering
@@ -540,7 +540,7 @@
 	\subsection[Deployment View]{\hyperlink{toc}{Deployment View}}
 		\label{sec:deploymentView}
 
-		As we have seen in the overview (\blueRef{sec:overview}) and component view (\blueRef{sec:componentView}) sections, we have designed a system that needs to interact with many agents. In order to define a crowd-sourced application where a lot of information needs to be managed as it can be used to provide different services, we decided to use a \textbf{client-server} architectural approach. As we may have guessed in the high-level component diagram of \blueAutoref{fig:highLevelComp} the business logic is represented by the server component while the clients are designed with two different technologies in order to have the best application software to make the customers interact with the system, depending on their characteristics.\\
+		As we have seen in the overview (\blueRef{sec:overview}) and component view (\blueRef{sec:componentView}) sections, we have designed a system that needs to interact with many agents. In order to define a crowd-sourced application where a lot of information needs to be managed as it can be used to provide different services, we decided to use a \textbf{client-server} architectural approach. As we may have guessed in the high-level component diagram of \blueAutoref{fig:highLevelComp} the business logic is represented by the server component while the clients are designed with two different technologies in order to have the best application software to make the customers interact with the system.\\
 		
 		The client-side system is composed of:
 		
@@ -549,11 +549,11 @@
 			\item \textbf{Web Application:} for the authorities
 		\end{itemize}
 			
-		Hence, to make this decision possible we need to consider a web server that will manage all the interaction between the web application and the internal system, while we can make directly interface the mobile application with the internal system thanks to the software application installed on the devices of the users.\\
+		Hence, to make this decision possible we need to consider a web server that will manage all the interactions between the web application and the internal system, while we can make directly interface the mobile application with the internal system thanks to the software application installed on the devices of the users.\\
 		
-		To accomplish the considerations just presented we decided to design the \textbf{client-server} paradigm with a \textbf{four-tier architecture} in order to have a clear separation between the clients and the servers that manage them; the decoupling of the database shown in the composition diagram (\blueAutoref{fig:compositionDiagram}) enforces once more this decision. All the communications between the system and the customers (both users and authorities) are handled via HTTP messages in a RESTful way. All the considerations just reported about some architectural and communication choices will be clearly precised in the devoted section (\blueRef{sec:selectedArchitecturalStylesAndPatterns}).\\
+		To accomplish the considerations just presented we decided to design the \textbf{client-server} paradigm with a \textbf{four-tier architecture} in order to have a clear separation between the clients and the servers that manage them; the decoupling of the database shown in the composition diagram (\blueAutoref{fig:compositionDiagram}) enforces once more this decision. All the communications between the system and the customers (both users and authorities) are handled via HTTP messages in a RESTful way (HTTPS is shown in the diagram for obvious security reasons). All the considerations just reported about some architectural and communication choices will be clearly precised in the devoted section (\blueRef{sec:selectedArchitecturalStylesAndPatterns}).\\
 		
-		Let's focus now on the illustration of the four-tier architecture as we can understand how the components that we have previously described are mapped with the tiers of the system. Then in the next section we first illustrate the decision tree we used while designing the system as we can later give the complete description of the deployment of the system.\\
+		Let's focus now on the illustration of the four-tier architecture as we can understand how the components that we have previously described are mapped with the tiers of the system. Then, in the next section we first illustrate the decision tree we used while designing the system as we can later give the complete description of the deployment.\\
 		
 		The following picture (\blueAutoref{fig:fourTierArchitecture}) illustrates the tiers of the system needed in order to deploy the components identified in the previous section. 
 		
@@ -565,10 +565,10 @@
 			\caption{\label{fig:fourTierArchitecture} Four Tier Architecture Diagram}
 		\end{figure}
 		
-		\paragraph{Components Mapping} Now that we know which are the tiers and which are the components we are able to map them together as we can clearly understand how the design is structured before starting with the deployment diagram where we highlight instead which are the devices that run the software components identified.
+		\paragraph{Components Mapping} Now that we know which are the tiers and which are the components, we are able to map them together as we can clearly understand how the design is structured before starting with the deployment diagram.
 		
 		\begin{itemize}
-			\item \textbf{Client:} are the components that allow the interaction of the customers with the system in order to benefit of its functionalities
+			\item \textbf{Client:} are the components that allow the interaction of the customers with the system in order to benefit of its functionalities.
 			
 				\begin{itemize}
 					\item AuthorityWebApp
@@ -601,7 +601,7 @@
 				\end{itemize}
 		\end{itemize}
 	
-		The diagram of next page (\blueAutoref{fig:coloredComponentDiagram}) provides a graphical illustration of what we have just said by coloring with the color of the corresponding layer the components highlighted in the general component diagram already seen.
+		The diagram of next page (\blueAutoref{fig:coloredComponentDiagram}) provides a graphical illustration of what we have just said by coloring the corresponding layer with the same color of the components highlighted in the general component diagram already seen.
 		
 		\newpage
 		
@@ -616,7 +616,7 @@
 		\subsubsection[Decision Tree]{\hyperlink{toc}{Decision Tree}}
 			\label{sec:decisionTree}
 			
-			Now that we have established how our system is going to be deployed at the highest level possible, before providing the most detailed deployment diagram we present the decision tree we developed while defining the design process as we can justify the diagram of the next section. As we can see in the picture (\blueAutoref{fig:decisionTree}) we started with a \textbf{client-server} decision and then refined with further more detailed decisions.
+			Now that we have established how our system is going to be deployed at the highest level possible, before providing the most detailed deployment diagram we present the decision tree we developed while defining the design process as we can justify the diagram of the next section. As we can see in the picture (\blueAutoref{fig:decisionTree}) we started with a \textbf{client-server} decision and then refined it with further more detailed decisions.
 			
 			\begin{figure}[h!]
 				\centering
@@ -629,7 +629,7 @@
 			
 			In the diagram of the following page (\blueAutoref{fig:deploymentDiagram}) we illustrate a precise description of how and where the components identified are deployed. We still use the colors related to the components now for the nodes that involve them.\\
 			
-			The communication is presented only between the nodes and not for the components as we already have a precise description of their interfaces that realize their interaction in the component view section (\blueRef{sec:componentView}). The \textbf{HTTPS} and \textbf{TCP/IP} protocols are used to connect respectively: a connection to a REST API or to a service providing system.\\
+			The communication is presented only between the nodes and not for the components as we already have a precise description of their interfaces that realize the interaction in the component view section (\blueRef{sec:componentView}). The \textbf{HTTPS} and \textbf{TCP/IP} protocols are used to connect respectively: a connection to a REST API or to a service providing system.\\
 			
 			All the motivations for the architectural styles and patterns but also the implementation choices that we can see in the picture will be clearly motivated in the devoted section (\blueRef{sec:selectedArchitecturalStylesAndPatterns}). 
 						
@@ -838,7 +838,7 @@
 		\subsubsection[Client-Server]{\hyperlink{toc}{Client-Server}}
 			\label{sec:clientServerDecision}
 			
-			Our system, as described in the context viewpoint of \blueAutoref{fig:contextViewpoint}, needs to interact with several external systems. It is true that in general SafeStreets needs to interact with systems that provide him services in order to realize its functionalities, but it is also true that SafeStreets aims to be a \textbf{crowd-sourced} system that is going to manage interactions with several users (who provide him the data) and several authorities. Thanks to these considerations, after considering different alternatives, we decided to choose a \textbf{client-server} architectural approach in order to manage easily the interaction with the mobile application of the users and to have a centralized server that is able to provide the services of the system to any customer that requires them.
+			Our system, as described in the context viewpoint of \blueAutoref{fig:contextViewpoint}, needs to interact with several external systems. It is true that in general SafeStreets needs to interact with systems that provide him services in order to realize its functionalities, but it is also true that SafeStreets aims to be a \textbf{crowd-sourced} system that is going to manage interactions with several users (who provide him the data) and several authorities. Thanks to these considerations, after studying different alternatives, we decided to choose a \textbf{client-server} architectural approach in order to manage easily the interaction with the mobile application of the users and to have a centralized server that is able to provide the services of the system to any customer that requires them.
 			
 			\begin{figure}[h!]
 				\centering
@@ -846,14 +846,14 @@
 				\caption{\label{fig:clientServerArchitecture} Client Server Architecture}
 			\end{figure}
 
-			Thanks to the client-server approach we also simplify the way in which we communicate with the external clients taking the decision of using the same technology of communication. In fact, as we will describe precisely in the further section \blueRef{sec:RESTDecision}, we are going to build our system in a RESTful way as we can have a simple communication protocol with HTTPS for the \textbf{Web Application} and we can integrate it with the \textbf{Mobile Application} communication in order to have the same APIs. This decision has several motivations even if it may not look the best choice to manage the interaction with the mobile application; one is the one just presented related to the development and interfacing to a single API technology, another is connected with an implementation and integration aspect (as we will see in section \blueRef{sec:selectedArchitecturalStylesAndPatterns}) that is: as we can see in the plan identified by the diagram of \blueAutoref{fig:useRelationHierarchy} the implementation and integration (obviously testing too) of the \textbf{User App} and \textbf{Web Server} will take place in parallel. In this way, as we will need at this moment to define also the interfaces that provide the communication, we will develop first a common REST API on which the two different interfaces related one to the app and the other on the web server will specialize in order to connect to the related device.\\
+			Thanks to the client-server approach we also simplify the way in which we communicate with the external clients taking the decision of using the same technology of communication. In fact, as we will describe precisely in the further section \blueRef{sec:RESTDecision}, we are going to build our system in a RESTful way as we can have a simple communication protocol with HTTPS for the \textbf{Web Application} and we can integrate it with the \textbf{Mobile Application} in order to have the same APIs. This decision has several motivations even if it may not look the best choice to manage the interaction with the mobile application; the first is the one just presented related to the development and interfacing to a single API technology, another is connected with an implementation and integration aspect (as we will see in section \blueRef{sec:selectedArchitecturalStylesAndPatterns}) that is: as we can see in the plan identified by the diagram of \blueAutoref{fig:useRelationHierarchy} the implementation and integration (obviously testing too) of the \textbf{User App} and \textbf{Web Server} will take place in parallel. In this way, as we will need at this moment to define also the interfaces that provide the communication, we will develop first a common REST API on which the two different interfaces will specialize in order to connect to the related device.\\
 			
-			 The communications with the other systems depend on the services they provide, as we can see in the deployment diagram (\blueAutoref{fig:deploymentDiagram}) some of the services are still provided in a RESTful way while others, related in particular to the interaction with the \emph{database server} and the \emph{email server} consider instead a classic interfacing because they are related to the management of data and the using of an email service.
+			 The communications with the other systems depend on the services they provide, as we can see in the deployment diagram (\blueAutoref{fig:deploymentDiagram}) some of the services are still provided in a RESTful way while others, related in particular to the interaction with the \emph{database server} and the \emph{email server} consider instead a classic interfacing related to the management of data and the using of an email service.
 			
 		\subsubsection[Four Tier Architecture]{\hyperlink{toc}{Four Tier Architecture}}
 			\label{sec:fourTierArchitectureDecision}
 			
-			Selected the \textbf{client-server} approach we needed to decide how to manage the layers of our system. We chose a multilayered architecture first to benefit of its advantages such as: decoupling, reuse, flexibility, migration... Second to have a way to realize a centralized business logic that allows to manage all the complex management of the data we need to take care of. Thanks to the different layers on which our system is designed we also separate the data as it can be managed more easily rather than having its complexity added inside our principal server. A multilayered architecture has allows also to adopt the \textbf{thin-client} approach by letting only the presentation layer to be managed on the devices of the clients.\\
+			Selected the \textbf{client-server} approach we needed to decide how to manage the layers of our system. We chose a multilayered architecture first to benefit of its advantages such as: decoupling, reuse, flexibility, migration... Second to have a way to realize a centralized business logic that allows to manage all the complex management of the data we need to take care of. Thanks to the different layers on which our system is designed we also separate the data as it can be managed more easily rather than having its complexity added inside our principal server. A multilayered architecture allows also to adopt the \textbf{thin-client} approach by letting only the presentation layer to be managed on the devices of the clients.\\
 			
 			For SafeStreets we decide to choose a \textbf{Four Tier Architecture} as we need to take into account (as we see from the devices highlighted in the deployment diagram of \blueAutoref{fig:deploymentDiagram}) two different approaches for the client interaction: \textbf{mobile application} for the users and \textbf{web application} for the authorities. Hence the necessity of a Web Server needs also to be considered in order to manage the web side of the clients. For this first architectural decision of the client's separation and to maintain the \textbf{thin-client} approach we need to have two different tiers to handle the \textbf{Presentation Layer}. In order to consider the management of the information (fundamental resource for our crowd source based system) we also need to separate the business logic from the data. The two remaining layers will be separated, hence one tier is needed to deal with the \textbf{Logic Layer} and another for the \textbf{Data Layer}.\\
 			
@@ -865,16 +865,16 @@
 				\caption{Four Tier Architecture}
 			\end{figure}
 		
-			To be completely precise, our system would also need an additional tier, on which the \textbf{script engine server} would be running, that allows to manage the dynamic generation of  the web pages for the authority web app. To focus on the most critical aspects of the design process we decided not to represent also this layer to keep quite simple diagrams and descriptions. However we should not completely overlook this consideration as it may be needed in particular for the generation of the map in the \emph{Unsafe Streets} functionality.
+			To be completely precise, our system would also need an additional tier, on which the \textbf{script engine server} would be running. This layer would allow to manage the dynamic generation of  the web pages for the authority web app. To focus on the most critical aspects of the design process we decided not to represent also this layer to keep quite simple diagrams and descriptions. However we should not completely overlook this consideration as it may be needed in particular for the generation of the map in the \emph{Unsafe Streets} functionality.
 			
 		\subsubsection[RESTful Architecture]{\hyperlink{toc}{RESTful Architecture}}
 			\label{sec:RESTDecision}
 			
-			We have already motivated the choice of this approach in the client-server section (\blueRef{sec:clientServerDecision}) in particular for how our system is going to provide its services to the clients. The communications with the external services do not need a precise motivation as we would be able to decide how they are established, we only need to stick with the decisions of the system that is providing the functionality and adapt our communication modules.\\
+			We have already motivated the choice of this approach in the client-server section (\blueRef{sec:clientServerDecision}) in particular for how our system is going to provide its services to the clients. The communications with the external services do not need a precise motivation, we only need to stick with the decisions of the system that is providing the functionality and adapt our communication modules.\\
 			
-			Now we want to present some further motivations and advantages that the RESTful architecture allows us to obtain to justify even more our decision. The principle on which REST is based, that is the stateless interaction of requests between the clients and server, is really helpful to us in order to manage the huge amount of data we expect to receive for the notification process. As we have already said, in this way, we will be also able to manage both the requests coming from the users and the authorities with one single interface that is adapted for the \textbf{mobile application} side and the \textbf{web application} side.\\
+			Now we want to present some further motivations and advantages that the RESTful architecture allows us to obtain. The principle on which REST is based, that is the stateless interaction of requests between the clients and server, is really helpful to us in order to manage the huge amount of data we expect to receive for the notification process. As we have already said, in this way, we will be also able to manage both the requests coming from the users and the authorities with one single interface that is adapted for the \textbf{mobile application} side and the \textbf{web application} side.\\
 			
-			In conclusion this communication architecture based on HTTP is perfectly embraced in our four tier architecture and allows also an easier way to manage the information in a precise standard. In particular we will decide to stick with the format used by the results provided by the \textbf{Map Interface} when it provides us the data relative to the map that has to be displayed to our clients for the \emph{Unsafe Streets} functionality.
+			In conclusion this communication architecture based on HTTP is perfectly embraced in our four tier architecture and allows also an easier way to manage the information in a precise standard. In particular we expect the JSON format of the result provided by the \textbf{Map Interface} when it return us the data relative to the map that has to be displayed to our clients for the \emph{Unsafe Streets} functionality.
 	
 	\subsection[Other Design Decisions]{\hyperlink{toc}{Other Design Decisions}}
 		\label{sec:otherDesignDecisions}						
@@ -891,7 +891,7 @@
 		\subsubsection[Native Application Approach]{\hyperlink{toc}{Native Application Approach}}
 			\label{sec:nativeAppApproach}
 			
-			We deiced to consider a native approach for the development of the \textbf{mobile application} for the users in order to provide a better experience of interaction with the system but also to obtain the best communication and responsiveness between the client and the server. Nowadays the mobile applications are developed with two different languages depending on the OS of the device: for \textbf{Android} we will use \emph{Android Studio} while for \textbf{IOS} the native language \textbf{Swift}.
+			We decided to consider a native approach for the development of the \textbf{mobile application} for the users in order to provide a better experience of interaction with the system but also to obtain the best communication and responsiveness between the client and the server. Nowadays the mobile applications are developed with two different languages depending on the OS of the device: for \textbf{Android} we will use \emph{Android Studio} while for \textbf{IOS} the native language \textbf{Swift}.
 			
 			\paragraph{Android Studio} it is the official IDE for Google's Android operating system, designed specifically for Android development. It is available for every operating system and perfectly documented with a huge community. In addition it is based on \emph{Gradle} that helps a lot in the dependency management and thus makes our result more extensible. In fact, it is important to remark that we are designing an extensible system: as we saw in the \textbf{class-diagram} of the RASD document \cite{RASD} the most expected extension we expect is the possibility to report not just parking violations but also other kinds of the general traffic violations.
 			
