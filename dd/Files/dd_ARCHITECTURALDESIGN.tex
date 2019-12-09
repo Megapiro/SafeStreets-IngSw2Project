@@ -3,9 +3,9 @@
 	
 	In the following section we describe precisely the architecture of our system. Starting with the highest possible view we first give an illustration of all the systems that SafeStreets is going to interact with. Differently than how we did in the RASD \cite{RASD} document here we need to precise which are the systems that provide the interfaces already mentioned in order to obtain a clear description of the communication between each system and the one we are designing.\\
 	
-	After the first global description we start focusing on the system, first with a clear listing of all the components needed to obtain the functionalities of the application and then with their deployment (\ref{sec:deploymentDiagram}) and runtime (\ref{sec:runtimeView}) utilization.\\
+	After the first global description we start focusing on the system, first with a clear listing of all the components needed to obtain the functionalities of the application and then with their deployment (\blueRef{sec:deploymentDiagram}) and runtime (\blueRef{sec:runtimeView}) utilization.\\
 	
-	The section concludes first with the precise definition of the architectural patterns used to deploy all the components identified and finally with other design decisions (\ref{sec:otherDesignDecisions}) that have been chosen in the architectural design process.	
+	The section concludes first with the precise definition of the architectural patterns used to deploy all the components identified and finally with other design decisions (\blueRef{sec:otherDesignDecisions}) that have been chosen in the architectural design process.	
 	
 	\subsection[Overview]{\hyperlink{toc}{Overview}}
 		\label{sec:overview}
@@ -24,7 +24,7 @@
 				\item \textbf{Advanced Functionalities:} services that provide the safety of an area chosen by the customers and some suggestions for possible interventions for the streets that are found to be dangerous.
 			\end{itemize}
 		
-			In the following picture we illustrate the \textbf{context viewpoint} (\autoref{fig:contextViewpoint}) as we can later describe how each of the systems identified are needed in order to obtain the functionalities just presented.
+			In the following picture we illustrate the \textbf{context viewpoint} (\blueAutoref{fig:contextViewpoint}) as we can later describe how each of the systems identified are needed in order to obtain the functionalities just presented.
 			
 			\newpage
 			
@@ -97,7 +97,7 @@
 			\caption{\label{fig:highLevelComp} High Level Component Diagram}
 		\end{figure}
 	
-		With the high-level description of the system provided in the previous sections we are now able to determine which are the components that will be considered in the architecture in order to accomplish the functionalities that each of the modules identified are going to provide. In fact it is straightforward the mapping between the component diagram (\autoref{fig:compositionDiagram}) and the picture above (\autoref{fig:serverComp}). The \textbf{communication interfaces} area is mapped with all the interfaces provided by the components that provide or receive services from the outside; the \textbf{business logic} is realized by the server component where all the computation to provide the functionalities of the system takes place, while the \textbf{data interfaces} are the ones that allow the system with both the DBMS and the authority common interface.\\
+		With the high-level description of the system provided in the previous sections we are now able to determine which are the components that will be considered in the architecture in order to accomplish the functionalities that each of the modules identified are going to provide. In fact it is straightforward the mapping between the component diagram (\blueAutoref{fig:compositionDiagram}) and the picture above (\blueAutoref{fig:serverComp}). The \textbf{communication interfaces} area is mapped with all the interfaces provided by the components that provide or receive services from the outside; the \textbf{business logic} is realized by the server component where all the computation to provide the functionalities of the system takes place, while the \textbf{data interfaces} are the ones that allow the system with both the DBMS and the authority common interface.\\
 		
 		Before describing in detail the most important components of the system it is now the moment to precisely describe what are the components presented in this picture and what are the services provided by the interfaces:
 		
@@ -157,7 +157,7 @@
 		\subsubsection[Client Handler Component]{\hyperlink{toc}{Client Handler Component}}
 			\label{sec:clientHandlerComponent}
 			
-			The \emph{ClientHandler} (\autoref{fig:clientHandlerComp}) is the component that manages all the requests coming from the customers. As we see two interfaces are provided, one for the mobile application (\textbf{MobileAppInterface}) and the other for the web server that manages the web application (\textbf{WebInterface}). These two interfaces are the ones that provide the result of each request once it has been managed by the logic of the system that starts to compute in this component.
+			The \emph{ClientHandler} (\blueAutoref{fig:clientHandlerComp}) is the component that manages all the requests coming from the customers. As we see two interfaces are provided, one for the mobile application (\textbf{MobileAppInterface}) and the other for the web server that manages the web application (\textbf{WebInterface}). These two interfaces are the ones that provide the result of each request once it has been managed by the logic of the system that starts to compute in this component.
 			
 			\begin{figure}[h!]
 				\centering
@@ -190,7 +190,7 @@
 		\subsubsection[Access Manager Component]{\hyperlink{toc}{Access Manager Component}}
 			\label{sec:accessManagerComponent}
 			
-			The \emph{AccessManager} (\autoref{fig:accessManagerComp}) is the component that manages all the issues related to the access of the customers to the system. As we have said several times when defining the goals and requirements of SafeStreets, in fact, it is fundamental to recognize the clients and thus to provide a registration process.\\
+			The \emph{AccessManager} (\blueAutoref{fig:accessManagerComp}) is the component that manages all the issues related to the access of the customers to the system. As we have said several times when defining the goals and requirements of SafeStreets, in fact, it is fundamental to recognize the clients and thus to provide a registration process.\\
 			
 			The components described in the following diagram are the ones that allow to provide the access functionalities of:
 			
@@ -232,7 +232,7 @@
 		\subsubsection[Query Manager Component]{\hyperlink{toc}{Query Manager Component}}
 			\label{sec:queryManagerComponent}
 			
-			The \emph{QueryManger} (\autoref{fig:queryManagerComp}) is the component that manages the requests related either to the basic or the advanced functionalities (see section \ref{sec:generalContext} for the precise functionalities description) coming from the customers with the realization of the \textbf{Mining Interface}. Hence, this component needs first to identify the request as it can be checked for the filters used thanks to the \textbf{Check Interface} and then, once identified the functionality, it realizes the respective query with the respective interface provided by the correct component:
+			The \emph{QueryManger} (\blueAutoref{fig:queryManagerComp}) is the component that manages the requests related either to the basic or the advanced functionalities (see section \blueRef{sec:generalContext} for the precise functionalities description) coming from the customers with the realization of the \textbf{Mining Interface}. Hence, this component needs first to identify the request as it can be checked for the filters used thanks to the \textbf{Check Interface} and then, once identified the functionality, it realizes the respective query with the respective interface provided by the correct component:
 			
 			\begin{itemize}
 				\item Interventions Interface
@@ -281,7 +281,7 @@
 		\subsubsection[Report Manager Component]{\hyperlink{toc}{Report Manager Component}}
 			\label{sec:reportManagerComponent}
 			
-			The \emph{ReportManager} (\autoref{fig:reportManagerComp}) is the component that manages the notification process of the system, hence the one that we called the core functionality of SafeStreets. We have to remark that the notification process starts when a report arrives from a user and then the methods of the \textbf{Notification Interface} are invoked and ends when all the information about the report are stored in the system. At the end of the process each notification stored is marked as unread as it can be retrieved by the competent authority whenever it requires to benefit of the check unread reports functionality.\\
+			The \emph{ReportManager} (\blueAutoref{fig:reportManagerComp}) is the component that manages the notification process of the system, hence the one that we called the core functionality of SafeStreets. We have to remark that the notification process starts when a report arrives from a user and then the methods of the \textbf{Notification Interface} are invoked and ends when all the information about the report are stored in the system. At the end of the process each notification stored is marked as unread as it can be retrieved by the competent authority whenever it requires to benefit of the check unread reports functionality.\\
 			
 			As we have already said in the description of the functionality we will need to complete the data provided by the user with some controls and additions that will be performed thanks to the three interfaces that we can see are used by this component:
 			
@@ -326,7 +326,7 @@
 		\subsubsection[Map Manager Component]{\hyperlink{toc}{Map Manager Component}}
 			\label{sec:mapManagerComponent}
 			
-			The \emph{MapManager} (\autoref{fig:mapManagerComp}) is the component that deals with all the map issues. We have already presented them while describing the MI API (section \ref{sec:componentView}); we are going to see now the components that manage these issues thanks to the methods provided by the external map management system. The functionalities of SafeStreets will be managed by the other components using the methods provided by the \textbf{StreetsRetrieval Interface} realized by this component.\\
+			The \emph{MapManager} (\blueAutoref{fig:mapManagerComp}) is the component that deals with all the map issues. We have already presented them while describing the MI API (section \blueRef{sec:componentView}); we are going to see now the components that manage these issues thanks to the methods provided by the external map management system. The functionalities of SafeStreets will be managed by the other components using the methods provided by the \textbf{StreetsRetrieval Interface} realized by this component.\\
 			
 			The components that allow the \emph{MapManager} to handle all the geographical and map issues inside the system are:
 			
@@ -355,7 +355,7 @@
 		\subsubsection[Safety Manager Component]{\hyperlink{toc}{Safety Manager Component}}
 			\label{sec:safetyManagerComponent}
 			
-			The \emph{SafetyManager} (\autoref{fig:safetyManagerComp}) is the component that deals with the safety calculus that has to be carried out every day considering the previous thirty days in order to have the data for the safety functionality. As precisely described in the RASD document \cite{RASD} we have defined a clear way to determine the safety of each street. In order to carry on this calculus we have to consider this component that periodically will run its algorithms in order to update the safety.\\
+			The \emph{SafetyManager} (\blueAutoref{fig:safetyManagerComp}) is the component that deals with the safety calculus that has to be carried out every day considering the previous thirty days in order to have the data for the safety functionality. As precisely described in the RASD document \cite{RASD} we have defined a clear way to determine the safety of each street. In order to carry on this calculus we have to consider this component that periodically will run its algorithms in order to update the safety.\\
 			
 			As we see no interface is provided by this component, in fact, as we have just said it is independent as it needs to run periodically by just retrieving the data over the notifications and accidents and update the safety of the streets.\\
 			
@@ -394,7 +394,7 @@
 		\subsubsection[Accidents Manager Component]{\hyperlink{toc}{Accidents Manager Component}}
 			\label{sec:accidentsManagerComponent}
 			
-			The \emph{AccidentsManager} (\autoref{fig:accidentsManagerComp}) is the component that deals just with the management of the accidents that have been stored by the authorities over the common interface. As we see only two components are needed, one that receives the accidents by using the methods provided by the \textbf{Authority API} and the other which stores the accidents that have been retrieved.\\
+			The \emph{AccidentsManager} (\blueAutoref{fig:accidentsManagerComp}) is the component that deals just with the management of the accidents that have been stored by the authorities over the common interface. As we see only two components are needed, one that receives the accidents by using the methods provided by the \textbf{Authority API} and the other which stores the accidents that have been retrieved.\\
 			
 			The components that allow the \emph{AccidentsManager} to handle the process of receiving the accidents provided by the authorities thanks to the authority common system are:
 			
@@ -415,7 +415,7 @@
 		\subsubsection[Data Manager Component]{\hyperlink{toc}{Data Manager Component}}
 			\label{sec:dataManagerComponent}
 			
-			The \emph{DataManager} (\autoref{fig:dataManagerComp}) is the component that deals with all the management of the data needed by the system in order to perform its functionalities. As we can see in the general diagram of the server (\autoref{fig:serverComp}) almost every component needs to use the interface provided by this one in order to provide its functionality.\\
+			The \emph{DataManager} (\blueAutoref{fig:dataManagerComp}) is the component that deals with all the management of the data needed by the system in order to perform its functionalities. As we can see in the general diagram of the server (\blueAutoref{fig:serverComp}) almost every component needs to use the interface provided by this one in order to provide its functionality.\\
 			
 			Hence the \emph{DataManager} realizes only the \textbf{DataIntF Interface} which provides the methods for the management of all the information and uses the methods provided by the \textbf{DBMS API} in order to perform on the database the storing or requesting actions needed.\\
 			
@@ -450,7 +450,7 @@
 		\subsubsection[Web Server Component]{\hyperlink{toc}{Web Server Component}}
 			\label{sec:webServerComponent}
 			
-			The \emph{WebServer} (\autoref{fig:webServerComp}) is an independent component, out of the server, that deals with the interaction between the web app and the business logic of the system. It realizes the \textbf{WebAppInterface} in order to provide the endpoint for the authorities to access SafeStreet with the web application displayed on their browser. It needs to use the methods provided by the \textbf{WebInterface} in order to establish the interaction between the authorities and the system.\\
+			The \emph{WebServer} (\blueAutoref{fig:webServerComp}) is an independent component, out of the server, that deals with the interaction between the web app and the business logic of the system. It realizes the \textbf{WebAppInterface} in order to provide the endpoint for the authorities to access SafeStreet with the web application displayed on their browser. It needs to use the methods provided by the \textbf{WebInterface} in order to establish the interaction between the authorities and the system.\\
 			
 			The components that allow the \emph{WebServer} to handle the interaction process between the requests coming from the web app and the business logic are:
 			
@@ -473,7 +473,7 @@
 		\subsubsection[User App Component]{\hyperlink{toc}{User App Component}}
 			\label{sec:userAppComponent}
 			
-			The \emph{UserApp:} (\autoref{fig:userAppComp}) is the other independent component that will be installed on the device of the users in order to provide the interaction with the system. Differently from the \emph{WebServer} this is already the component that will manage the actions performed by the user as it represents the mobile software application. For this reason it only needs to use the methods provided by the \textbf{MobileAppInterface} to send the requests to the system as they can be processed.\\
+			The \emph{UserApp:} (\blueAutoref{fig:userAppComp}) is the other independent component that will be installed on the device of the users in order to provide the interaction with the system. Differently from the \emph{WebServer} this is already the component that will manage the actions performed by the user as it represents the mobile software application. For this reason it only needs to use the methods provided by the \textbf{MobileAppInterface} to send the requests to the system as they can be processed.\\
 			
 			The components that allow the \emph{UserApp} to handle the interaction process between the requests coming from the mobile app and the business logic are:
 			
@@ -493,10 +493,54 @@
 				\item \textbf{RequestHandler:} it is the component that deals with all the requests coming from the mobile application. Thanks to the \textbf{Request Interface} realized, it is able to process the incoming request and send it to the business logic with the methods of the \textbf{MobileAppInterface} as the functionality required will be displayed in the application.
 			\end{itemize}
 			
+	\subsection[Database View]{\hyperlink{toc}{Database View}}
+		\label{sec:databaseView}
+		
+		Before giving the description of how the components now presented will be deployed in our system, it is also important to define a model that allows to manage the huge amount of data we expect to deal with. As we will also motivate later, in section \blueRef{sec:selectedArchitecturalStylesAndPatterns}, we decided to use a relational approach to store the information we need to manage. In order to do so we decided to use a class diagram model rather than an entity relational one as we could give a continuous representation of what we already presented in the RASD document \cite{RASD}. The class diagram of next page, in fact, has been updated with more detailed considerations that we were now able to consider, being at the design level.\\
+		
+		As we can see in the picture (\blueAutoref{fig:classDiagramModel}) some classes and relations have been updated, in particular for what concerns the maps issues and the safety ones. In particular:
+		
+		\begin{itemize}
+			\item The classes that we are going to use to store the position issues have been updated. We removed the \textbf{Position} class as it is not relevant anymore while we added the \textbf{Cross} class that is important for the transportation of the data relative to a map to be highlighted. The \textbf{Path} class has also been updated to consider a possible way to store the information relative to a path provided by the MI. The \textbf{Street} and \textbf{City} classes are still considered as we have said that we need to store in our system their information in order to deal with the functionalities the system has tp provide.
+			
+			\item The most important update is the \textbf{Map} class. This class is the result of the invocation of the methods that deal with the \emph{UnsafeStreets} functionality. What happens, in fact, when a request of this type arrives to the business logic is: first retrieve in the database all the requested streets and their safety, second, provide them to the methods of the MI that will return the JSON file containing all the relevant information for a map to be displayed. Thanks to this class, we will easily parse the file and store its values in the class attributes.
+			
+			\item The \textbf{Safety} class has also been removed as it was used in the initial class diagram to define more precisely which were the relations that allowed to determine its value for the streets stored in the system. We decided now to simplify the safety considerations, even to reduce the complexity of the algorithms that will determine the safety, to store in each street a value that is \emph{true} if the street is safe, otherwise \emph{false}.		
+		\end{itemize}
+		
+		\newpage
+		
+		\begin{figure}[ht!bp]
+			\centering
+			\includegraphics[scale=0.175, angle=90]{/diagrams/classDiagramModel.png}
+			\caption{\label{fig:classDiagramModel} Class Diagram Model}
+		\end{figure}
+	
+		\FloatBarrier
+		
+		To conclude with this section that aims to provide an overview of which type of data will flow inside our system, we want to give a practical example of how the objects of the \textbf{Map} class will be instantiated once we receive as a result a JSON file from the MI. What we want to achieve is a one to one correspondence between the file and the class as we can store all the information with just one method of some parsing library. Hence, what we aim to is something like presented in the following picture (\blueAutoref{fig:jsonMapping}):
+		
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[scale=0.3]{jsonMapping.png}
+			\caption{\label{fig:jsonMapping} Map-Class and Json-File Correspondence}
+		\end{figure}
+	
+		Thanks to this information we will be able to use the map objects and display for our clients the safety they are requiring, in fact:
+		
+		\begin{itemize}
+			\item The \emph{streets} are the ones that have to be displayed
+			\item The \emph{crosses} establish how the streets are disposed
+			\item The \emph{safety} array specifies the safety of the crosses
+			\item The \emph{isResazible} attribute specifies if the map is resizable or not
+		\end{itemize}
+	
+		\newpage
+	
 	\subsection[Deployment View]{\hyperlink{toc}{Deployment View}}
 		\label{sec:deploymentView}
 
-		As we have seen in the overview (\ref{sec:overview}) and component view (\ref{sec:componentView}) sections, we have designed a system that needs to interact with many agents. In order to define a crowd-sourced application where a lot of information needs to be managed as it can be used to provide different services, we decided to use a \textbf{client-server} architectural approach. As we may have guessed in the high-level component diagram of \autoref{fig:highLevelComp} the business logic is represented by the server component while the clients are designed with two different technologies in order to have the best application software to make the customers interact with the system, depending on their characteristics.\\
+		As we have seen in the overview (\blueRef{sec:overview}) and component view (\blueRef{sec:componentView}) sections, we have designed a system that needs to interact with many agents. In order to define a crowd-sourced application where a lot of information needs to be managed as it can be used to provide different services, we decided to use a \textbf{client-server} architectural approach. As we may have guessed in the high-level component diagram of \blueAutoref{fig:highLevelComp} the business logic is represented by the server component while the clients are designed with two different technologies in order to have the best application software to make the customers interact with the system, depending on their characteristics.\\
 		
 		The client-side system is composed of:
 		
@@ -507,11 +551,11 @@
 			
 		Hence, to make this decision possible we need to consider a web server that will manage all the interaction between the web application and the internal system, while we can make directly interface the mobile application with the internal system thanks to the software application installed on the devices of the users.\\
 		
-		To accomplish the considerations just presented we decided to design the \textbf{client-server} paradigm with a \textbf{four-tier architecture} in order to have a clear separation between the clients and the servers that manage them; the decoupling of the database shown in the composition diagram (\autoref{fig:compositionDiagram}) enforces once more this decision. All the communications between the system and the customers (both users and authorities) are handled via HTTP messages in a RESTful way. All the considerations just reported about some architectural and communication choices will be clearly precised in the devoted section (\ref{sec:selectedArchitecturalStylesAndPatterns}).\\
+		To accomplish the considerations just presented we decided to design the \textbf{client-server} paradigm with a \textbf{four-tier architecture} in order to have a clear separation between the clients and the servers that manage them; the decoupling of the database shown in the composition diagram (\blueAutoref{fig:compositionDiagram}) enforces once more this decision. All the communications between the system and the customers (both users and authorities) are handled via HTTP messages in a RESTful way. All the considerations just reported about some architectural and communication choices will be clearly precised in the devoted section (\blueRef{sec:selectedArchitecturalStylesAndPatterns}).\\
 		
 		Let's focus now on the illustration of the four-tier architecture as we can understand how the components that we have previously described are mapped with the tiers of the system. Then in the next section we first illustrate the decision tree we used while designing the system as we can later give the complete description of the deployment of the system.\\
 		
-		The following picture (\autoref{fig:fourTierArchitecture}) illustrates the tiers of the system needed in order to deploy the components identified in the previous section. 
+		The following picture (\blueAutoref{fig:fourTierArchitecture}) illustrates the tiers of the system needed in order to deploy the components identified in the previous section. 
 		
 		\vspace{0.3cm}
 		
@@ -557,7 +601,7 @@
 				\end{itemize}
 		\end{itemize}
 	
-		The diagram of next page (\autoref{fig:coloredComponentDiagram}) provides a graphical illustration of what we have just said by coloring with the color of the corresponding layer the components highlighted in the general component diagram already seen.
+		The diagram of next page (\blueAutoref{fig:coloredComponentDiagram}) provides a graphical illustration of what we have just said by coloring with the color of the corresponding layer the components highlighted in the general component diagram already seen.
 		
 		\newpage
 		
@@ -572,7 +616,7 @@
 		\subsubsection[Decision Tree]{\hyperlink{toc}{Decision Tree}}
 			\label{sec:decisionTree}
 			
-			Now that we have established how our system is going to be deployed at the highest level possible, before providing the most detailed deployment diagram we present the decision tree we developed while defining the design process as we can justify the diagram of the next section. As we can see in the picture (\autoref{fig:decisionTree}) we started with a \textbf{client-server} decision and then refined with further more detailed decisions.
+			Now that we have established how our system is going to be deployed at the highest level possible, before providing the most detailed deployment diagram we present the decision tree we developed while defining the design process as we can justify the diagram of the next section. As we can see in the picture (\blueAutoref{fig:decisionTree}) we started with a \textbf{client-server} decision and then refined with further more detailed decisions.
 			
 			\begin{figure}[h!]
 				\centering
@@ -583,11 +627,11 @@
 		\subsubsection[Deployment Diagram]{\hyperlink{toc}{Deployment Diagram}}
 			\label{sec:deploymentDiagram}
 			
-			In the diagram of the following page (\autoref{fig:deploymentDiagram}) we illustrate a precise description of how and where the components identified are deployed. We still use the colors related to the components now for the nodes that involve them.\\
+			In the diagram of the following page (\blueAutoref{fig:deploymentDiagram}) we illustrate a precise description of how and where the components identified are deployed. We still use the colors related to the components now for the nodes that involve them.\\
 			
-			The communication is presented only between the nodes and not for the components as we already have a precise description of their interfaces that realize their interaction in the component view section (\ref{sec:componentView}). The \textbf{HTTPS} and \textbf{TCP/IP} protocols are used to connect respectively: a connection to a REST API or to a service providing system.\\
+			The communication is presented only between the nodes and not for the components as we already have a precise description of their interfaces that realize their interaction in the component view section (\blueRef{sec:componentView}). The \textbf{HTTPS} and \textbf{TCP/IP} protocols are used to connect respectively: a connection to a REST API or to a service providing system.\\
 			
-			All the motivations for the architectural styles and patterns but also the implementation choices that we can see in the picture will be clearly motivated in the devoted section (\ref{sec:selectedArchitecturalStylesAndPatterns}). 
+			All the motivations for the architectural styles and patterns but also the implementation choices that we can see in the picture will be clearly motivated in the devoted section (\blueRef{sec:selectedArchitecturalStylesAndPatterns}). 
 						
 			\begin{figure}[hbtp]
 				\centering
@@ -600,7 +644,7 @@
 	\subsection[Runtime View]{\hyperlink{toc}{Runtime View}}
 		\label{sec:runtimeView}
 		
-		In this section we are going to present the most important runtime views of the interactions between customers and SafeStreets. All the methods used in the following diagrams will be precisely described in the next section (\ref{sec:componentInterfaces}) where each of them will be mapped to the respective interface that realizes it.\\
+		In this section we are going to present the most important runtime views of the interactions between customers and SafeStreets. All the methods used in the following diagrams will be precisely described in the next section (\blueRef{sec:componentInterfaces}) where each of them will be mapped to the respective interface that realizes it. For the sake of simplicity we decided to use the first level of components to describe the interactions, in this way we obtained more clear diagrams and their internal correspondence can be easily found with the satisfactory description of every sub-component that we identified in the component view section (\blueRef{sec:componentView}). \\
 		
 		The \emph{Runtime View Diagrams} of this section are presented first for the \textbf{users} and \textbf{authorities}. Then, for the common functionalities, we decided to show only the interaction between the UserApp and the system to keep the diagrams clear (the ones for the authorities would need an additional interaction with the WebServer before interfacing with the system) and lastly two critical managers are shown in order to present how the components related to the safety and the map issues work.
 		
@@ -608,10 +652,10 @@
 			\label{sec:userRuntimeView}
 			
 			\begin{itemize}
-				\item \textbf{Login:} In this sequence diagram (\autoref{fig:loginRuntime}), the process of user login is shown. The authority login is not shown in the runtime view section, since it is basically the same. In fact, both users and authorities log in with a username and a password. This process is actually quite simple: the UserApp asks the server to log in by passing username and password. ClientHandler receives the request and forwards it to the AccessManager component, that will ask DataManager for a simple query in the database. If no user with that username is found, an error message is given to the client, otherwise the check of the password will be performed. If the password inserted and sent by the user is the same as the one retrieved from the database, the login will be considered as logged in and then informed.
+				\item \textbf{Login:} In this sequence diagram (\blueAutoref{fig:loginRuntime}), the process of user login is shown. The authority login is not shown in the runtime view section, since it is basically the same. In fact, both users and authorities log in with a username and a password. This process is actually quite simple: the UserApp asks the server to log in by passing username and password. ClientHandler receives the request and forwards it to the AccessManager component, that will ask DataManager for a simple query in the database. If no user with that username is found, an error message is given to the client, otherwise the check of the password will be performed. If the password inserted and sent by the user is the same as the one retrieved from the database, the login will be considered as logged in and then informed.
 				The difference for the authorities is that their login requests will come from  the AuthorityWebApp, instead of using the UserApp, thus the WebServer will be involved too, between the AuthorityWebApp and the ClientHandler.
 	
-				\item \textbf{Registration:} This sequence diagram (\autoref{fig:userRegistrationRuntime}) pictures the interaction through which a user registers to SafeStreets. After UserApp has asked him all the registration data (username, password, and other information), it will hand them to the server, hidden into a User object. ClientHandler will forward the request to AccessManager, that is the same component that manages the login interactions. AccessManager will first check if there is an already existing user who registered with that same username and in case will send back an error. If not, it will ask DataManager to store the user information into the database of the system.
+				\item \textbf{Registration:} This sequence diagram (\blueAutoref{fig:userRegistrationRuntime}) pictures the interaction through which a user registers to SafeStreets. After UserApp has asked him all the registration data (username, password, and other information), it will hand them to the server, hidden into a User object. ClientHandler will forward the request to AccessManager, that is the same component that manages the login interactions. AccessManager will first check if there is an already existing user who registered with that same username and in case will send back an error. If not, it will ask DataManager to store the user information into the database of the system.
 				
 				\newpage
 				
@@ -632,7 +676,7 @@
 				\FloatBarrier
 				\newpage
 			
-				\item \textbf{Report Violation:} Here (\autoref{fig:reportViolationRuntime}), it is shown how a violation is reported by users to the system. UserApp sends all the information contained in a Violation object (pictures, location, ...). ClientHandler forwards the call to ReportManager, the component designed to handle the reports. It will indeed ask IRI for the plate number, providing it with the pictures sent by the user. Then, it will ask MapManager for the name of the street of the violation. MapManager of course needs to ask the external MI to accomplish this, and it only needs the provided location. When all the information is gathered, the report is ready to be stored into the database. To do so, ReportManager will ask DataManager to interact with the DBMS and update the related table(s).
+				\item \textbf{Report Violation:} Here (\blueAutoref{fig:reportViolationRuntime}), it is shown how a violation is reported by users to the system. UserApp sends all the information contained in a Violation object (pictures, location, ...). ClientHandler forwards the call to ReportManager, the component designed to handle the reports. It will indeed ask IRI for the plate number, providing it with the pictures sent by the user. Then, it will ask MapManager for the name of the street of the violation. MapManager of course needs to ask the external MI to accomplish this, and it only needs the provided location. When all the information is gathered, the report is ready to be stored into the database. To do so, ReportManager will ask DataManager to interact with the DBMS and update the related table(s).
 				
 				\begin{figure}[h!]
 					\centering
@@ -647,7 +691,7 @@
 			The following are the interactions that involve authorities. In the sequence diagrams, all of these interactions start with a call from the WebServer but of course, the component that really start them is the AuthorityWebApp, that ask web pages to the WebServer. The interaction between the AuthorityWebApp and the WebServer is not shown here for the sake of simplicity.
 			
 			\begin{itemize}
-				\item \textbf{Registration:} It is now described (\autoref{fig:authorityRegistrationRuntime}) the process through which an authority registers to SafeStreets. This is a little bit more complicated process with respect to the user one, because the system requires the authority to be real and recognized. The assumption here is that there's a completely secure PEC address assigning mechanism. The ClientHandler forwards the WebServer request to AccessManager. The request contains of course all the necessary information for the registration. AccessManager will then check whether there is already an authority registered for the city contained in the registration request. If a authority already exists, the request is rejected and an error message is sent back to the client, otherwise AccessManager will check whether the specified PEC address actually corresponds to the authority of the city contained in the request. This is to avoid that an authority registers for a different city. To do that, it needs to ask the Authority Common Interface that is external with respect to SafeStreets. If the addresses do not match, an error message is sent to the client and the procedure is aborted. If the specified address is correct for that city, SafeStreets needs now to verify that the actual person that is making the request through the AuthorityWebApp is able to access the PEC address and actually read the received emails. In order to do that, AccessManager generates a code that will be sent by PEC through EmailAPI. AccessManager now waits for the authority to insert, through the AuthorityWebApp, the received code. Then, it will check that the generated code and the inserted one coincide. If they do not coincide, an error is sent to the AuthorityWebApp and the registration is aborted. If the inserted code is correct, AccessManager will ask DataManager to store the information into the database.
+				\item \textbf{Registration:} It is now described (\blueAutoref{fig:authorityRegistrationRuntime}) the process through which an authority registers to SafeStreets. This is a little bit more complicated process with respect to the user one, because the system requires the authority to be real and recognized. The assumption here is that there's a completely secure PEC address assigning mechanism. The ClientHandler forwards the WebServer request to AccessManager. The request contains of course all the necessary information for the registration. AccessManager will then check whether there is already an authority registered for the city contained in the registration request. If a authority already exists, the request is rejected and an error message is sent back to the client, otherwise AccessManager will check whether the specified PEC address actually corresponds to the authority of the city contained in the request. This is to avoid that an authority registers for a different city. To do that, it needs to ask the Authority Common Interface that is external with respect to SafeStreets. If the addresses do not match, an error message is sent to the client and the procedure is aborted. If the specified address is correct for that city, SafeStreets needs now to verify that the actual person that is making the request through the AuthorityWebApp is able to access the PEC address and actually read the received emails. In order to do that, AccessManager generates a code that will be sent by PEC through EmailAPI. AccessManager now waits for the authority to insert, through the AuthorityWebApp, the received code. Then, it will check that the generated code and the inserted one coincide. If they do not coincide, an error is sent to the AuthorityWebApp and the registration is aborted. If the inserted code is correct, AccessManager will ask DataManager to store the information into the database.
 				
 				\begin{figure}[h!]
 					\centering
@@ -655,7 +699,7 @@
 					\caption{\label{fig:authorityRegistrationRuntime} Authority Registration Runtime View}
 				\end{figure}
 			
-				\item \textbf{Check Unread Reports:} In this sequence diagram (\autoref{fig:unreadReportsRuntime}), it is shown how an authority is able to retrieve all the unread reports sent by users to SafeStreets. The WebServer will ask ClientHandler to forward the request to the right component, that in this case is again QueryManager. In fact, its job is to call the right method of DataManager to obtain only the reports that have the "read" flag set to false. DataManager will as usual execute the actual query into the DBMS. Finally, QueryManager will send the result back to the WebServer, that will forward it to the AuthorityWebApp.
+				\item \textbf{Check Unread Reports:} In this sequence diagram (\blueAutoref{fig:unreadReportsRuntime}), it is shown how an authority is able to retrieve all the unread reports sent by users to SafeStreets. The WebServer will ask ClientHandler to forward the request to the right component, that in this case is again QueryManager. In fact, its job is to call the right method of DataManager to obtain only the reports that have the "read" flag set to false. DataManager will as usual execute the actual query into the DBMS. Finally, QueryManager will send the result back to the WebServer, that will forward it to the AuthorityWebApp.
 				
 				\begin{figure}[h!]
 					\centering
@@ -663,7 +707,7 @@
 					\caption{\label{fig:unreadReportsRuntime} Check Unread Reports Runtime View}
 				\end{figure}
 			
-				\item \textbf{Find Reports:} Here (\autoref{fig:findReportsRuntime}) it is described the interactions through the components when the authority asks for some past reports applying some filters. The request is made by the WebServer and is forwarded to QueryManager by ClientHandler. After having checked if the specified filters are correct and eventually returning an error to the AuthorityWebApp, QueryManager will ask DataManager to interact with the DBMS and execute the query that will return all the reports located in the authority’s city that match the specified filters.
+				\item \textbf{Find Reports:} Here (\blueAutoref{fig:findReportsRuntime}) it is described the interactions through the components when the authority asks for some past reports applying some filters. The request is made by the WebServer and is forwarded to QueryManager by ClientHandler. After having checked if the specified filters are correct and eventually returning an error to the AuthorityWebApp, QueryManager will ask DataManager to interact with the DBMS and execute the query that will return all the reports located in the authority’s city that match the specified filters.
 				
 				\begin{figure}[h!]
 					\centering
@@ -678,7 +722,7 @@
 			These functionalities are available to both users and authorities. Therefore, they're reported here.
 			
 			\begin{itemize}
-				\item \textbf{Find Streets With Highest Number of Violations:} It is now shown (\autoref{fig:violationsFrequencyRuntime}) how a possible query for the streets with the highest number of violations is made. The filterList object represents all the filters that are selected by the user, like time slots and types of violation. These filters are widely described in the RASD. The component designed to handle these queries is of course QueryManager. It will check the correctness of all the used filters (e.g. at least a type of violation must be included). If some constraint is not fulfilled, an error is sent to the user, otherwise QueryManager will prepare the query and forward it to DataManager, that will actually execute it on the DBMS. The result is then back propagated through the involved components and to the UserApp.
+				\item \textbf{Find Streets With Highest Number of Violations:} It is now shown (\blueAutoref{fig:violationsFrequencyRuntime}) how a possible query for the streets with the highest number of violations is made. The filterList object represents all the filters that are selected by the user, like time slots and types of violation. These filters are widely described in the RASD. The component designed to handle these queries is of course QueryManager. It will check the correctness of all the used filters (e.g. at least a type of violation must be included). If some constraint is not fulfilled, an error is sent to the user, otherwise QueryManager will prepare the query and forward it to DataManager, that will actually execute it on the DBMS. The result is then back propagated through the involved components and to the UserApp.
 				
 				\begin{figure}[h!]
 					\centering
@@ -686,7 +730,7 @@
 					\caption{\label{fig:violationsFrequencyRuntime} Violations Frequency Runtime View}
 				\end{figure}
 			
-				\item \textbf{Find Dangerous Vehicles:} This interaction (\autoref{fig:dangerousVehiclesRuntime}) is basically the same as the previous one, thus it won't be explained again here. The only difference is that the query designed by QueryManager will be specific for finding the types of vehicle that made the most violations.
+				\item \textbf{Find Dangerous Vehicles:} This interaction (\blueAutoref{fig:dangerousVehiclesRuntime}) is basically the same as the previous one, thus it won't be explained again here. The only difference is that the query designed by QueryManager will be specific for finding the types of vehicle that made the most violations.
 				
 				\begin{figure}[h!]
 					\centering
@@ -694,7 +738,7 @@
 					\caption{\label{fig:dangerousVehiclesRuntime} Dangerous Vehicles Runtime View}
 				\end{figure}
 			
-				\item \textbf{Find Unsafe Streets:} In this interaction (\autoref{fig:unsafeStreetsRuntime}) it is shown how the UserApp requests maps with coloured streets. The request made by the UserApp is forwarded by ClientHandler to QueryManager. Depending on the option selected by the user, three different methods could be called: the one with a city as input, the one with starting and ending points, or the one with a single street. In the first case, QueryManager will look for all the streets of the selected city in the DBMS, going through DataManager. In the second case, a path needs to be generated, thus QueryManager will ask MI through MapManager for a path, that will include a certain number of streets. In the last case, no action is required. Then, for all the gathered streets, QueryManager will search in the database for their safety, asking DataManager to execute the actual query. Then QueryManager will ask MapManager for the generation of the map that, according to the gathered infomation about the safety of the involved streets, will be coloured as described in RASD. If path option was selected, the path will be passed to MapInterface so that the generated map will show it. This map will be finally sent back to the UserApp and displayed.
+				\item \textbf{Find Unsafe Streets:} In this interaction (\blueAutoref{fig:unsafeStreetsRuntime}) it is shown how the UserApp requests maps with coloured streets. The request made by the UserApp is forwarded by ClientHandler to QueryManager. Depending on the option selected by the user, three different methods could be called: the one with a city as input, the one with starting and ending points, or the one with a single street. In the first case, QueryManager will look for all the streets of the selected city in the DBMS, going through DataManager. In the second case, a path needs to be generated, thus QueryManager will ask MI through MapManager for a path, that will include a certain number of streets. In the last case, no action is required. Then, for all the gathered streets, QueryManager will search in the database for their safety, asking DataManager to execute the actual query. Then QueryManager will ask MapManager for the generation of the map that, according to the gathered infomation about the safety of the involved streets, will be coloured as described in RASD. If path option was selected, the path will be passed to MapInterface so that the generated map will show it. This map will be finally sent back to the UserApp and displayed.
 				
 				\vspace{1cm}		
 		
@@ -706,7 +750,7 @@
 			
 				\newpage
 			
-				\item \textbf{Find Urgent Interventions:} This interaction (\autoref{fig:urgentInterventionsRuntime}) is basically the same as "find streets with highest number of violations", thus it won't be explained again here. The only difference is that the query designed by QueryManager will be specific for urgent interventions.
+				\item \textbf{Find Urgent Interventions:} This interaction (\blueAutoref{fig:urgentInterventionsRuntime}) is basically the same as "find streets with highest number of violations", thus it won't be explained again here. The only difference is that the query designed by QueryManager will be specific for urgent interventions.
 				
 				\begin{figure}[h!]
 					\centering
@@ -721,7 +765,7 @@
 			\label{sec.safetyManagerRuntime}
 			
 			\begin{itemize}
-				\item \textbf{Update Safety:} This  (\autoref{fig:safetyUpdateRuntime}) is the description of the process of updating the safety estimation of every registered street, along with the suggested possible interventions. The component designed to do this operation is SafetyManager. It asks DataManager to get all the violations and accidents information from the DBMS. Then it will calculate the safety estimation and all the possible interventions for that street as described in RASD. Finally, it will store safety estimation and all those possible interventions in the database, so that it will be possible to always retrieve the most updated information without actually calculating it for every request that is made.
+				\item \textbf{Update Safety:} This  (\blueAutoref{fig:safetyUpdateRuntime}) is the description of the process of updating the safety estimation of every registered street, along with the suggested possible interventions. The component designed to do this operation is SafetyManager. It asks DataManager to get all the violations and accidents information from the DBMS. Then it will calculate the safety estimation and all the possible interventions for that street as described in RASD. Finally, it will store safety estimation and all those possible interventions in the database, so that it will be possible to always retrieve the most updated information without actually calculating it for every request that is made.
 				
 				\begin{figure}[h!]
 					\centering
@@ -729,7 +773,7 @@
 					\caption{\label{fig:safetyUpdateRuntime} Update Safety Runtime View}
 				\end{figure}
 			
-				\item \textbf{Update Accidents:} Here (\autoref{fig:accidentsUpdateRuntime}) it is described how SafeStreets uses the Authority Common Interface to retrieve data about accidents. For every city with a registered authority, AccidentsManager will ask ACI for these data and then will ask DataManager to store them into the database.
+				\item \textbf{Update Accidents:} Here (\blueAutoref{fig:accidentsUpdateRuntime}) it is described how SafeStreets uses the Authority Common Interface to retrieve data about accidents. For every city with a registered authority, AccidentsManager will ask ACI for these data and then will ask DataManager to store them into the database.
 				
 				\begin{figure}[h!]
 					\centering
@@ -743,15 +787,13 @@
 		\subsubsection[Map Manager]{\hyperlink{toc}{Map Manager}}
 		\label{sec:mapManagerRuntime}
 		
-		The map manager has to deal with a particular component that deals with the updating of the information related to the maps it has stored in the databases. This is the diagram (\autoref{fig:mapUpdateRuntime}) describes the updating process of the map thanks to the component designed for this operation: the \emph{MapManager}. It asks the external MapInterface for an updated map of the whole territory considered by SafeStreets and then stores it in the database. What is stored is actually a simpler version of the map: all the system needs is in fact the collection of cities and streets and the relationships among them.
+		The map manager has to deal with a particular component that deals with the updating of the information related to the maps it has stored in the databases. This is the diagram (\blueAutoref{fig:mapUpdateRuntime}) describes the updating process of the map thanks to the component designed for this operation: the \emph{MapManager}. It asks the external MapInterface for an updated map of the whole territory considered by SafeStreets and then stores it in the database. What is stored is actually a simpler version of the map: all the system needs is in fact the collection of cities and streets and the relationships among them.
 		
 		\begin{figure}[h!]
 			\centering
 			\includegraphics[scale=0.24]{/diagrams/sequence/mapUpdate.png}
 			\caption{\label{fig:mapUpdateRuntime} Update Map Runtime View}
-		\end{figure}
-	
-		\newpage						
+		\end{figure}		
 	
 	\subsection[Component Interfaces]{\hyperlink{toc}{Component Interfaces}}
 		\label{sec:componentInterfaces}
@@ -762,7 +804,7 @@
 			\caption{\label{fig:componentInterfaces} Component Interfaces Diagram}
 		\end{figure}
 		
-		\autoref{fig:componentInterfaces} shows the component interfaces that are inside the application server. For every interface, the exposed methods are shown. Only the internal interfaces are shown. All the methods used in the sequence diagrams of the \hyperref[sec:runtimeView]{RuntimeView section} must be shown here. For what concerns the specific methods, their input parameters and returned value, they are only meant to give an idea of what they should do, but we are open to changes at the implementation level.
+		\blueAutoref{fig:componentInterfaces} shows the component interfaces that are inside the application server. For every interface, the exposed methods are shown. Only the internal interfaces are shown. All the methods used in the sequence diagrams of the \hyperref[sec:runtimeView]{RuntimeView section} must be shown here. For what concerns the specific methods, their input parameters and returned value, they are only meant to give an idea of what they should do, but we are open to changes at the implementation level.
 		
 		\subsubsection[WebInterface]{\hyperlink{toc}{WebInterface}}
 			This is the interface with all the methods exposed by the ClientHandler component that will be called by the WebServer. This methods have the only purpose of forwarding requests to the right component of our system that will handle them. The parameters and the returned values are the same as in the interfaces of the components to which the requests are forwarded to. Therefore, they won't be described here.
@@ -791,12 +833,12 @@
 	\subsection[Selected Architectural Styles and Patterns]{\hyperlink{toc}{Selected Architectural Styles and Patterns}}
 		\label{sec:selectedArchitecturalStylesAndPatterns}
 		
-		In this section we are going to describe precisely which are the architectural choices we did while designing the system and why we decided to choose them. As we saw in the deployment view section (\ref{sec:deploymentView}) we started with a \textbf{client-server} approach and then realized it with a \textbf{four-tier architecture}. We now need to describe why we decided these two styles that work good together but also how the elements that really deploy the system can communicate, hence we want also to describe precisely the communications that we highlighted in red in the deployment diagram (\autoref{fig:deploymentDiagram}).
+		In this section we are going to describe precisely which are the architectural choices we did while designing the system and why we decided to choose them. As we saw in the deployment view section (\blueRef{sec:deploymentView}) we started with a \textbf{client-server} approach and then realized it with a \textbf{four-tier architecture}. We now need to describe why we decided these two styles that work good together but also how the elements that really deploy the system can communicate, hence we want also to describe precisely the communications that we highlighted in red in the deployment diagram (\blueAutoref{fig:deploymentDiagram}).
 		
 		\subsubsection[Client-Server]{\hyperlink{toc}{Client-Server}}
 			\label{sec:clientServerDecision}
 			
-			Our system, as described in the context viewpoint of \autoref{fig:contextViewpoint}, needs to interact with several external systems. It is true that in general SafeStreets needs to interact with systems that provide him services in order to realize its functionalities, but it is also true that SafeStreets aims to be a \textbf{crowd-sourced} system that is going to manage interactions with several users (who provide him the data) and several authorities. Thanks to these considerations, after considering different alternatives, we decided to choose a \textbf{client-server} architectural approach in order to manage easily the interaction with the mobile application of the users and to have a centralized server that is able to provide the services of the system to any customer that requires them.
+			Our system, as described in the context viewpoint of \blueAutoref{fig:contextViewpoint}, needs to interact with several external systems. It is true that in general SafeStreets needs to interact with systems that provide him services in order to realize its functionalities, but it is also true that SafeStreets aims to be a \textbf{crowd-sourced} system that is going to manage interactions with several users (who provide him the data) and several authorities. Thanks to these considerations, after considering different alternatives, we decided to choose a \textbf{client-server} architectural approach in order to manage easily the interaction with the mobile application of the users and to have a centralized server that is able to provide the services of the system to any customer that requires them.
 			
 			\begin{figure}[h!]
 				\centering
@@ -804,16 +846,16 @@
 				\caption{\label{fig:clientServerArchitecture} Client Server Architecture}
 			\end{figure}
 
-			Thanks to the client-server approach we also simplify the way in which we communicate with the external clients taking the decision of using the same technology of communication. In fact, as we will describe precisely in the further section \ref{sec:RESTDecision}, we are going to build our system in a RESTful way as we can have a simple communication protocol with HTTPS for the \textbf{Web Application} and we can integrate it with the \textbf{Mobile Application} communication in order to have the same APIs. This decision has several motivations even if it may not look the best choice to manage the interaction with the mobile application; one is the one just presented related to the development and interfacing to a single API technology, another is connected with an implementation and integration aspect (as we will see in section \ref{sec:selectedArchitecturalStylesAndPatterns}) that is: as we can see in the plan identified by the diagram of \autoref{fig:useRelationHierarchy} the implementation and integration (obviously testing too) of the \textbf{User App} and \textbf{Web Server} will take place in parallel. In this way, as we will need at this moment to define also the interfaces that provide the communication, we will develop first a common REST API on which the two different interfaces related one to the app and the other on the web server will specialize in order to connect to the related device.\\
+			Thanks to the client-server approach we also simplify the way in which we communicate with the external clients taking the decision of using the same technology of communication. In fact, as we will describe precisely in the further section \blueRef{sec:RESTDecision}, we are going to build our system in a RESTful way as we can have a simple communication protocol with HTTPS for the \textbf{Web Application} and we can integrate it with the \textbf{Mobile Application} communication in order to have the same APIs. This decision has several motivations even if it may not look the best choice to manage the interaction with the mobile application; one is the one just presented related to the development and interfacing to a single API technology, another is connected with an implementation and integration aspect (as we will see in section \blueRef{sec:selectedArchitecturalStylesAndPatterns}) that is: as we can see in the plan identified by the diagram of \blueAutoref{fig:useRelationHierarchy} the implementation and integration (obviously testing too) of the \textbf{User App} and \textbf{Web Server} will take place in parallel. In this way, as we will need at this moment to define also the interfaces that provide the communication, we will develop first a common REST API on which the two different interfaces related one to the app and the other on the web server will specialize in order to connect to the related device.\\
 			
-			 The communications with the other systems depend on the services they provide, as we can see in the deployment diagram (\autoref{fig:deploymentDiagram}) some of the services are still provided in a RESTful way while others, related in particular to the interaction with the \emph{database server} and the \emph{email server} consider instead a classic interfacing because they are related to the management of data and the using of an email service.
+			 The communications with the other systems depend on the services they provide, as we can see in the deployment diagram (\blueAutoref{fig:deploymentDiagram}) some of the services are still provided in a RESTful way while others, related in particular to the interaction with the \emph{database server} and the \emph{email server} consider instead a classic interfacing because they are related to the management of data and the using of an email service.
 			
 		\subsubsection[Four Tier Architecture]{\hyperlink{toc}{Four Tier Architecture}}
 			\label{sec:fourTierArchitectureDecision}
 			
 			Selected the \textbf{client-server} approach we needed to decide how to manage the layers of our system. We chose a multilayered architecture first to benefit of its advantages such as: decoupling, reuse, flexibility, migration... Second to have a way to realize a centralized business logic that allows to manage all the complex management of the data we need to take care of. Thanks to the different layers on which our system is designed we also separate the data as it can be managed more easily rather than having its complexity added inside our principal server. A multilayered architecture has allows also to adopt the \textbf{thin-client} approach by letting only the presentation layer to be managed on the devices of the clients.\\
 			
-			For SafeStreets we decide to choose a \textbf{Four Tier Architecture} as we need to take into account (as we see from the devices highlighted in the deployment diagram of \autoref{fig:deploymentDiagram}) two different approaches for the client interaction: \textbf{mobile application} for the users and \textbf{web application} for the authorities. Hence the necessity of a Web Server needs also to be considered in order to manage the web side of the clients. For this first architectural decision of the client's separation and to maintain the \textbf{thin-client} approach we need to have two different tiers to handle the \textbf{Presentation Layer}. In order to consider the management of the information (fundamental resource for our crowd source based system) we also need to separate the business logic from the data. The two remaining layers will be separated, hence one tier is needed to deal with the \textbf{Logic Layer} and another for the \textbf{Data Layer}.\\
+			For SafeStreets we decide to choose a \textbf{Four Tier Architecture} as we need to take into account (as we see from the devices highlighted in the deployment diagram of \blueAutoref{fig:deploymentDiagram}) two different approaches for the client interaction: \textbf{mobile application} for the users and \textbf{web application} for the authorities. Hence the necessity of a Web Server needs also to be considered in order to manage the web side of the clients. For this first architectural decision of the client's separation and to maintain the \textbf{thin-client} approach we need to have two different tiers to handle the \textbf{Presentation Layer}. In order to consider the management of the information (fundamental resource for our crowd source based system) we also need to separate the business logic from the data. The two remaining layers will be separated, hence one tier is needed to deal with the \textbf{Logic Layer} and another for the \textbf{Data Layer}.\\
 			
 			We now present once more the picture of our four tier system as we can easier compare it with what we have just said.
 			
@@ -828,14 +870,12 @@
 		\subsubsection[RESTful Architecture]{\hyperlink{toc}{RESTful Architecture}}
 			\label{sec:RESTDecision}
 			
-			We have already motivated the choice of this approach in the client-server section (\ref{sec:clientServerDecision}) in particular for how our system is going to provide its services to the clients. The communications with the external services do not need a precise motivation as we would be able to decide how they are established, we only need to stick with the decisions of the system that is providing the functionality and adapt our communication modules.\\
+			We have already motivated the choice of this approach in the client-server section (\blueRef{sec:clientServerDecision}) in particular for how our system is going to provide its services to the clients. The communications with the external services do not need a precise motivation as we would be able to decide how they are established, we only need to stick with the decisions of the system that is providing the functionality and adapt our communication modules.\\
 			
 			Now we want to present some further motivations and advantages that the RESTful architecture allows us to obtain to justify even more our decision. The principle on which REST is based, that is the stateless interaction of requests between the clients and server, is really helpful to us in order to manage the huge amount of data we expect to receive for the notification process. As we have already said, in this way, we will be also able to manage both the requests coming from the users and the authorities with one single interface that is adapted for the \textbf{mobile application} side and the \textbf{web application} side.\\
 			
 			In conclusion this communication architecture based on HTTP is perfectly embraced in our four tier architecture and allows also an easier way to manage the information in a precise standard. In particular we will decide to stick with the format used by the results provided by the \textbf{Map Interface} when it provides us the data relative to the map that has to be displayed to our clients for the \emph{Unsafe Streets} functionality.
-			
-			%todo qua ci starebbe un bel json d esempio di risposta della MI
-		
+	
 	\subsection[Other Design Decisions]{\hyperlink{toc}{Other Design Decisions}}
 		\label{sec:otherDesignDecisions}						
 		
@@ -846,7 +886,7 @@
 			
 			We decided to consider a relational approach in particular for the way in which the data has to be managed because of the functionalities of the system. In fact, without focusing on the clients that can be managed in a relational database without any problem, we have seen how several relations are established between the entities that compose our system. In particular the most important are the ones related to the safety calculus: first the relations between the interventions and the streets and also between the accidents and the streets allow to determine the safety; second the relations between the \textbf{safety} and the street allows us to process this data and send it to the clients as it can be highlighted for the \emph{Unsafe Streets} functionality.\\
 			
-			Considering now some more implementation aspects, as we can also see in the decision tree (\autoref{fig:decisionTree}), we decided to choose MySQL as the DBMS to interact with because it is the most popular relational one and provides a complete and clear documentation on how to benefit of its services.
+			Considering now some more implementation aspects, as we can also see in the decision tree (\blueAutoref{fig:decisionTree}), we decided to choose MySQL as the DBMS to interact with because it is the most popular relational one and provides a complete and clear documentation on how to benefit of its services.
 			
 		\subsubsection[Native Application Approach]{\hyperlink{toc}{Native Application Approach}}
 			\label{sec:nativeAppApproach}
