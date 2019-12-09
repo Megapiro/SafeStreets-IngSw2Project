@@ -1,12 +1,12 @@
 \section[Overall Description]{\hyperlink{toc}{Overall Description}}
 \label{sec:overallDescription}
 \subsection[Product Perspective]{\hyperlink{toc}{Product Perspective}}
-	Thanks to the general introduction and the scope definition from the previous sections, we are now able to look at our system first from the outside and then from the inside. To deal with this description we are going to see the external interfaces the system has to interact with and then the definition of the model in order to have a feasible structure with them; at the end of the section \textbf{state diagrams} are used to emphasize the dynamic behavior of the most critical classes identified for the model.
+	Thanks to the general introduction and the scope definition from the previous sections, we are now able to look at our system first from the outside and then from the inside. To deal with this description we are going to see the external interfaces the system has to interact with and then the definition of the model in order to have a feasible structure with them; at the end of the section, \textbf{state diagrams} are used to emphasize the dynamic behavior of the most critical classes identified for the model.
 	\subsubsection[System Interfaces]{\hyperlink{toc}{System Interfaces}}
 		\label{sec:systemInterfaces}
-		In this section we are going to deal with the interfaces that SafeStreets needs to \emph{use} in order to provide its functionalities. The definition of SafeStreet's interfaces to the external world, instead, will be described in the further related section (\blueRef{sec:externalInterfaceRequirements}), while precise details are given in the Design Document \cite{DD}.\\
+		In this section we are going to deal with the interfaces that SafeStreets needs to \emph{use} in order to provide its functionalities. The definition of SafeStreet's interfaces to the external world, instead, will be described in the further related section (\blueRef{sec:externalInterfaceRequirements}), while precise details will be given in the Design Document \cite{DD}.\\
 	
-		To accomplish the \hyperref[sec:goals]{\textbf{goals}} stated in the introduction the application interfaces with three main external systems as reported in the following picture (\blueAutoref{fig:systemInterfaces}).  
+		To accomplish the \hyperref[sec:goals]{\textbf{goals}} stated in the introduction, the application interacts with three main external systems, as reported in the following picture (\blueAutoref{fig:systemInterfaces}).  
 		\vspace{0,3cm}
 		
 		\begin{figure}[h]
@@ -19,14 +19,14 @@
 		\begin{itemize}
 			\item \textbf{Left hand side:} interfaces that provide functions for the system to perform internal algorithmic operations. In particular:
 			\begin{itemize}
-				\item \textsc{IRI} is used to process the pictures received from a violation. Whenever an infraction is reported, the application needs to retrieve the plate's number of the violation in order to be stored and notified to the authority. The image recognition algorithm "has always the last word": it uses the information provided by the user to help the recognition and, in all the cases a plate number will be found, it will be considered correct in the stored information and thus notifiable. Hence, whenever the algorithm does not recognize any plate number the entire notification will be discarded.
+				\item \textsc{IRI} is used to process the pictures received from a violation. Whenever an infraction is reported, the application needs to retrieve the plate's number of the violation in order to be stored and notified to the authority. The image recognition algorithm "has always the last word": it uses the information provided by the user to help the recognition and, in all the cases a plate number will be found, it will be considered correct in the stored information and thus notifiable. Hence, whenever the algorithm does not recognize any plate number, the entire notification will be discarded.
 			
-				\item \textsc{MI} is used to process the map issues. This interface provides three services fundamental for the application: the first is used to retrieve the exact street where a reported violation has occurred (using its GPS position), the second allows to find the best path between two position specified by the customer, while the third one offers the system a way to obtain a file that contains all the information needed in order to highlight the map for the \emph{UnsafeStreets} functionality. This interface provides also another service related to the data of all the streets and cities the system has to deal with: once stored in its database the initial information, we need to keep track of the updates that can occur in the territory; in order to do so we use this interface to be aligned with the newest maps.
+				\item \textsc{MI} is used to process the map issues. This interface provides three fundamental services for the application: the first is used to retrieve the exact street where a reported violation has occurred (using its GPS position), the second allows to find the best path between two positions specified by the customer, while the third one offers the system a way to obtain a file that contains all the information needed in order to highlight the map for the \emph{UnsafeStreets} functionality. This interface provides also another service related to the data of all the streets and cities the system has to deal with: once stored in its database the initial information, we need to keep track of the updates that can occur in the territory; in order to do so, we use this interface to be aligned with the newest maps.
 			\end{itemize}
 			
 			\item \textbf{Right hand side:} considers all the interfaces that provide management services on which the system has to rely on. In particular:
 			\begin{itemize}
-				\item \textsc{ACI} this global interface manages both the accidents provided by the authorities and their PEC addresses: a publishing system will be needed to allow the authorities to publish their accidents in order to provide a way to retrieve them by the system. This interface allows also to possess all the information related to the PEC addresses of each authority the application has to manage.
+				\item \textsc{ACI} is global interface that manages both the accidents provided by the authorities and their PEC addresses: a publishing system will be needed to allow the authorities to publish their accidents in order to provide a way to retrieve them by the system. This interface allows also to grab all the information related to the PEC addresses of each authority the application has to manage.
 				
 				\item \textsc{DBMS API} allows the management of all the data the system needs to use in order to provide its functionalities.
 				
@@ -47,7 +47,7 @@
 		
 		\item \textbf{Violation:} represents a general traffic violation. This class is thought to be used in a future extension of the system in case more violations are going to be considered.
 		
-		\item \textbf{ParkingViolation:} is the result of a notification provided by a user. In this way the application considers all the possible information that is filled whenever an infraction is reported. As we see in the UML diagram the class contains: multiple images for an improved help to both the image recognition algorithm and the authorities; the position retrieved by the GPS (used to find the name of the street); the type of the vehicle; the plate's number, date and time. The type of the violation, selected by the users will be determined considering one of the possible extending classes: \textbf{DoubleParking, DisabledZone, NoParkingZone, BikeLaneParking...} The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \blueRef{sec:stateDiagrams} and \blueRef{sec:safetyFunction}.
+		\item \textbf{ParkingViolation:} is the result of a notification provided by a user. In this way the application considers all the possible information that is provided whenever an infraction is reported. As we see in the UML diagram, the class contains: multiple images for an improved help to both the image recognition algorithm and the authorities; the position retrieved by the GPS (used to find the name of the street); the type of the vehicle; the plate's number, date and time. The type of the violation, selected by the users, will be determined considering one of the possible extending classes: \textbf{DoubleParking, DisabledZone, NoParkingZone, BikeLaneParking...} The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \blueRef{sec:stateDiagrams} and \blueRef{sec:safetyFunction}.
 		
 		\item \textbf{Accident:} will be used to store the data received by the municipality by characterizing each accident as: \textbf{BikeCrash, MotorcycleCrash, CarCrash, ParkingHit...} The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \blueRef{sec:stateDiagrams} and \blueRef{sec:safetyFunction}.
 		
@@ -105,7 +105,7 @@
 			\end{figure}
 		
 		\paragraph{Safety}
-			The last state diagram is used to highlight how the system is able to determine the safety of a street and update its state whenever new violations occur or new accidents data is provided by the municipality. The diagram (\blueAutoref{fig:safetyState}) shows how the safety of a street evolves in the time. The system, each day, does two checks related to all the parking violations and accidents that occurred in a certain street in the previous 30 days. Two tresholds are defined to make the \textit{safe} state trigger: one is related to each \textbf{Possible Intervention} the other to the sum of all \textbf{Violations} and \textbf{Accidents}. It is enough that one treshold for a possible intervention \textbf{or} that the sum treshold is exceeded in order to reach the \textit{unsafe[RED]} state; the opposite happens for reaching the \textit{safe[GREEN]} one. In the section \blueRef{sec:safetyFunction} all details are provided to understand how this counting works, for now it is important to understand that thanks to it the safety of each street can be updated daily.
+			The last state diagram is used to highlight how the system is able to determine the safety of a street and update its state whenever new violations occur or new accidents data is provided by the municipality. The diagram (\blueAutoref{fig:safetyState}) shows how the safety of a street evolves in the time. The system, each day, does two checks related to all the parking violations and accidents that occurred in a certain street in the previous 30 days. Two thresholds are defined to make the \textit{safe} state trigger: one is related to each \textbf{Possible Intervention} the other to the sum of all \textbf{Violations} and \textbf{Accidents}. It is enough that one threshold for a possible intervention \textbf{or} that the sum threshold is exceeded in order to reach the \textit{unsafe[RED]} state; the opposite happens for reaching the \textit{safe[GREEN]} one. In the section \blueRef{sec:safetyFunction} all details are provided to understand how this counting works, for now it is important to understand that thanks to it the safety of each street can be updated daily.
 			
 			\vspace{0.3cm}
 			\begin{figure}[h]
@@ -172,21 +172,21 @@
 		\label{sec:safetyFunction}
 		SafeStreets is able to process the information provided by the municipality about the accidents that occur in a territory. Thanks to this additional data the system can cross it with its stored one and determine the \textbf{safety} of each street as we now precisely describe. Whenever a municipality is not able to provide the information about the accidents to SafeStreets the safety can be still determined thanks to the mathematical model further defined that will just use the information stored about the violations. \\
 		
-		The system dynamically changes the safety of a streets thanks to two different kinds of treshold defined for each street:
+		The system dynamically changes the safety of a streets thanks to two different kinds of threshold defined for each street:
 		
 		\begin{enumerate}
-			\item \textbf{Intervention Treshold:} each intervention has a "personal" treshold that once exceeded determines a street to be unsafe. Every type of accident or violation is related to one or more intervention so that, once they occur in a street they make increase the counter of each intervention. If one of the counters of the interventions for a street exceeds the treshold it means that the street has become \textbf{unsafe} and that the exceeded intervention should be taken into account as the suggestion to enhance the \textbf{safety} of the now dangerous street.
+			\item \textbf{Intervention Threshold:} each intervention has a "personal" threshold that once exceeded determines a street to be unsafe. Every type of accident or violation is related to one or more intervention so that, once they occur in a street they increase the counter of each intervention. If one of the counters of the interventions for a street exceeds the threshold it means that the street has become \textbf{unsafe} and that the exceeded intervention should be taken into account as the suggestion to enhance the \textbf{safety} of the now dangerous street.
 			
-			\item \textbf{Sum Treshold:} another treshold is needed to consider also the accidents that are not related to any intervention but anyway determine a street to be \textbf{unsafe}. This treshold is based on the sum of the accidents and parking violations that occur in the street. If the sum exceeds the treshold it means that the street has become \textbf{unsafe} and the related possible intervention is the one whose counter is the nearest to the treshold.
+			\item \textbf{Sum Threshold:} another threshold is needed to consider also the accidents that are not related to any intervention but anyway determine a street to be \textbf{unsafe}. This threshold is based on the sum of the accidents and parking violations that occur in the street. If the sum exceeds the threshold it means that the street has become \textbf{unsafe} and the related possible intervention is the one whose counter is the nearest to the threshold.
 		\end{enumerate}
 	
-		Hence the first of the two types of treshold that is exceeded in a street determines it to be unsafe.
+		Hence the first of the two types of threshold that is exceeded in a street determines it to be unsafe.
 		The safety of each street and then the related intervention is determined each day by the system with the stored information about the previous month. Thanks to the data retrieved by the \emph{crossing} process, SafeStreets is able to provide the following functionalities:
 		
 		 \begin{itemize}
-		 	\item \textbf{Unsafe Streets:} thanks to the MI SafeStreets can use its services to retrieve the portion of an area and highlight its streets with two different colors to distinguish \emph{safe streets} colored in \textbf{GREEN} from \emph{unsafe streets} colored in \textbf{RED}. The map interface provides functions that require a set of streets and the colors to be highlighted with and returns the best positioned map with the respective colors. 
+		 	\item \textbf{Unsafe Streets:} thanks to the MI, SafeStreets can use its services to retrieve the portion of an area and highlight its streets with two different colors to distinguish \emph{safe streets}, colored in \textbf{GREEN}, from \emph{unsafe streets}, colored in \textbf{RED}. The map interface provides methods that require a set of streets and the safety data and return a map with colored streets. 
 		 	
-		 	\item \textbf{Urgent Interventions:} thanks to the tresholds we always at least one suggestion for a possible intervention whenever a street is considered to be unsafe. This functionality allows the customers to retrieve the possible interventions for the area in which they are interested in.
+		 	\item \textbf{Urgent Interventions:} thanks to the thresholds we always have at least one suggestion for a possible intervention whenever a street is considered to be unsafe. This functionality allows the customers to retrieve the possible interventions for the area in which they are interested in.
 		 \end{itemize}
 	 
 	 	Both these functionalities in fact can be filtered in order to reduce the size of the interested area, the possible filters used in one or the other are: \textbf{city, path, street.}
@@ -211,7 +211,7 @@
 			\end{itemize}
 		\item \textbf{AUTHORITY/MUNICIPALITY}
 			\begin{itemize}
-				\item Are supposed to be in Italy.
+				\item Is supposed to be in Italy.
 				\item Always inserts correct data while registering.
 				\item Knows the PEC address of the territory they manage.
 				\item Provides correct information about accidents.
@@ -227,7 +227,7 @@
 	
 \subsection[Domain Assumptions]{\hyperlink{toc}{Domain Assumptions}}
 	\label{sec:domainAssumptions}
-	Domain assumptions are used to define clearly the world in which SafeStreets is involved. Thanks to them we are able to add constraints that define the bounds of the environment. It is first important to give the description of one of these assumption to precise why we decided to consider it. The fact that \emph{The system is allowed to work in Italy} is used to deal with the recognition of the authorities. It is very important in fact to be sure of the identity of each customer in order to manage the security of the stored data, problems relative to the law and simplify the description with only the correct level of details. Thanks to this assumption in fact we can consider that every authority knows its PEC address and thus use this existing technology to define the recognition process. \\
+	Domain assumptions are used to define clearly the world in which SafeStreets works. Thanks to them, we are able to add constraints that define the bounds of the environment. It is first important to describe one of these assumption to clarify why we decided to consider it. The fact that \emph{The system is allowed to work in Italy} is used to deal with the recognition of the authorities. It is very important in fact to be sure of the identity of each customer in order to manage the security of the stored data, problems relative to the law and simplify the description with only the correct level of details. Thanks to this assumption in fact we can consider that every authority knows its PEC address and thus use this existing technology to define the recognition process. \\
 	
 	We assume that these assumptions hold true in the domain of the system:
 		
@@ -254,9 +254,9 @@
 	
 \subsection[The World and the Machine]{\hyperlink{toc}{The World and the Machine}}
 	\label{sec:worldMachine}
-	Thanks to the constraints on the domain of interest for the system (section \blueRef{sec:domainAssumptions}), we are now able to describe SafeStreets with the \textit{World and the Machine} approach that allows to underline the most important phenomena that are present in the problem we are dealing with. The machine represents the system do be developed while the world (a.k.a environment) is the portion of the real world affected by the machine.\\
+	Thanks to the constraints on the domain of interest for the system (section \blueRef{sec:domainAssumptions}), we are now able to describe SafeStreets with the \textit{World and the Machine} approach that allows to underline the most important phenomena that are present in the problem we are dealing with. The machine represents the system to be developed while the world (a.k.a environment) is the portion of the real world affected by the machine.\\
 	
-	Thanks to this distinction we highlight in the next picture (\blueAutoref{fig:worldAndMachine}) the main phenomena of our problem: the ones in the world affect the world only, the ones in the machine affect the machine only and the ones in between affect both the world and the machine. This figure can be also used to start guessing the requirements (section \blueRef{sec:specificRequirements}) of our system as they can be defined as: \textit{prescriptive assertions formulated in terms of shared phenomena.}
+	Thanks to this distinction, we highlight in the next picture (\blueAutoref{fig:worldAndMachine}) the main phenomena of our problem:  in the world affect the world only, the ones in the machine affect the machine only and the ones in between affect both the world and the machine. This figure can be also used to start guessing the requirements (section \blueRef{sec:specificRequirements}) of our system: in fact they can be defined as \textit{prescriptive assertions formulated in terms of shared phenomena.}
 	\vspace{1cm} 
 	
 	\begin{figure}[h]
