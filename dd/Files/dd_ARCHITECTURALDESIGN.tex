@@ -692,7 +692,7 @@
 					\caption{\label{fig:dangerousVehiclesRuntime} Dangerous Vehicles Runtime View}
 				\end{figure}
 			
-				\item \textbf{Find Unsafe Streets:} In this interaction (\autoref{fig:unsafeStreetsRuntime}) it is shown how the UserApp requests maps with coloured streets. The request made by the UserApp is forwarded by ClientHandler to QueryManager. Depending on the option selected by the user, three different methods could be called: the one with a city as input, the one with starting and ending points, or the one with a single street. In the first case, QueryManager will look for all the streets of the selected city in the DBMS, going through DataManager. In the second case, a path needs to be generated, thus QueryManager will ask MI through MapManager for a path, that will include a certain number of streets. In the last case, no action is required. Then, for all the gathered streets, QueryManager will search in the database for their safety, asking DataManager to execute the actual query. Then QueryManager will ask MapManager for the generation of the map that, according to the gathered infomation about the safety of the involved streets, will be coloured as described in RASD. This map will be finally sent back to the UserApp and displayed.
+				\item \textbf{Find Unsafe Streets:} In this interaction (\autoref{fig:unsafeStreetsRuntime}) it is shown how the UserApp requests maps with coloured streets. The request made by the UserApp is forwarded by ClientHandler to QueryManager. Depending on the option selected by the user, three different methods could be called: the one with a city as input, the one with starting and ending points, or the one with a single street. In the first case, QueryManager will look for all the streets of the selected city in the DBMS, going through DataManager. In the second case, a path needs to be generated, thus QueryManager will ask MI through MapManager for a path, that will include a certain number of streets. In the last case, no action is required. Then, for all the gathered streets, QueryManager will search in the database for their safety, asking DataManager to execute the actual query. Then QueryManager will ask MapManager for the generation of the map that, according to the gathered infomation about the safety of the involved streets, will be coloured as described in RASD. If path option was selected, the path will be passed to MapInterface so that the generated map will show it. This map will be finally sent back to the UserApp and displayed.
 				
 				\vspace{1cm}		
 		
@@ -748,19 +748,41 @@
 			\includegraphics[scale=0.24]{/diagrams/sequence/mapUpdate.png}
 			\caption{\label{fig:mapUpdateRuntime} Update Map Runtime View}
 		\end{figure}
-						
+	
+		\newpage						
 	
 	\subsection[Component Interfaces]{\hyperlink{toc}{Component Interfaces}}
 		\label{sec:componentInterfaces}
-		% todo qui ci va una bella introduzione per sto diagramma, almeno dire come mai basta che lasciamo il diagramma senza dare neanche una descrizione dei metodi
-		
-		\newpage
 		
 		\begin{figure}[hbtp]
 			\centering
 			\includegraphics[scale=0.33, angle=90]{componentInterfaces}
 			\caption{\label{fig:componentInterfaces} Component Interfaces Diagram}
 		\end{figure}
+		
+		\autoref{fig:componentInterfaces} shows the component interfaces that are inside the application server. For every interface, the exposed methods are shown. Only the internal interfaces are shown. All the methods used in the sequence diagrams of the \hyperref[sec:runtimeView]{RuntimeView section} must be shown here. For what concerns the specific methods, their input parameters and returned value, they are only meant to give an idea of what they should do, but we are open to changes at the implementation level.
+		
+		\subsubsection[WebInterface]{\hyperlink{toc}{WebInterface}}
+			This is the interface with all the methods exposed by the ClientHandler component that will be called by the WebServer. This methods have the only purpose of forwarding requests to the right component of our system that will handle them. The parameters and the returned values are the same as in the interfaces of the components to which the requests are forwarded to. Therefore, they won't be described here.
+		
+		\subsubsection[MobileAppInterface]{\hyperlink{toc}{MobileAppInterface}}
+			Same as above, except that this interface is specific for the requests that come from the UserApp. Some methods are duplicated in these two interfaces because they realize functionalities that both users and authorities are supposed to get advantage of.
+			
+		\subsubsection[MiningInterface]{\hyperlink{toc}{MiningInterface}}
+			The main purpose of the methods exposed in this interface is to prepare the queries that will be then forwarded to the DataManager component. Queries, that are the means through which mining functionality is provided by our system, usually have a bunch of filters that are here represented by the objects of type FilterList. It is a fictional Class that stands for a multitude of other classes: for example, a user can filter by City, Street, ViolationType and so on. Thus, we can imagine this object at the implementation level having some fields, that could be scalar in case of City, or arrays when users want to include some different types of violation in their queries. The unused fields (for example if a user doesn't want to filter by time slot) will be left empty, for example set to null. Other types of queries, implemented with the overloaded method findUnsafeStreets() for example, are a little bit more simple so the decision is to use the actual object used as parameters. findUnreadReports() and findReports() are actually quite similar: the first is a simpler version of the second because it has no filters as parameters and will include in the returned list of violations only those that have the "read" field set to false. 
+		
+		\subsubsection[NotificationInterface]{\hyperlink{toc}{NotificationInterface}}
+			Despite the fact this interface only exposes one method, it is extremely important because it fulfills the reports notification functionality, that is the very core of our system. The idea is that the UserApp will create an object of type Violation and will then send it to the server and finally to this method, that is able to process it. This method will interact with IRI and MapManager to prepare the final Violation object that will be stored into the database.
+		
+		\subsubsection[AccessInterface]{\hyperlink{toc}{AccessInterface}}
+			These methods are useful for registration and login purposes. They're actually quite simple and self-explanatory. The objects of types User and Authority have all the information gathered during the registration phase, and the methods newUser() and newAuthority() use them to store all the information in the database.
+		
+		\subsubsection[StreetsRetrievalInterface]{\hyperlink{toc}{StreetsRetrievalInterface}}
+			The methods of this interface are exposed by the MapManager component, whose main purpose is to interact with the external MapInterface and for example ask for street names, paths and maps. Our system is not able to do all of this by itself, so this is the reason why we need an external interface like MapInterface. The objects of type Position are created either by getting the user's GPS positon through the GPS module of the user's device or when the user inserts the position manually. The generateMap() method requires a detailed explanation. It has two object as input, a list of object of type Street and a Path. Depending on the case, only one of those parameters will be set, while the other one will be left null. The goal of this method is handing all the necessary information to the MapInterface so that it could generate a colored map according to the streets safety data. Of course, if path option is selected by the user, the previously calculated path will have to be shown in the generated map and this is the reason why it appears as a parameter. In addition to this, an object of type Path already includes a list of the involved streets plus other information that is needed to link all the streets in a particular way (e.g. right and left turns etc.), therefore when a Path object is passed, generateMap() won't need the list of streets.
+		
+		\subsubsection[DataInterface]{\hyperlink{toc}{DataInterface}}
+			This interface contains the methods exposed by the DataManager component. This component is in charge of communicating with the DBMS. In this way, the whole system is decoupled from the actual DBMS. All of these methods will be implemented by calling the methods exposed by the DBMS that are not modeled here for the sake of simplicity.
+		
 	
 		\FloatBarrier
 		
