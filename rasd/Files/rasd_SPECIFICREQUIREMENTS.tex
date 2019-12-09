@@ -8,7 +8,7 @@
 	\subsubsection[Customer Interfaces]{\hyperlink{toc}{Customer Interfaces}}
 	\label{sec:customerInterfaces}
 	
-	The following interfaces are meant to give a first description of how the functionalities will be offered in practice to the customers of SafeStreets. A precise description of how each mockup precisely reflects one functionality of SafeStreets is given in the Design Document \cite{DD}. It is sufficient for now to start with their illustration as we can understand the relation with the goals (section \ref{sec:goals}) and use cases (section \ref{sec:useCases}) described in this document.\\
+	The following interfaces are meant to give a first description of how the functionalities will be offered in practice to the customers of SafeStreets. A precise description of how each mockup precisely reflects one functionality of SafeStreets is given in the Design Document \cite{DD}. It is sufficient for now to start with their illustration as we can understand the relation with the goals (section \blueRef{sec:goals}) and use cases (section \blueRef{sec:useCases}) described in this document.\\
 	
 	First are shown the interfaces of the \textbf{Mobile App} for the users, then the ones of the \textbf{Web App} for the authorities.
 	
@@ -148,10 +148,10 @@
 	\FloatBarrier
 	
 	\subsubsection[Hardware Interfaces]{\hyperlink{toc}{Hardware Interfaces}}
-		Hardware interfaces have to be considered on the clients' software in order to interact with the camera and the GPS modules. As described in the section \ref{sec:notificationFunction} in fact, a user must always take at least one picture and enable the GPS in order to report a violation. 
+		Hardware interfaces have to be considered on the clients' software in order to interact with the camera and the GPS modules. As described in the section \blueRef{sec:notificationFunction} in fact, a user must always take at least one picture and enable the GPS in order to report a violation. 
 		
 	\subsubsection[Software Interfaces]{\hyperlink{toc}{Software Interfaces}}
-		The interfaces used by SafeStreets to benefit of services provided by external systems are precisely described in the section \ref{sec:systemInterfaces}. Internal interfaces instead are needed in particular to manage the DBMS of the system; as described in the section \ref{sec:standardCompliance} we will need to manage all the information with different logical models in order to store the different kind of data that the application has to deal with. SafeStreets does not provide APIs to external possible clients.
+		The interfaces used by SafeStreets to benefit of services provided by external systems are precisely described in the section \blueRef{sec:systemInterfaces}. Internal interfaces instead are needed in particular to manage the DBMS of the system; as described in the section \blueRef{sec:standardCompliance} we will need to manage all the information with different logical models in order to store the different kind of data that the application has to deal with. SafeStreets does not provide APIs to external possible clients.
 		
 	\subsubsection[Communication Interfaces]{\hyperlink{toc}{Communication Interfaces}}
 		An important communication interface that must be considered while developing the system is the one that makes SafeStreets receive the accidents data provided by the municipality. As we described in the global external interface of the authorities we expect to have a system where all of them can publish their accidents as our system will be able to retrieve them.
@@ -203,173 +203,173 @@
 		\label{sec:goalSatisfaction}
 		\begin{description}
 			\setlength\itemsep{0.7cm}
-			\item \ref{goal:notification}\ \textbf{Users should be able to notify authorities when traffic violations occur, in particular parking violations.}
+			\item \blueRef{goal:notification}\ \textbf{Users should be able to notify authorities when traffic violations occur, in particular parking violations.}
 				\begin{description}
-					\item \ref{req:userReg}\ The system must allow users to register.
-					\item \ref{req:authorityReg}\ The system must allow authorities to register.
-					\item \ref{req:userLogin}\ The system must allow the user to log in.
-					\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
-					\item \ref{req:uniqueName}\ The system must guarantee that each username is unique.
-					\item \ref{req:saveRegData}\ The system must save the customers' registration data.
-					\item \ref{req:specialCharacters}\ The system must prevent users to use special characters in their username.
-					\item \ref{req:takePictures}\ The system must allow users to take pictures of the violation they want to report.
-					\item \ref{req:dateTime}\ The system must retrieve date and time while the user reports a violation.
-					\item \ref{req:gpsPosition}\ The system must retrieve the GPS position while the user reports a violation.
-					\item \ref{req:violationType}\ The system must allow users to insert the type of violation they’re reporting.
-					\item \ref{req:vehicleType}\ The system must allow users to insert the type of the vehicles they’re reporting.
-					\item \ref{req:plateNumber}\ The system must allow users to insert the license plate number of the vehicle they are reporting.
-					\item \ref{req:readPlate}\ The system must read the license plate from every picture sent by the user.
-					\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
-					\item \ref{req:streetName}\ The system must be able to retrieve the name of the street from the GPS coordinates.
-					\item \ref{req:notifyAuthority}\ The system must be able to show authorities all the violation reports sent by users.
-					\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
-					\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
-					\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
-					\item \ref{dom:uniquePec}\ PEC addresses are unique.
-					\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
-					\item \ref{dom:correctDateTime}\ Date and time on the devices on which SafeStreets runs are always correct.
-					\item \ref{dom:gpsAccuracy}\ The GPS module of the devices on which SafeStreets runs always works correctly and has an accuracy of 2 meters.
-					\item \ref{dom:correctCamera}\ The camera module of the devices on which SafeStreets runs always works correctly.
-					\item \ref{dom:correctInternet}\ Internet connection works always without errors.
-					\item \ref{dom:italy}\ The system is assumed to work in Italy.
-					\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
-					\item \ref{dom:nonameStreets}\ There are no streets without a name.
-					\item \ref{dom:noMaliciousPlates}\ No one physically and maliciously replaces license plates.
-					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-					\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
-					\item \ref{dom:nomultipleViolations}\ No multiple violations of the same vehicle occur in the same place at the same time.
+					\item \blueRef{req:userReg}\ The system must allow users to register.
+					\item \blueRef{req:authorityReg}\ The system must allow authorities to register.
+					\item \blueRef{req:userLogin}\ The system must allow the user to log in.
+					\item \blueRef{req:authorityLogin}\ The system must allow authorities to log in.
+					\item \blueRef{req:uniqueName}\ The system must guarantee that each username is unique.
+					\item \blueRef{req:saveRegData}\ The system must save the customers' registration data.
+					\item \blueRef{req:specialCharacters}\ The system must prevent users to use special characters in their username.
+					\item \blueRef{req:takePictures}\ The system must allow users to take pictures of the violation they want to report.
+					\item \blueRef{req:dateTime}\ The system must retrieve date and time while the user reports a violation.
+					\item \blueRef{req:gpsPosition}\ The system must retrieve the GPS position while the user reports a violation.
+					\item \blueRef{req:violationType}\ The system must allow users to insert the type of violation they’re reporting.
+					\item \blueRef{req:vehicleType}\ The system must allow users to insert the type of the vehicles they’re reporting.
+					\item \blueRef{req:plateNumber}\ The system must allow users to insert the license plate number of the vehicle they are reporting.
+					\item \blueRef{req:readPlate}\ The system must read the license plate from every picture sent by the user.
+					\item \blueRef{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+					\item \blueRef{req:streetName}\ The system must be able to retrieve the name of the street from the GPS coordinates.
+					\item \blueRef{req:notifyAuthority}\ The system must be able to show authorities all the violation reports sent by users.
+					\item \blueRef{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+					\item \blueRef{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+					\item \blueRef{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+					\item \blueRef{dom:uniquePec}\ PEC addresses are unique.
+					\item \blueRef{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+					\item \blueRef{dom:correctDateTime}\ Date and time on the devices on which SafeStreets runs are always correct.
+					\item \blueRef{dom:gpsAccuracy}\ The GPS module of the devices on which SafeStreets runs always works correctly and has an accuracy of 2 meters.
+					\item \blueRef{dom:correctCamera}\ The camera module of the devices on which SafeStreets runs always works correctly.
+					\item \blueRef{dom:correctInternet}\ Internet connection works always without errors.
+					\item \blueRef{dom:italy}\ The system is assumed to work in Italy.
+					\item \blueRef{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
+					\item \blueRef{dom:nonameStreets}\ There are no streets without a name.
+					\item \blueRef{dom:noMaliciousPlates}\ No one physically and maliciously replaces license plates.
+					\item \blueRef{dom:nosameStreets}\ In a city there are not streets with the same name.
+					\item \blueRef{dom:streetCity}\ Every street belongs exactly to one city.
+					\item \blueRef{dom:nomultipleViolations}\ No multiple violations of the same vehicle occur in the same place at the same time.
 				\end{description}
 					
-			\item \ref{goal:mining}\ \textbf{Users and authorities should be able to mine the information stored by SafeStreets, with different levels of visibility.}
+			\item \blueRef{goal:mining}\ \textbf{Users and authorities should be able to mine the information stored by SafeStreets, with different levels of visibility.}
 				\begin{description}
 					\setlength\itemsep{0.7cm}
-					\item \ref{goal:miningA}\ \textbf{Users and authorities should be able to know where the highest number of violations occur.}
+					\item \blueRef{goal:miningA}\ \textbf{Users and authorities should be able to know where the highest number of violations occur.}
 						\begin{description}
-							\item \ref{req:userReg}\ The system must allow users to register.
-							\item \ref{req:authorityReg}\ The system must allow authorities to register.
-							\item \ref{req:userLogin}\ The system must allow the user to log in.
-							\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
-							\item \ref{req:saveRegData}\ The system must save the customers registration data.
-							\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
-							\item \ref{req:mineData}\ The system must be able to mine the stored violation reports.
-							\item \ref{req:cityFilter}\ The system must allow the customer to filter by city.
-							\item \ref{req:violationFilter}\ The system must allow the customer to filter by type of violation.
-							\item \ref{req:timeFilter}\ The system must allow the customer to filter by time slot.
-							\item \ref{req:vehicleFilter}\ The system must allow the customer to filter by type of vehicle.
-							\item \ref{req:sortedResult}\ The system must be able to sort streets by number of violations.
-							\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
-							\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
-							\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
-							\item \ref{dom:uniquePec}\ PEC addresses are unique.
-							\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
-							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
-							\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
-							\item \ref{dom:nonameStreets}\ There are no streets without a name.
-							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-							\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
+							\item \blueRef{req:userReg}\ The system must allow users to register.
+							\item \blueRef{req:authorityReg}\ The system must allow authorities to register.
+							\item \blueRef{req:userLogin}\ The system must allow the user to log in.
+							\item \blueRef{req:authorityLogin}\ The system must allow authorities to log in.
+							\item \blueRef{req:saveRegData}\ The system must save the customers registration data.
+							\item \blueRef{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+							\item \blueRef{req:mineData}\ The system must be able to mine the stored violation reports.
+							\item \blueRef{req:cityFilter}\ The system must allow the customer to filter by city.
+							\item \blueRef{req:violationFilter}\ The system must allow the customer to filter by type of violation.
+							\item \blueRef{req:timeFilter}\ The system must allow the customer to filter by time slot.
+							\item \blueRef{req:vehicleFilter}\ The system must allow the customer to filter by type of vehicle.
+							\item \blueRef{req:sortedResult}\ The system must be able to sort streets by number of violations.
+							\item \blueRef{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+							\item \blueRef{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+							\item \blueRef{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+							\item \blueRef{dom:uniquePec}\ PEC addresses are unique.
+							\item \blueRef{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+							\item \blueRef{dom:correctInternet}\ Internet connection works always without errors.
+							\item \blueRef{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
+							\item \blueRef{dom:nonameStreets}\ There are no streets without a name.
+							\item \blueRef{dom:nosameStreets}\ In a city there are not streets with the same name.
+							\item \blueRef{dom:streetCity}\ Every street belongs exactly to one city.
 						\end{description}
-					\item \ref{goal:miningB}\ \textbf{Users and authorities should be able to know what types of vehicle make the most violations.}
+					\item \blueRef{goal:miningB}\ \textbf{Users and authorities should be able to know what types of vehicle make the most violations.}
 						\begin{description}
-							\item \ref{req:userReg}\ The system must allow users to register.
-							\item \ref{req:authorityReg}\ The system must allow authorities to register.
-							\item \ref{req:userLogin}\ The system must allow the user to log in.
-							\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
-							\item \ref{req:saveRegData}\ The system must save the customers registration data.
-							\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
-							\item \ref{req:mineData}\ The system must be able to mine the stored violation reports.
-							\item \ref{req:cityFilter}\ The system must allow the customer to filter by city.
-							\item \ref{req:violationFilter}\ The system must allow the customer to filter by type of violation.
-							\item \ref{req:sortedVehicles}\ The system must be able to sort types of vehicle by number of violations they make.
-							\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
-							\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
-							\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
-							\item \ref{dom:uniquePec}\ PEC addresses are unique.
-							\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
-							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
-							\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
-							\item \ref{dom:nonameStreets}\ There are no streets without a name.
-							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-							\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
+							\item \blueRef{req:userReg}\ The system must allow users to register.
+							\item \blueRef{req:authorityReg}\ The system must allow authorities to register.
+							\item \blueRef{req:userLogin}\ The system must allow the user to log in.
+							\item \blueRef{req:authorityLogin}\ The system must allow authorities to log in.
+							\item \blueRef{req:saveRegData}\ The system must save the customers registration data.
+							\item \blueRef{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+							\item \blueRef{req:mineData}\ The system must be able to mine the stored violation reports.
+							\item \blueRef{req:cityFilter}\ The system must allow the customer to filter by city.
+							\item \blueRef{req:violationFilter}\ The system must allow the customer to filter by type of violation.
+							\item \blueRef{req:sortedVehicles}\ The system must be able to sort types of vehicle by number of violations they make.
+							\item \blueRef{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+							\item \blueRef{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+							\item \blueRef{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+							\item \blueRef{dom:uniquePec}\ PEC addresses are unique.
+							\item \blueRef{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+							\item \blueRef{dom:correctInternet}\ Internet connection works always without errors.
+							\item \blueRef{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
+							\item \blueRef{dom:nonameStreets}\ There are no streets without a name.
+							\item \blueRef{dom:nosameStreets}\ In a city there are not streets with the same name.
+							\item \blueRef{dom:streetCity}\ Every street belongs exactly to one city.
 						\end{description}
-					\item \ref{goal:miningC}\ \textbf{Authorities should be able to consult every violation report sent by users.}
+					\item \blueRef{goal:miningC}\ \textbf{Authorities should be able to consult every violation report sent by users.}
 						\begin{description}
-							\item \ref{req:authorityReg}\ The system must allow authorities to register.
-							\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
-							\item \ref{req:saveRegData}\ The system must save the customers registration data.
-							\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
-							\item \ref{req:mineData}\ The system must be able to mine the stored violation reports.
-							\item \ref{req:cityFilter}\ The system must allow the customer to filter by city.
-							\item \ref{req:streetFilter}\ The system must allow the customer to filter by street.
-							\item \ref{req:violationFilter}\ The system must allow the customer to filter by type of violation.
-							\item \ref{req:timeFilter}\ The system must allow the customer to filter by time slot.
-							\item \ref{req:dateFilter}\ The system must allow the authority to filter by date intervals.
-							\item \ref{req:vehicleFilter}\ The system must allow the customer to filter by type of vehicle.
-							\item \ref{req:visibility}\ The system must be able to provide different levels of visibility.
-							\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
-							\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
-							\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
-							\item \ref{dom:uniquePec}\ PEC addresses are unique.
-							\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
-							\item \ref{dom:correctInternet}\ Internet connection works always without errors.
-							\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
-							\item \ref{dom:nonameStreets}\ There are no streets without a name.
-							\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-							\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
+							\item \blueRef{req:authorityReg}\ The system must allow authorities to register.
+							\item \blueRef{req:authorityLogin}\ The system must allow authorities to log in.
+							\item \blueRef{req:saveRegData}\ The system must save the customers registration data.
+							\item \blueRef{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+							\item \blueRef{req:mineData}\ The system must be able to mine the stored violation reports.
+							\item \blueRef{req:cityFilter}\ The system must allow the customer to filter by city.
+							\item \blueRef{req:streetFilter}\ The system must allow the customer to filter by street.
+							\item \blueRef{req:violationFilter}\ The system must allow the customer to filter by type of violation.
+							\item \blueRef{req:timeFilter}\ The system must allow the customer to filter by time slot.
+							\item \blueRef{req:dateFilter}\ The system must allow the authority to filter by date intervals.
+							\item \blueRef{req:vehicleFilter}\ The system must allow the customer to filter by type of vehicle.
+							\item \blueRef{req:visibility}\ The system must be able to provide different levels of visibility.
+							\item \blueRef{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+							\item \blueRef{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+							\item \blueRef{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+							\item \blueRef{dom:uniquePec}\ PEC addresses are unique.
+							\item \blueRef{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+							\item \blueRef{dom:correctInternet}\ Internet connection works always without errors.
+							\item \blueRef{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
+							\item \blueRef{dom:nonameStreets}\ There are no streets without a name.
+							\item \blueRef{dom:nosameStreets}\ In a city there are not streets with the same name.
+							\item \blueRef{dom:streetCity}\ Every street belongs exactly to one city.
 						\end{description}
 				\end{description}
-			\item \ref{goal:safety}\ \textbf{Users should be able to know which streets are safe and which ones are not.} 
+			\item \blueRef{goal:safety}\ \textbf{Users should be able to know which streets are safe and which ones are not.} 
 				\begin{description}
-					\item \ref{req:userReg}\ The system must allow users to register.
-					\item \ref{req:authorityReg}\ The system must allow authorities to register.
-					\item \ref{req:userLogin}\ The system must allow the user to log in.
-					\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
-					\item \ref{req:saveRegData}\ The system must save the customers registration data.
-					\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
-					\item \ref{req:crossData}\ The system must be able to cross accidents data with violations one.
-					\item \ref{req:safeStreet}\ The system must be able to determine whether a street is safe or not.
-					\item \ref{req:accidentsData}\ The system must be able to store and manage data about accidents, if provided by the authority.
-					\item \ref{req:cityStreets} The system must be able to access all the available maps.
-					\item \ref{req:pathFinder} The system must find a path between two given points in a map.
-					\item \ref{req:colorMap} The system must be able to color the streets in a map according to their safety.
-					\item \ref{req:cityFilter} The system must allow the customer to filter by city.
-					\item \ref{req:streetFilter} The system must allow the customer to filter by street.
-					\item \ref{req:pathFilter} The system must allow the customer to filter by path.
-					\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
-					\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
-					\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
-					\item \ref{dom:uniquePec}\ PEC addresses are unique.
-					\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
-					\item \ref{dom:correctInternet}\ Internet connection works always without errors.
-					\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
-					\item \ref{dom:nonameStreets}\ There are no streets without a name.
-					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-					\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
-					\item \ref{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.
+					\item \blueRef{req:userReg}\ The system must allow users to register.
+					\item \blueRef{req:authorityReg}\ The system must allow authorities to register.
+					\item \blueRef{req:userLogin}\ The system must allow the user to log in.
+					\item \blueRef{req:authorityLogin}\ The system must allow authorities to log in.
+					\item \blueRef{req:saveRegData}\ The system must save the customers registration data.
+					\item \blueRef{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+					\item \blueRef{req:crossData}\ The system must be able to cross accidents data with violations one.
+					\item \blueRef{req:safeStreet}\ The system must be able to determine whether a street is safe or not.
+					\item \blueRef{req:accidentsData}\ The system must be able to store and manage data about accidents, if provided by the authority.
+					\item \blueRef{req:cityStreets} The system must be able to access all the available maps.
+					\item \blueRef{req:pathFinder} The system must find a path between two given points in a map.
+					\item \blueRef{req:colorMap} The system must be able to color the streets in a map according to their safety.
+					\item \blueRef{req:cityFilter} The system must allow the customer to filter by city.
+					\item \blueRef{req:streetFilter} The system must allow the customer to filter by street.
+					\item \blueRef{req:pathFilter} The system must allow the customer to filter by path.
+					\item \blueRef{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+					\item \blueRef{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+					\item \blueRef{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+					\item \blueRef{dom:uniquePec}\ PEC addresses are unique.
+					\item \blueRef{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+					\item \blueRef{dom:correctInternet}\ Internet connection works always without errors.
+					\item \blueRef{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
+					\item \blueRef{dom:nonameStreets}\ There are no streets without a name.
+					\item \blueRef{dom:nosameStreets}\ In a city there are not streets with the same name.
+					\item \blueRef{dom:streetCity}\ Every street belongs exactly to one city.
+					\item \blueRef{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.
 				\end{description}	
-			\item \ref{goal:intervention}\ \textbf{Users and authorities should be able to know the possible interventions that could be done in a city.}
+			\item \blueRef{goal:intervention}\ \textbf{Users and authorities should be able to know the possible interventions that could be done in a city.}
 				\begin{description}
-					\item \ref{req:userReg}\ The system must allow users to register.
-					\item \ref{req:authorityReg}\ The system must allow authorities to register.
-					\item \ref{req:userLogin}\ The system must allow the user to log in.
-					\item \ref{req:authorityLogin}\ The system must allow authorities to log in.
-					\item \ref{req:saveRegData}\ The system must save the customers registration data.
-					\item \ref{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
-					\item \ref{req:crossData}\ The system must be able to cross accidents data with violations one.
-					\item \ref{req:accidentsData}\ The system must be able to store and manage data about accidents, if provided by the authority.
-					\item \ref{req:cityStreets} The system must be able to access all the available maps.
-					\item \ref{req:interventions} The system must be able to determine the most urgent interventions in a street.
-					\item \ref{req:cityFilter} The system must allow the customer to filter by city.
-					\item \ref{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
-					\item \ref{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
-					\item \ref{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
-					\item \ref{dom:uniquePec}\ PEC addresses are unique.
-					\item \ref{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
-					\item \ref{dom:correctInternet}\ Internet connection works always without errors.
-					\item \ref{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
-					\item \ref{dom:nonameStreets}\ There are no streets without a name.
-					\item \ref{dom:nosameStreets}\ In a city there are not streets with the same name.
-					\item \ref{dom:streetCity}\ Every street belongs exactly to one city.
-					\item \ref{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.	
+					\item \blueRef{req:userReg}\ The system must allow users to register.
+					\item \blueRef{req:authorityReg}\ The system must allow authorities to register.
+					\item \blueRef{req:userLogin}\ The system must allow the user to log in.
+					\item \blueRef{req:authorityLogin}\ The system must allow authorities to log in.
+					\item \blueRef{req:saveRegData}\ The system must save the customers registration data.
+					\item \blueRef{req:storeViolation}\ The system must store the data received along with the name of the street where the violation occurred.
+					\item \blueRef{req:crossData}\ The system must be able to cross accidents data with violations one.
+					\item \blueRef{req:accidentsData}\ The system must be able to store and manage data about accidents, if provided by the authority.
+					\item \blueRef{req:cityStreets} The system must be able to access all the available maps.
+					\item \blueRef{req:interventions} The system must be able to determine the most urgent interventions in a street.
+					\item \blueRef{req:cityFilter} The system must allow the customer to filter by city.
+					\item \blueRef{dom:correctRegistration}\ Customers always insert correct data while registering to SafeStreets.
+					\item \blueRef{dom:correctViolation}\ Users always insert correct data while reporting violations to SafeStreets.
+					\item \blueRef{dom:pecKnown}\ The association between cities and PEC is well-known by SafeStreets.
+					\item \blueRef{dom:uniquePec}\ PEC addresses are unique.
+					\item \blueRef{dom:specialCharacters}\ Special characters are all the characters that are not letters nor numbers.
+					\item \blueRef{dom:correctInternet}\ Internet connection works always without errors.
+					\item \blueRef{dom:italyMaps}\ Maps of Italy are well known, complete and up to date.
+					\item \blueRef{dom:nonameStreets}\ There are no streets without a name.
+					\item \blueRef{dom:nosameStreets}\ In a city there are not streets with the same name.
+					\item \blueRef{dom:streetCity}\ Every street belongs exactly to one city.
+					\item \blueRef{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.	
 				\end{description}		
 		\end{description}
 
@@ -841,7 +841,7 @@
 				\centering
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
 					\cline{2-11}
-					\multicolumn{1}{c|}{} & \ref{req:userReg} & \ref{req:authorityReg} & \ref{req:userLogin} & \ref{req:authorityLogin} & \ref{req:uniqueName} & \ref{req:saveRegData} & \ref{req:specialCharacters} & \ref{req:takePictures} & \ref{req:dateTime}  & \ref{req:gpsPosition}\\
+					\multicolumn{1}{c|}{} & \blueRef{req:userReg} & \blueRef{req:authorityReg} & \blueRef{req:userLogin} & \blueRef{req:authorityLogin} & \blueRef{req:uniqueName} & \blueRef{req:saveRegData} & \blueRef{req:specialCharacters} & \blueRef{req:takePictures} & \blueRef{req:dateTime}  & \blueRef{req:gpsPosition}\\
 					\hline
 					Registration & \xmark & \xmark & & & \xmark & \xmark & \xmark & & &\\
 					\hline
@@ -861,17 +861,17 @@
 					\hline
 					Find Reports & & \xmark & & \xmark & & & & & &\\
 					\hline
-					\ref{sce:notification} & \xmark & & \xmark & & & & \xmark & \xmark & \xmark & \xmark \\
+					\blueRef{sce:notification} & \xmark & & \xmark & & & & \xmark & \xmark & \xmark & \xmark \\
 					\hline
-					\ref{sce:basicUser} & \xmark & & \xmark & & & & & & &\\
+					\blueRef{sce:basicUser} & \xmark & & \xmark & & & & & & &\\
 					\hline
-					\ref{sce:advancedUser} & \xmark & & \xmark & & & & & & &\\
+					\blueRef{sce:advancedUser} & \xmark & & \xmark & & & & & & &\\
 					\hline
-					\ref{sce:findReports} & & \xmark & & \xmark & & & & & &\\
+					\blueRef{sce:findReports} & & \xmark & & \xmark & & & & & &\\
 					\hline
-					\ref{sce:basicAuthority} & & \xmark & & \xmark & & & & & &\\
+					\blueRef{sce:basicAuthority} & & \xmark & & \xmark & & & & & &\\
 					\hline
-					\ref{sce:advancedAuthority} & & \xmark & & \xmark & & & & & &\\
+					\blueRef{sce:advancedAuthority} & & \xmark & & \xmark & & & & & &\\
 					\hline
 				\end{tabular}
 				\vspace{0.4cm}
@@ -886,7 +886,7 @@
 			\begin{minipage}{0.5\textheight}
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
 					\cline{2-10}
-					\multicolumn{1}{c|}{} & \ref{req:violationType} &  \ref{req:vehicleType} & \ref{req:plateNumber} & \ref{req:readPlate} & \ref{req:storeViolation} & \ref{req:streetName} & \ref{req:notifyAuthority} & \ref{req:mineData} & \ref{req:cityFilter} \\
+					\multicolumn{1}{c|}{} & \blueRef{req:violationType} &  \blueRef{req:vehicleType} & \blueRef{req:plateNumber} & \blueRef{req:readPlate} & \blueRef{req:storeViolation} & \blueRef{req:streetName} & \blueRef{req:notifyAuthority} & \blueRef{req:mineData} & \blueRef{req:cityFilter} \\
 					\hline
 					Registration & & & & & & & & & \\
 					\hline
@@ -906,17 +906,17 @@
 					\hline
 					Find Reports & & & & & \xmark & & & & \xmark \\
 					\hline
-					\ref{sce:notification} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
+					\blueRef{sce:notification} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
 					\hline
-					\ref{sce:basicUser} & & & & & & & & \xmark & \xmark\\
+					\blueRef{sce:basicUser} & & & & & & & & \xmark & \xmark\\
 					\hline
-					\ref{sce:advancedUser} & & & & & \xmark & & & & \xmark\\
+					\blueRef{sce:advancedUser} & & & & & \xmark & & & & \xmark\\
 					\hline
-					\ref{sce:findReports} & & & & & \xmark & & & & \xmark \\
+					\blueRef{sce:findReports} & & & & & \xmark & & & & \xmark \\
 					\hline
-					\ref{sce:basicAuthority} & & & & & & & & \xmark & \xmark\\
+					\blueRef{sce:basicAuthority} & & & & & & & & \xmark & \xmark\\
 					\hline
-					\ref{sce:advancedAuthority} & & & & & \xmark & & & & \xmark \\
+					\blueRef{sce:advancedAuthority} & & & & & \xmark & & & & \xmark \\
 					\hline
 				\end{tabular}
 				\vspace{0.4cm}
@@ -930,7 +930,7 @@
 				\centering
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
 					\cline{2-10}
-					\multicolumn{1}{c|}{} & \ref{req:streetFilter} & \ref{req:pathFilter} & \ref{req:violationFilter} & \ref{req:timeFilter} & \ref{req:dateFilter} & \ref{req:vehicleFilter} & \ref{req:sortedResult} & \ref{req:sortedVehicles} & \ref{req:visibility} \\
+					\multicolumn{1}{c|}{} & \blueRef{req:streetFilter} & \blueRef{req:pathFilter} & \blueRef{req:violationFilter} & \blueRef{req:timeFilter} & \blueRef{req:dateFilter} & \blueRef{req:vehicleFilter} & \blueRef{req:sortedResult} & \blueRef{req:sortedVehicles} & \blueRef{req:visibility} \\
 					\hline
 					Registration & & & & & & & & &\\
 					\hline
@@ -950,17 +950,17 @@
 					\hline
 					Find Reports & \xmark & & \xmark & \xmark & \xmark & \xmark & & & \xmark\\
 					\hline
-					\ref{sce:notification} & & & & & & & & & \\
+					\blueRef{sce:notification} & & & & & & & & & \\
 					\hline
-					\ref{sce:basicUser} & & & \xmark & \xmark & & \xmark & \xmark & &\\
+					\blueRef{sce:basicUser} & & & \xmark & \xmark & & \xmark & \xmark & &\\
 					\hline
-					\ref{sce:advancedUser} & \xmark & \xmark & & & & & & &\\
+					\blueRef{sce:advancedUser} & \xmark & \xmark & & & & & & &\\
 					\hline
-					\ref{sce:findReports} & \xmark & & \xmark & \xmark & \xmark & \xmark & & & \xmark\\
+					\blueRef{sce:findReports} & \xmark & & \xmark & \xmark & \xmark & \xmark & & & \xmark\\
 					\hline
-					\ref{sce:basicAuthority} & & & \xmark & \xmark & & \xmark & \xmark & &\\
+					\blueRef{sce:basicAuthority} & & & \xmark & \xmark & & \xmark & \xmark & &\\
 					\hline
-					\ref{sce:advancedAuthority} & \xmark & & & & & & & &\\
+					\blueRef{sce:advancedAuthority} & \xmark & & & & & & & &\\
 					\hline
 				\end{tabular}
 				\vspace{0.4cm}
@@ -976,7 +976,7 @@
 				\centering
 				\begin{tabular}{|c|c|c|c|c|c|c|c|}
 					\cline{2-8}
-					\multicolumn{1}{c|}{} & \ref{req:accidentsData} & \ref{req:crossData} & \ref{req:safeStreet} & \ref{req:cityStreets} & \ref{req:pathFinder} & \ref{req:colorMap} & \ref{req:interventions} \\
+					\multicolumn{1}{c|}{} & \blueRef{req:accidentsData} & \blueRef{req:crossData} & \blueRef{req:safeStreet} & \blueRef{req:cityStreets} & \blueRef{req:pathFinder} & \blueRef{req:colorMap} & \blueRef{req:interventions} \\
 					\hline
 					Registration & & & & & & &\\
 					\hline
@@ -996,17 +996,17 @@
 					\hline
 					Find Reports & & & & & & &\\
 					\hline
-					\ref{sce:notification} & & & & & & & \\
+					\blueRef{sce:notification} & & & & & & & \\
 					\hline
-					\ref{sce:basicUser} & & & & & & & \\
+					\blueRef{sce:basicUser} & & & & & & & \\
 					\hline
-					\ref{sce:advancedUser} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
+					\blueRef{sce:advancedUser} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark &\\
 					\hline
-					\ref{sce:findReports} & & & & & & &\\
+					\blueRef{sce:findReports} & & & & & & &\\
 					\hline
-					\ref{sce:basicAuthority} & & & & & & & \\
+					\blueRef{sce:basicAuthority} & & & & & & & \\
 					\hline
-					\ref{sce:advancedAuthority} & \xmark & \xmark & & \xmark & & &\xmark \\
+					\blueRef{sce:advancedAuthority} & \xmark & \xmark & & \xmark & & &\xmark \\
 					\hline
 				\end{tabular}
 				\vspace{0.4cm}
@@ -1026,7 +1026,7 @@
 			\label{sec:standardCompliance}
 			The most important standard that needs to be highlighted here is the one related to the interaction with the databases. Hence it will be mandatory for the system to interact with a DBMS in order to benefit of the services that allows it to manage the big amount of data we expect to manage. As already said, SafeStreets is a crowd-sourced application that enables also to mine the data provided by the users. This consideration highlights even better the fact that the interaction with the databases is going to be crucial and thus a lot of modules will be needed to deal with this very important aspect.
 		\subsubsection[Hardware Limitations]{\hyperlink{toc}{Hardware Limitations}}
-			Hardware limitations would be critical in devices that do not provide a camera or a GPS module. As described in the section \ref{sec:notificationFunction} in fact a user must provide at least one picture and enable his GPS in order to report a violation. No further considerations have to be considered as we have also specified that the image recognition algorithms will be helped by the information provided by the users; this can make us not to require high definition pictures of the infractions reported and thus nor the newest cameras for the devices.
+			Hardware limitations would be critical in devices that do not provide a camera or a GPS module. As described in the section \blueRef{sec:notificationFunction} in fact a user must provide at least one picture and enable his GPS in order to report a violation. No further considerations have to be considered as we have also specified that the image recognition algorithms will be helped by the information provided by the users; this can make us not to require high definition pictures of the infractions reported and thus nor the newest cameras for the devices.
 		\subsubsection[Any other Constraint]{\hyperlink{toc}{Any other Constraint}}
 			\emph{Regulatory policies}  have to be considered for the interaction between SafeStreets and both users and authorities. The application in fact will ask the position of each user while reporting a violation but will also provide its name to authorities whenever they receive a notification or use the \emph{find reports} functionality.
 			Authorities instead need to accept the treatment that will be carried out by the crossing process over the accidents data they provide to SafeStreets.

@@ -4,9 +4,9 @@
 	Thanks to the general introduction and the scope definition from the previous sections, we are now able to look at our system first from the outside and then from the inside. To deal with this description we are going to see the external interfaces the system has to interact with and then the definition of the model in order to have a feasible structure with them; at the end of the section \textbf{state diagrams} are used to emphasize the dynamic behavior of the most critical classes identified for the model.
 	\subsubsection[System Interfaces]{\hyperlink{toc}{System Interfaces}}
 		\label{sec:systemInterfaces}
-		In this section we are going to deal with the interfaces that SafeStreets needs to \emph{use} in order to provide its functionalities. The definition of SafeStreet's interfaces to the external world, instead, will be described in the further related section (\ref{sec:externalInterfaceRequirements}), while precise details are given in the Design Document \cite{DD}.\\
+		In this section we are going to deal with the interfaces that SafeStreets needs to \emph{use} in order to provide its functionalities. The definition of SafeStreet's interfaces to the external world, instead, will be described in the further related section (\blueRef{sec:externalInterfaceRequirements}), while precise details are given in the Design Document \cite{DD}.\\
 	
-		To accomplish the \hyperref[sec:goals]{\textbf{goals}} stated in the introduction the application interfaces with three main external systems as reported in the following picture (\autoref{fig:systemInterfaces}).  
+		To accomplish the \hyperref[sec:goals]{\textbf{goals}} stated in the introduction the application interfaces with three main external systems as reported in the following picture (\blueAutoref{fig:systemInterfaces}).  
 		\vspace{0,3cm}
 		
 		\begin{figure}[h]
@@ -21,15 +21,21 @@
 			\begin{itemize}
 				\item \textsc{IRI} is used to process the pictures received from a violation. Whenever an infraction is reported, the application needs to retrieve the plate's number of the violation in order to be stored and notified to the authority. The image recognition algorithm "has always the last word": it uses the information provided by the user to help the recognition and, in all the cases a plate number will be found, it will be considered correct in the stored information and thus notifiable. Hence, whenever the algorithm does not recognize any plate number the entire notification will be discarded.
 			
-				\item \textsc{MI} is used to process the map issues. This interface provides three services fundamental for the application: the first is used to retrieve the exact street where a reported violation has occurred (using its GPS position), the second allows to find the best path between two position specified by the customer, while the third one offers the system a way to highlight a map with different colors when it provides to the functions a list of streets and their related colors. We will describe precisely in further sections how the street retrieval is used in the notification service while the map highlight in the safety one.
+				\item \textsc{MI} is used to process the map issues. This interface provides three services fundamental for the application: the first is used to retrieve the exact street where a reported violation has occurred (using its GPS position), the second allows to find the best path between two position specified by the customer, while the third one offers the system a way to obtain a file that contains all the information needed in order to highlight the map for the \emph{UnsafeStreets} functionality. This interface provides also another service related to the data of all the streets and cities the system has to deal with: once stored in its database the initial information, we need to keep track of the updates that can occur in the territory; in order to do so we use this interface to be aligned with the newest maps.
 			\end{itemize}
 			
-			\item \textbf{Right hand side:} considers all the interfaces that involve an interaction with the authority. This means that this global interface manages both the accidents provided by the authorities and their PEC addresses: a publishing system will be needed to allow the authorities to publish their accidents in order to provide a way to retrieve them by the system. This interface allows also to possess all the information related to the PEC addresses of each authority the application has to manage.
-			
+			\item \textbf{Right hand side:} considers all the interfaces that provide management services on which the system has to rely on. In particular:
+			\begin{itemize}
+				\item \textsc{ACI} this global interface manages both the accidents provided by the authorities and their PEC addresses: a publishing system will be needed to allow the authorities to publish their accidents in order to provide a way to retrieve them by the system. This interface allows also to possess all the information related to the PEC addresses of each authority the application has to manage.
+				
+				\item \textsc{DBMS API} allows the management of all the data the system needs to use in order to provide its functionalities.
+				
+				\item \textsc{EMS API} allows the management of the email services needed by the system, in particular for the access functionalities.
+			\end{itemize}
 		\end{itemize}
 	
 	\subsubsection[Model Structure]{\hyperlink{toc}{Model Structure}}
-	The static analysis now continues to define the internal structure of the system, in particular with a high-level class diagram (\autoref{fig:classDiagram}) that considers the most important objects and their relations in order to achieve the functionalities described by the \hyperref[sec:goals]{\textbf{goals}}.\\
+	The static analysis now continues to define the internal structure of the system, in particular with a high-level class diagram (\blueAutoref{fig:classDiagram}) that considers the most important objects and their relations in order to achieve the functionalities described by the \hyperref[sec:goals]{\textbf{goals}}.\\
 	
 	The main objects in the UML class diagram are:
 	\begin{itemize}
@@ -41,9 +47,9 @@
 		
 		\item \textbf{Violation:} represents a general traffic violation. This class is thought to be used in a future extension of the system in case more violations are going to be considered.
 		
-		\item \textbf{ParkingViolation:} is the result of a notification provided by a user. In this way the application considers all the possible information that is filled whenever an infraction is reported. As we see in the UML diagram the class contains: multiple images for an improved help to both the image recognition algorithm and the authorities; the position retrieved by the GPS (used to find the name of the street); the type of the vehicle; the plate's number, date and time. The type of the violation, selected by the users will be determined considering one of the possible extending classes: \textbf{DoubleParking, DisabledZone, NoParkingZone, BikeLaneParking...} The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \ref{sec:stateDiagrams} and \ref{sec:safetyFunction}.
+		\item \textbf{ParkingViolation:} is the result of a notification provided by a user. In this way the application considers all the possible information that is filled whenever an infraction is reported. As we see in the UML diagram the class contains: multiple images for an improved help to both the image recognition algorithm and the authorities; the position retrieved by the GPS (used to find the name of the street); the type of the vehicle; the plate's number, date and time. The type of the violation, selected by the users will be determined considering one of the possible extending classes: \textbf{DoubleParking, DisabledZone, NoParkingZone, BikeLaneParking...} The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \blueRef{sec:stateDiagrams} and \blueRef{sec:safetyFunction}.
 		
-		\item \textbf{Accident:} will be used to store the data received by the municipality by characterizing each accident as: \textbf{BikeCrash, MotorcycleCrash, CarCrash, ParkingHit...} The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \ref{sec:stateDiagrams} and \ref{sec:safetyFunction}.
+		\item \textbf{Accident:} will be used to store the data received by the municipality by characterizing each accident as: \textbf{BikeCrash, MotorcycleCrash, CarCrash, ParkingHit...} The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \blueRef{sec:stateDiagrams} and \blueRef{sec:safetyFunction}.
 		
 		\item \textbf{Position:} stores the coordinates obtained by the GPS of where the parking violation occurred. The position of each infraction will be used to retrieve the street thanks to the functionalities provided by the MI.
 		
@@ -61,7 +67,7 @@
 		
 		\item \textbf{AdvancedRequest:} is the request that deals with the advanced functionality. It is extended in fact by the different requests that can be performed by a customer: \textbf{UnsafeStreetsRequest} and \textbf{InterventionRequest.}
 		
-		\item \textbf{PossibleIntervention:} represents a possible intervention suggested for a precise street. The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \ref{sec:stateDiagrams} and \ref{sec:safetyFunction}.
+		\item \textbf{PossibleIntervention:} represents a possible intervention suggested for a precise street. The relation with the safety class helps to highlight how \emph{safety} is determined as it will be precisely described in further sections \blueRef{sec:stateDiagrams} and \blueRef{sec:safetyFunction}.
 		
 		\item \textbf{Safety:} is a support class used to highlight the relations between the objects that determine whether a street is \textbf{safe} or \textbf{unsafe}.
 	\end{itemize}
@@ -76,10 +82,10 @@
 	
 	\subsubsection[State Diagrams]{\hyperlink{toc}{State Diagrams}}
 	\label{sec:stateDiagrams}
-		Considering now the main functionalities of the system, it is important to highlight the events that make its objects change their state. State diagrams are used to describe the most critical aspects of the objects previously described in the UML class diagram (\autoref{fig:classDiagram}).
+		Considering now the main functionalities of the system, it is important to highlight the events that make its objects change their state. State diagrams are used to describe the most critical aspects of the objects previously described in the UML class diagram (\blueAutoref{fig:classDiagram}).
 		
 		\paragraph{Notification}
-			Starting with the report of a violation it is important to remember that each infraction will be refused by the system i.i.f no plate is found by the image recognition algorithm. The diagram (\autoref{fig:notifyState}) starts when a notification is received in the \textit{unprocessed} state. First the system needs to use the functionalities provided by the IRI in order to find the plate of the vehicle. If no plate number is found, the notification is \textit{rejected} and the diagram ends, otherwise the \textit{accepted} violation needs now to use the MI functionalities to retrieve the street where the infraction occurred. All the information about the violation is now known in the \textit{accepted} state, before storing and notifying it, the application has to look for duplicates checking in its stored data for a violation with the same: plate number, street, date and time, type of vehicle and type of violation. If a \textit{duplicate is found} the notification is still rejected by the system, otherwise it is stored and then notified to the related authority. The notification diagrams ends with the violation marked as \textbf{unread} for the authority that will be able, once logged in the system, to retrieve all the violations that occurred in its territory.
+			Starting with the report of a violation it is important to remember that each infraction will be refused by the system i.i.f no plate is found by the image recognition algorithm. The diagram (\blueAutoref{fig:notifyState}) starts when a notification is received in the \textit{unprocessed} state. First the system needs to use the functionalities provided by the IRI in order to find the plate of the vehicle. If no plate number is found, the notification is \textit{rejected} and the diagram ends, otherwise the \textit{accepted} violation needs now to use the MI functionalities to retrieve the street where the infraction occurred. All the information about the violation is now known in the \textit{accepted} state, before storing and notifying it, the application has to look for duplicates checking in its stored data for a violation with the same: plate number, street, date and time, type of vehicle and type of violation. If a \textit{duplicate is found} the notification is still rejected by the system, otherwise it is stored and then notified to the related authority. The notification diagrams ends with the violation marked as \textbf{unread} for the authority that will be able, once logged in the system, to retrieve all the violations that occurred in its territory.
 			
 			\vspace{0.3cm}
 			\begin{figure}[h]
@@ -89,7 +95,7 @@
 			\end{figure}
 		
 		\paragraph{Request}
-			Information retrieval is another critical functionality that needs a state diagram to define how the information to be mined is provided with different levels of visibility depending on the role of the customer. The diagram (\autoref{fig:requestState}) considers in fact the process of how the query obtained by a request will be managed in order to avoid providing secret data to the users. Whenever a request is received the relative query will be retrieved in the \textit{unprocessed} state and then executed in the \textit{processed} one. A check is now needed in order to understand the kind of customer from which the request is coming. If the query comes from a customer who could perform it the data is \textit{accepted} and sent back to the inquirer, otherwise it is \textit{rejected} and the diagram ends.
+			Information retrieval is another critical functionality that needs a state diagram to define how the information to be mined is provided with different levels of visibility depending on the role of the customer. The diagram (\blueAutoref{fig:requestState}) considers in fact the process of how the query obtained by a request will be managed in order to avoid providing secret data to the users. Whenever a request is received the relative query will be retrieved in the \textit{unprocessed} state and then executed in the \textit{processed} one. A check is now needed in order to understand the kind of customer from which the request is coming. If the query comes from a customer who could perform it the data is \textit{accepted} and sent back to the inquirer, otherwise it is \textit{rejected} and the diagram ends.
 			
 			\vspace{0.3cm}
 			\begin{figure}[h]
@@ -99,7 +105,7 @@
 			\end{figure}
 		
 		\paragraph{Safety}
-			The last state diagram is used to highlight how the system is able to determine the safety of a street and update its state whenever new violations occur or new accidents data is provided by the municipality. The diagram (\autoref{fig:safetyState}) shows how the safety of a street evolves in the time. The system, each day, does two checks related to all the parking violations and accidents that occurred in a certain street in the previous 30 days. Two tresholds are defined to make the \textit{safe} state trigger: one is related to each \textbf{Possible Intervention} the other to the sum of all \textbf{Violations} and \textbf{Accidents}. It is enough that one treshold for a possible intervention \textbf{or} that the sum treshold is exceeded in order to reach the \textit{unsafe[RED]} state; the opposite happens for reaching the \textit{safe[GREEN]} one. In the section \ref{sec:safetyFunction} all details are provided to understand how this counting works, for now it is important to understand that thanks to it the safety of each street can be updated daily.
+			The last state diagram is used to highlight how the system is able to determine the safety of a street and update its state whenever new violations occur or new accidents data is provided by the municipality. The diagram (\blueAutoref{fig:safetyState}) shows how the safety of a street evolves in the time. The system, each day, does two checks related to all the parking violations and accidents that occurred in a certain street in the previous 30 days. Two tresholds are defined to make the \textit{safe} state trigger: one is related to each \textbf{Possible Intervention} the other to the sum of all \textbf{Violations} and \textbf{Accidents}. It is enough that one treshold for a possible intervention \textbf{or} that the sum treshold is exceeded in order to reach the \textit{unsafe[RED]} state; the opposite happens for reaching the \textit{safe[GREEN]} one. In the section \blueRef{sec:safetyFunction} all details are provided to understand how this counting works, for now it is important to understand that thanks to it the safety of each street can be updated daily.
 			
 			\vspace{0.3cm}
 			\begin{figure}[h]
@@ -158,7 +164,7 @@
 			\item \textbf{Type of violation:} thanks to the information about the type of the violation (provided by the user) the application allows also to filter by type. We can think of this  mainly filter for the authorities who will look for the highest type of vehicles that commit a violation in a street in order to take action; however this filter is also allowed to users who may be interested in this kind of data too.
 		\end{itemize}
 	
-		Each functionality considers only the filters that are needed to achieve its mining process. As we see in the interfaces (section \ref{sec:userInterfaces}) and in the use case diagrams (section \ref{sec:useCases}) just some of the listed filters are allowed to be selected. \\
+		Each functionality considers only the filters that are needed to achieve its mining process. As we see in the interfaces (section \blueRef{sec:userInterfaces}) and in the use case diagrams (section \blueRef{sec:useCases}) just some of the listed filters are allowed to be selected. \\
 		
 		It is important to highlight that SafeStreets provides information to customers with different levels of visibility depending on their role. To accomplish this distinction the system provides the authorities an additional functionality that allows them to retrieve the information in the highest level of detail possible. \emph{Highest Number of Violations} and \emph{Most Dangerous Vehicles} are in fact statistical functionalities that are not meant to be provided differently depending on the user that is requiring them. Moreover the \textbf{Find Reports} functionality is able to give the authorities a way to retrieve each violation in detail as it is stored in the system. This functionality is the one that contains the highest number of filters as it can provide a specific way to retrieve the violations of interest to the authorities. 
 
@@ -187,7 +193,7 @@
 		
 \subsection[User Characteristics]{\hyperlink{toc}{User Characteristics}}
 	\label{sec:userCharacteristics}
-	SafeStreets has two different customers that are very important to distinguish in order to provide correctly the functionalities previously described in subsection \ref{sec:productFunctions}. In the entire document a general client is called \textbf{customer} and the distinction is made between:
+	SafeStreets has two different customers that are very important to distinguish in order to provide correctly the functionalities previously described in subsection \blueRef{sec:productFunctions}. In the entire document a general client is called \textbf{customer} and the distinction is made between:
 	
 	\begin{itemize}
 		\item \textbf{USER}
@@ -248,9 +254,9 @@
 	
 \subsection[The World and the Machine]{\hyperlink{toc}{The World and the Machine}}
 	\label{sec:worldMachine}
-	Thanks to the constraints on the domain of interest for the system (section \ref{sec:domainAssumptions}), we are now able to describe SafeStreets with the \textit{World and the Machine} approach that allows to underline the most important phenomena that are present in the problem we are dealing with. The machine represents the system do be developed while the world (a.k.a environment) is the portion of the real world affected by the machine.\\
+	Thanks to the constraints on the domain of interest for the system (section \blueRef{sec:domainAssumptions}), we are now able to describe SafeStreets with the \textit{World and the Machine} approach that allows to underline the most important phenomena that are present in the problem we are dealing with. The machine represents the system do be developed while the world (a.k.a environment) is the portion of the real world affected by the machine.\\
 	
-	Thanks to this distinction we highlight in the next picture (\autoref{fig:worldAndMachine}) the main phenomena of our problem: the ones in the world affect the world only, the ones in the machine affect the machine only and the ones in between affect both the world and the machine. This figure can be also used to start guessing the requirements (section \ref{sec:specificRequirements}) of our system as they can be defined as: \textit{prescriptive assertions formulated in terms of shared phenomena.}
+	Thanks to this distinction we highlight in the next picture (\blueAutoref{fig:worldAndMachine}) the main phenomena of our problem: the ones in the world affect the world only, the ones in the machine affect the machine only and the ones in between affect both the world and the machine. This figure can be also used to start guessing the requirements (section \blueRef{sec:specificRequirements}) of our system as they can be defined as: \textit{prescriptive assertions formulated in terms of shared phenomena.}
 	\vspace{1cm} 
 	
 	\begin{figure}[h]
