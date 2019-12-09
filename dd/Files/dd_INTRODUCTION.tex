@@ -11,7 +11,7 @@
 	\subsection[Context]{\hyperlink{toc}{Context}}
 		\label{sec:context}
 		
-		SafeStreets is a \emph{crowd-sourced} application that intends to provide a way to notify authorities when a traffic violation occurs. Nowadays systems tend to aim the \emph{crowdsourcing} always more, this way of managing the information in fact reflects different positive aspects that can be used to provide a lot of useful functionalities with a cost that is almost null. Consequentially, several discussions and opinions try to describe which is the best practice to develop a crowd-sourced application. After having considered several alternatives \cite{CB} we decided to build our system with the aspects we thought to be the most important, grasped from one possibility to the other. As a result we have obtained a quite solid system based on totally agreeable assumptions that would be really developed in the "real world". 
+		SafeStreets is a \emph{crowd-sourced} application that intends to provide a way to notify authorities when a traffic violation occurs. Nowadays systems tend to aim the \emph{crowdsourcing} always more, this way of managing the information in fact reflects different positive aspects that can be used to provide a lot of useful functionalities with a cost that is almost null. Consequentially, several discussions and opinions try to describe which is the best practice to develop a crowd-sourced application. After having considered several alternatives (for example \cite{CB}) we decided to build our system with the aspects we thought to be the most important, grasped from one possibility to the other. As a result we have obtained a solid system based on totally agreeable assumptions that would be really developed in the "real world". 
 		
 	\subsection[Scope]{\hyperlink{toc}{Scope}}
 		\label{sec:scope}
@@ -25,7 +25,7 @@
 		
 		\subsubsection[Definitions]{\hyperlink{toc}{Definitions}}
 			\begin{itemize}
-				\item \textbf{DBMS:} is the software system that allows to manage efficiently the data stored in the databases of the system.
+				\item \textbf{DBMS:} is the software system that allows to manage efficiently the data stored in the database of the system.
 				
 				\item \textbf{Posta Elettronica Certificata:} is a technology that allows to send email with a legal approach.
 				
@@ -60,6 +60,7 @@
 			\begin{itemize}
 				\item \textbf{IIT:} Implementation, Integration and Testing
 				\item \textbf{R:} Requirement
+				\item \textbf{e.g.:} exemply gratia
 			\end{itemize}
 		
 	\subsection[Document Structure]{\hyperlink{toc}{Document Structure}}
@@ -72,15 +73,15 @@
 		\begin{enumerate}
 			\item \textbf{\hyperref[sec:introduction]{Introduction}:} gives a first description of the problem and tries to motivate how in this document it is going to be faced first with the purpose and second with the context. The scope is used to point out the main features of the system as they can be always clear in mind while reading the document. The section ends with the glossary.
 			
-			\item \textbf{\hyperref[sec:architecturalDesign]{Architectural Design:}} this is the core of the entire document. This section starts with a high level description of the architecture of the system and then continues always more in details considering the components and then the interfaces that have been identified. The deployment of the system is also taken into account right after having defined the components while their interfaces are precised in the next section. The entire section terminates with the precise description of the architectural styles and patterns (sec \blueRef{sec:selectedArchitecturalStylesAndPatterns}) used to define the entire system.
+			\item \textbf{\hyperref[sec:architecturalDesign]{Architectural Design:}} this is the core of the entire document. This section starts with a high level description of the architecture of the system and then continues always more in details considering the components and then the interfaces that have been identified. The deployment of the system is also taken into account right after having defined the components and the database view while the interfaces are precised in the next section. The entire section terminates with the precise description of the architectural styles and patterns (sec \blueRef{sec:selectedArchitecturalStylesAndPatterns}) used to define the entire system.
 			
 			\item \textbf{\hyperref[sec:userInterfaceDesign]{User Interface Design}:} this section aims to a precise description of the interfaces that will conduce the interaction of the clients with the system. As these mockups were already presented in the RASD we want here: first to describe with the UX diagrams how the client navigates the application in order to obtain the functionality he is requiring; second to give a precise identification of each mockup to explain why it needs to be designed in this way in order to provide the functionality it is supposed for.
 			
 			\item \textbf{\hyperref[sec:requirementsTraceability]{Requirements Traceability}:} once the description of the software design and architecture is clear we identify the relation between the requirements identified in the RASD document \cite{RASD} and the components that allow to realize them.
 			
-			\item \textbf{\hyperref[sec:iitPlan]{Implementation, Integration and Test Plan}:} finally in this section everything gets together as a plan to develop the entire system needs also to be clearly identified and described. In order to do so, in this section, we first give an overview on the main features we considered to decide the plan. Then, in the next subsection we identify the conditions that are needed to be met before starting with the development process. The utility tree (\blueAutoref{fig:utilityTree}) is presented before the real description of the plan as we thought it would be helpful to understand further motivations provided for the order of the IIT plan. Thanks to the \textbf{Use Relation Hierarchy} diagram of \blueAutoref{fig:useRelationHierarchy} we used the relations to establish the order and then described the plan by matching each phase of \emph{Implementation, Integration and Testing} with the relative number.
+			\item \textbf{\hyperref[sec:iitPlan]{Implementation, Integration and Test Plan}:} finally in this section everything gets together as a plan to develop the entire system needs also to be clearly identified and described. In order to do so, in this section, we first give an overview of the main features we considered to decide the plan. Then, in the next subsection we identify the conditions that are needed to be met before starting with the development process. The utility tree (\blueAutoref{fig:utilityTree}) is presented before the real description of the plan as we thought it would be helpful to understand further motivations provided for the order of the IIT plan. Thanks to the \textbf{Use Relation Hierarchy} diagram of \blueAutoref{fig:useRelationHierarchy} we used the relations to establish the order and then described the plan by matching each phase of \emph{Implementation, Integration and Testing} with the relative number.
 			
-			\item \textbf{\hyperref[sec:effortSpent]{Effort Spent}:} this section have been used to keep track of the hours spent to complete the document. The first table defines the hours spent together while taking the most important decisions, the seconds instead contain the individual hours.
+			\item \textbf{\hyperref[sec:effortSpent]{Effort Spent}:} this section has been used to keep track of the hours spent to complete the document. The first table defines the hours spent together while taking the most important decisions, the seconds instead contains the individual hours.
 			
 			\item \textbf{\hyperref[sec:references]{References}:} includes all the references used to define the document.
 		\end{enumerate}			
