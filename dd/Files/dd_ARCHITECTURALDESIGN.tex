@@ -13,7 +13,7 @@
 		\subsubsection[General Context]{\hyperlink{toc}{General Context}}
 			\label{sec:generalContext}
 			
-			Let's start this huge and dense section with the highest level of visibility possible of our system in order to first understand which are the other system it needs to interact with. SafeStreets is a crowd-sourced application that intends to provide services to two typologies of customers: \textbf{users} and \textbf{authorities}. Hence the crowd is composed by the users who provide the system information thanks to the core functionality offered that is the \emph{notification of a traffic violation}.\\
+			Let's start this huge and dense section with the highest level of visibility possible of our system in order to first understand which are the other systems it needs to interact with. SafeStreets is a crowd-sourced application that intends to provide services to two typologies of customers: \textbf{users} and \textbf{authorities}. Hence the crowd is composed by the users who provide the system information thanks to the core functionality offered that is the \emph{notification of a traffic violation}.\\
 			
 			To understand which systems are involved in each of the functionalities offered by SafeStreets that will now be called as already mentioned in the RASD document \cite{RASD}:
 			
@@ -600,9 +600,9 @@
 	\subsection[Runtime View]{\hyperlink{toc}{Runtime View}}
 		\label{sec:runtimeView}
 		
-		In this section we are going to present the most important runtime views of the interactions between the customers and SafeStreets. All the methods used in the following diagrams will be precisely described in the next section (\ref{sec:componentInterfaces}) where each of them will be mapped with the respective interface that realizes it.\\
+		In this section we are going to present the most important runtime views of the interactions between customers and SafeStreets. All the methods used in the following diagrams will be precisely described in the next section (\ref{sec:componentInterfaces}) where each of them will be mapped to the respective interface that realizes it.\\
 		
-		The \emph{Runtime View Diagrams} of this section are presented first for the \textbf{users} and \textbf{authorities}, then for the common functionalities where we decided to show only the interaction between the UserApp and the system to keep the diagrams as clearest as possible (the ones for the authorities would need an additional interaction with the WebServer before interfacing with the system) and lastly two critical managers are shown in order to present how the components related to the safety and the map issues work.
+		The \emph{Runtime View Diagrams} of this section are presented first for the \textbf{users} and \textbf{authorities}. Then, for the common functionalities, we decided to show only the interaction between the UserApp and the system to keep the diagrams clear (the ones for the authorities would need an additional interaction with the WebServer before interfacing with the system) and lastly two critical managers are shown in order to present how the components related to the safety and the map issues work.
 		
 		\subsubsection[User]{\hyperlink{toc}{User}}
 			\label{sec:userRuntimeView}
@@ -674,6 +674,8 @@
 		
 		\subsubsection[Common Functionalities]{\hyperlink{toc}{Common Functionalities}}
 			\label{sec:commonFunctionalitiesRuntime}
+			
+			These functionalities are available to both users and authorities. Therefore, they're reported here.
 			
 			\begin{itemize}
 				\item \textbf{Find Streets With Highest Number of Violations:} It is now shown (\autoref{fig:violationsFrequencyRuntime}) how a possible query for the streets with the highest number of violations is made. The filterList object represents all the filters that are selected by the user, like time slots and types of violation. These filters are widely described in the RASD. The component designed to handle these queries is of course QueryManager. It will check the correctness of all the used filters (e.g. at least a type of violation must be included). If some constraint is not fulfilled, an error is sent to the user, otherwise QueryManager will prepare the query and forward it to DataManager, that will actually execute it on the DBMS. The result is then back propagated through the involved components and to the UserApp.

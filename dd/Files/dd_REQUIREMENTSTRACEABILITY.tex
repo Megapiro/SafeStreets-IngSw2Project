@@ -33,11 +33,11 @@
 		\item \label{req:plateNumber} The system must allow users to insert the license plate number of the vehicle they are reporting.\\
 		\textbf{UserApp}
 		\item \label{req:readPlate} The system must read the license plate from every picture sent by the user.\\
-		\textbf{ReportManager, IRI}
+		\textbf{ReportManager}
 		\item \label{req:storeViolation} The system must store the data received along with the name of the street where the violation occurred.\\
-		\textbf{ReportManager, MapManager, MapInterface}
+		\textbf{ReportManager, MapManager}
 		\item \label{req:streetName} The system must be able to retrieve the name of the street from the GPS coordinates.\\
-		\textbf{MapManager, MapInterface}
+		\textbf{MapManager}
 		\item \label{req:notifyAuthority} The system must be able to show authorities all the violation reports sent by users.\\
 		\textbf{ReportManager}
 		\item \label{req:mineData} The system must be able to mine the stored violation reports.\\
@@ -71,9 +71,9 @@
 		\item \label{req:cityStreets} The system must be able to access all the available maps.\\
 		\textbf{MapManager}
 		\item \label{req:pathFinder} The system must find a path between two given points in a map.\\
-		\textbf{MapManager, MapInterface}
+		\textbf{MapManager}
 		\item \label{req:colorMap} The system must be able to color the streets in a map according to their safety.\\
-		\textbf{MapManager, MapInterface}
+		\textbf{MapManager}
 		\item \label{req:interventions} The system must be able to determine the most urgent interventions in a street.	\\
 		\textbf{SafetyManager}
 	\end{enumerate}
