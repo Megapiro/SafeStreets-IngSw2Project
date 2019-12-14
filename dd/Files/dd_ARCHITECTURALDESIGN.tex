@@ -30,7 +30,7 @@
 			
 			\begin{figure}[ht]
 				\centering
-				\includegraphics[scale=0.4]{contextViewPoint.png}
+				\includegraphics[scale=0.4]{miscellaneous/contextViewPoint.png}
 				\caption{\label{fig:contextViewpoint} Context Viewpoint}
 			\end{figure}
 		
@@ -58,7 +58,7 @@
 			
 			\begin{figure}[ht]
 				\centering
-				\includegraphics[scale=0.3]{compositionViewPoint.png}
+				\includegraphics[scale=0.3]{miscellaneous/compositionViewPoint.png}
 				\caption{\label{fig:compositionDiagram} Composition Diagram}
 			\end{figure}
 		
@@ -157,7 +157,7 @@
 		\subsubsection[Client Handler Component]{\hyperlink{toc}{Client Handler Component}}
 			\label{sec:clientHandlerComponent}
 			
-			The \emph{ClientHandler} (\blueAutoref{fig:clientHandlerComp}) is the component that manages all the requests coming from the customers. As we see two interfaces are provided, one for the mobile application (\textbf{MobileAppInterface}) and the other for the web server, that manages the web application (\textbf{WebInterface}). These two interfaces are the ones that provide the result of each request once it has been managed by the logic of the system which starts its computation in this component.
+			The \emph{ClientHandler} (\blueAutoref{fig:clientHandlerComp}) is the component that manages all the requests coming from the customers. As we see two interfaces are provided, one for the mobile application (\textbf{MobileAppInterface}) and the other for the web server, that manages the web application (\textbf{WebInterface}). These two interfaces are the ones that extend the general \textbf{HandleRequest} to define a more precise communication with the components of the clients. It is important to understand that this approach, as precisely described in the section \blueRef{sec:selectedArchitecturalStylesAndPatterns}, allows us to use one single technology to interact with both the mobile and the web applications: this simplifies both the maintenance and replacement of the interface and it gives also lots of advantages in the IIT plan. In the component interfaces diagram (\blueAutoref{fig:componentInterfaces}) we will describe the \textbf{WebInterface} and the \textbf{MobileAppInterface} but we have to remember that they are the extension of the most general \textbf{HandleRequest} interface defined in this component.
 			
 			\begin{figure}[h!]
 				\centering
@@ -168,10 +168,6 @@
 			The components that allow the \emph{ClientHandler} to process a request, first receiving it and then dispatching it to the related functionality are:
 			
 			\begin{itemize}
-				\item \textbf{WebRequestManager:} it is the component that manages all the requests that come from the web application, hence from the web server that uses the \textbf{WebInterface} realized by this component.
-				
-				\item \textbf{AppRequestManager:} it is the component that manages all the requests that come from the mobile application, hence from the device that uses the \textbf{MobileAppInterface} realized by this component.
-				
 				\item \textbf{RequestDispatcher:} it is the component that allows to handle each type of request that comes either from the web app or the mobile one. In fact, thanks to the \textbf{HandleRequest Interface} the components previously described can deploy the request to this one that, depending on the type of the request, will need to use different services in order to provide the functionality required. As a consequence, we can see several interfaces that are used by this component:
 				
 				\begin{itemize}
@@ -522,7 +518,7 @@
 		
 		\begin{figure}[h!]
 			\centering
-			\includegraphics[scale=0.3]{jsonMapping.png}
+			\includegraphics[scale=0.3]{miscellaneous/jsonMapping.png}
 			\caption{\label{fig:jsonMapping} Map-Class and Json-File Correspondence}
 		\end{figure}
 	
@@ -561,7 +557,7 @@
 		
 		\begin{figure}[h!]
 			\centering
-			\includegraphics[scale=0.4]{fourTierArchitecture.png}
+			\includegraphics[scale=0.4]{architecture/fourTierArchitecture.png}
 			\caption{\label{fig:fourTierArchitecture} Four Tier Architecture Diagram}
 		\end{figure}
 		
@@ -607,7 +603,7 @@
 		
 		\begin{figure}[htbp]
 			\centering
-			\includegraphics[scale=0.16, angle=90]{coloredComponentDiagram.png}
+			\includegraphics[scale=0.16, angle=90]{architecture/coloredComponentDiagram.png}
 			\caption{\label{fig:coloredComponentDiagram} Components Mapping Diagram}
 		\end{figure}
 	
@@ -620,7 +616,7 @@
 			
 			\begin{figure}[h!]
 				\centering
-				\includegraphics[scale=0.45]{decisionTree}
+				\includegraphics[scale=0.45]{miscellaneous/decisionTree}
 				\caption{\label{fig:decisionTree} Decision Tree}
 			\end{figure}
 			
@@ -800,7 +796,7 @@
 		
 		\begin{figure}[hbtp]
 			\centering
-			\includegraphics[scale=0.33, angle=90]{componentInterfaces}
+			\includegraphics[scale=0.33, angle=90]{miscellaneous/componentInterfaces}
 			\caption{\label{fig:componentInterfaces} Component Interfaces Diagram}
 		\end{figure}
 		
@@ -844,7 +840,7 @@
 			
 			\begin{figure}[h!]
 				\centering
-				\includegraphics[scale=0.6]{clientServer.png}
+				\includegraphics[scale=0.6]{architecture/clientServer.png}
 				\caption{\label{fig:clientServerArchitecture} Client Server Architecture}
 			\end{figure}
 
@@ -863,7 +859,7 @@
 			
 			\begin{figure}[h!]
 				\centering
-				\includegraphics[scale=0.4]{fourTierArchitecture.png}
+				\includegraphics[scale=0.4]{architecture/fourTierArchitecture.png}
 				\caption{Four Tier Architecture}
 			\end{figure}
 		
