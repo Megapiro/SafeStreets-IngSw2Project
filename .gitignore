@@ -7,10 +7,13 @@
 *.lot
 *.out
 *.toc
+*.nav
+*.snm
 
 # Temporary PDF
 rasd/rasd_MAIN.pdf
 dd/dd_MAIN.pdf
+presentation/pt_MAIN.pdf
 *.synctex.gz
 
 # Mac
