@@ -1,7 +1,7 @@
 \section[Architectural Design]{\hyperlink{toc}{Architectural Design}}
 	\label{sec:architecturalDesign}
 	
-	In the following section we describe precisely the architecture of our system. Starting with the highest possible view we first give an illustration of all the systems that SafeStreets is going to interact with. Differently than how we did in the RASD \cite{RASD} document we need here to precise the rule of the systems in order to obtain a clear description of the communication between with the one we are designing.\\
+	In the following section we precisely describe the architecture of our system. Starting with the highest possible view we first give an illustration of all the systems that SafeStreets is going to interact with. Differently than how we did in the RASD \cite{RASD}, here we need to specify the rule of the systems in order to obtain a clear description of the communication with the one we are designing.\\
 	
 	After a first global description we start focusing on the system, initially with a clear listing of all the components needed to obtain the functionalities of the application and then with their deployment (\blueRef{sec:deploymentDiagram}) and runtime (\blueRef{sec:runtimeView}) utilization.\\
 	
@@ -13,9 +13,9 @@
 		\subsubsection[General Context]{\hyperlink{toc}{General Context}}
 			\label{sec:generalContext}
 			
-			To get involved in the problem, we start in section with the highest level of visibility possible of our system in order to understand which are the other systems it needs to interact with. SafeStreets is a crowd-sourced application that intends to provide services to two types of customers: \textbf{users} and \textbf{authorities}. Hence the crowd is composed by the users who provide the system information thanks to the core functionality offered: the \emph{notification of a traffic violation}.\\
+			To get involved in the problem, we start this section with the highest level of visibility of our system in order to understand which are the other systems it needs to interact with. SafeStreets is a crowd-sourced application that intends to provide services to two types of customers: \textbf{users} and \textbf{authorities}. Hence the crowd is composed by the users who provide the system information thanks to the core functionality offered: the \emph{notification of a traffic violation}.\\
 			
-			To understand which systems are involved in each of the functionalities offered by SafeStreets, that will now be called as already mentioned in the RASD document \cite{RASD}, we need to focus on their definitions:
+			To understand which systems are involved in each of the functionalities offered by SafeStreets, that will now be called as already mentioned in the RASD \cite{RASD}, we need to focus on their definitions:
 			
 			\begin{itemize}
 				\item \textbf{Access Functionality:} service that allows customers to register and login to the system in order to be recognized.
@@ -97,7 +97,7 @@
 			\caption{\label{fig:highLevelComp} High Level Component Diagram}
 		\end{figure}
 	
-		With the high-level description of the system provided in the previous sections we are now able to determine which are the components that will be considered in the architecture in order to accomplish the functionalities that each of the modules identified are going to provide. In fact it is straightforward the mapping between the component diagram (\blueAutoref{fig:compositionDiagram}) and the picture above (\blueAutoref{fig:highLevelComp}). The \textbf{communication interfaces} area is mapped with all the interfaces provided by the components that provide or receive services from the outside; the \textbf{business logic} is realized by the server component where all the computation to provide the functionalities of the system takes place, while the \textbf{data interfaces} are the ones that brings to the system both the DBMS and the authority common interface's services.\\
+		With the high-level description of the system provided in the previous sections we are now able to determine which are the components that will be considered in the architecture in order to accomplish the functionalities that each of the identified modules are going to provide. In fact it is straightforward the mapping between the component diagram (\blueAutoref{fig:compositionDiagram}) and the picture above (\blueAutoref{fig:highLevelComp}). The \textbf{communication interfaces} area is mapped with all the interfaces provided by the components that provide or receive services from the outside; the \textbf{business logic} is realized by the server component where all the computation to provide the functionalities of the system takes place, while the \textbf{data interfaces} are the ones that bring to the system both the DBMS and the authority common interface's services.\\
 		
 		Before describing in detail the most important components of the system it is now the moment to precisely describe what are the components presented in this picture and what are the services provided by their interfaces:
 		
@@ -144,7 +144,7 @@
 			
 			From now on we are going to blow up the high-level component view just presented, starting with the most complex component that is the server and continuing first with its internal ones and in the end with the others that we have to take into account while defining the architecture of our system (WebServer and UserApp). In all the diagrams we are going to illustrate, the interaction between the components and the interfaces provided is carried on by means of the lollipop-socket notation. We will then continue by precisely describing each of these components to understand how they allow to obtain the functionalities of the system by providing and using the interfaces identified.\\
 			
-			The diagram of the next page (\blueAutoref{fig:serverComp}) highlights all the components that compose the server and describes both their internal and external interactions: we can see in fact the interfaces that we defined in the previous section how are provided or used by these components and how new interfaces are needed to make them interact.
+			The diagram of the next page (\blueAutoref{fig:serverComp}) highlights all the components that compose the server and describes both their internal and external interactions: we can see in fact how the interfaces that we defined in the previous section are provided or used by these components and how new interfaces are needed to make them interact.
 			
 			\begin{figure}[h!]
 				\centering
@@ -157,7 +157,7 @@
 		\subsubsection[Client Handler Component]{\hyperlink{toc}{Client Handler Component}}
 			\label{sec:clientHandlerComponent}
 			
-			The \emph{ClientHandler} (\blueAutoref{fig:clientHandlerComp}) is the component that manages all the requests coming from the customers. As we see two interfaces are provided, one for the mobile application (\textbf{MobileAppInterface}) and the other for the web server, that manages the web application (\textbf{WebInterface}). These two interfaces are the ones that extend the general \textbf{HandleRequest} to define a more precise communication with the components of the clients. It is important to understand that this approach, as precisely described in the section \blueRef{sec:selectedArchitecturalStylesAndPatterns}, allows us to use one single technology to interact with both the mobile and the web applications: this simplifies both the maintenance and replacement of the interface and it gives also lots of advantages in the IIT plan. In the component interfaces diagram (\blueAutoref{fig:componentInterfaces}) we will describe the \textbf{WebInterface} and the \textbf{MobileAppInterface} but we have to remember that they are the extension of the most general \textbf{HandleRequest} interface defined in this component.
+			The \emph{ClientHandler} (\blueAutoref{fig:clientHandlerComp}) is the component that manages all the requests coming from the customers. As we see, two interfaces are provided, one for the mobile application (\textbf{MobileAppInterface}) and the other for the web server, that manages the web application (\textbf{WebInterface}). These two interfaces are the ones that extend the general \textbf{HandleRequest} to define a more precise communication with the components of the clients. It is important to understand that this approach, as precisely described in the section \blueRef{sec:selectedArchitecturalStylesAndPatterns}, allows us to use one single technology to interact with both the mobile and the web applications: this simplifies both the maintenance and replacement of the interface and it gives also lots of advantages in the IIT plan. In the component interfaces diagram (\blueAutoref{fig:componentInterfaces}) we will describe the \textbf{WebInterface} and the \textbf{MobileAppInterface} but we have to remember that they are the extension of the most general \textbf{HandleRequest} interface defined in this component.
 			
 			\begin{figure}[h!]
 				\centering
@@ -228,7 +228,7 @@
 		\subsubsection[Query Manager Component]{\hyperlink{toc}{Query Manager Component}}
 			\label{sec:queryManagerComponent}
 			
-			The \emph{QueryManger} (\blueAutoref{fig:queryManagerComp}) is the component that manages the requests related either to the basic or the advanced functionalities (see section \blueRef{sec:generalContext} for the precise functionalities description) coming from the customers with the realization of the \textbf{Mining Interface}. Hence, this component needs first to identify the request, then it checks its filters with the \textbf{Check Interface} and finally, once identified the functionality, it realizes the respective query with the relative interface provided by the correct component:
+			The \emph{QueryManager} (\blueAutoref{fig:queryManagerComp}) is the component that manages the requests related either to the basic or the advanced functionalities (see section \blueRef{sec:generalContext} for the precise functionalities description) coming from the customers with the realization of the \textbf{Mining Interface}. Hence, this component needs first to identify the request, then it checks its filters with the \textbf{Check Interface} and finally, once identified the functionality, it realizes the respective query with the relative interface provided by the correct component:
 			
 			\begin{itemize}
 				\item Interventions Interface
@@ -295,7 +295,7 @@
 				\begin{itemize}
 					\item \textbf{HandlePosition:} it is the interface that retrieves the street providing the GPS position of where the parking violation occurred.
 					
-					\item \textbf{PlaceRecognition:} it is the interface that retrieves the plate of the reported vehicle providing the images of the infraction and the possible additional number inserted by the user. It is important to remark once more that the result of the methods provided by this interface will determine whether to discard or not the notification.
+					\item \textbf{PlateRecognition:} it is the interface that retrieves the plate of the reported vehicle providing the images of the infraction and the possible additional number inserted by the user. It is important to remark once more that the result of the methods provided by this interface will determine whether to discard or not the notification.
 					
 					\item \textbf{Check:} it is the interface that allows to check if there exists already the same notification in the system. As we have already said, it is useless to store twice the same notification, in the case of a duplicate the current one will be discarded.
 					
@@ -351,7 +351,7 @@
 		\subsubsection[Safety Manager Component]{\hyperlink{toc}{Safety Manager Component}}
 			\label{sec:safetyManagerComponent}
 			
-			The \emph{SafetyManager} (\blueAutoref{fig:safetyManagerComp}) is the component that deals with the safety calculus that has to be carried out every day considering the previous thirty days in order to have the data for the safety functionality. As precisely described in the RASD document \cite{RASD} we have defined a clear way to determine the safety of each street. In order to carry on this calculus we have to consider this component that periodically will run its algorithms in order to update the safety.\\
+			The \emph{SafetyManager} (\blueAutoref{fig:safetyManagerComp}) is the component that deals with the safety computation that has to be carried out every day considering the previous thirty days in order to have the data for the safety functionality. As precisely described in the RASD \cite{RASD} we have defined a clear way to determine the safety of each street. In order to carry on this computation we have to consider this component that periodically will run its algorithms in order to update the safety.\\
 			
 			As we see, no interface is provided by this component, as we have just said in fact it is independent as it needs to run periodically by just retrieving the data over the notifications and accidents and update the safety of the streets.\\
 			
@@ -492,7 +492,7 @@
 	\subsection[Database View]{\hyperlink{toc}{Database View}}
 		\label{sec:databaseView}
 		
-		Before giving the description of how the components now presented will be deployed in our system, it is also important to define a model that allows to manage the huge amount of data we expect to deal with. As we will also motivate later, in section \blueRef{sec:selectedArchitecturalStylesAndPatterns}, we decided to use a relational approach to store the information we need to manage. In order to do so we decided to use a class diagram model rather than an entity relational one as we could give a continuous representation of what we already presented in the RASD document \cite{RASD}. The class diagram of next page, in fact, has been updated with more detailed considerations that we were now able to consider, being at the design level.\\
+		Before giving the description of how the components now presented will be deployed in our system, it is also important to define a model that allows to manage the huge amount of data we expect to deal with. As we will also motivate later, in section \blueRef{sec:selectedArchitecturalStylesAndPatterns}, we decided to use a relational approach to store the information we need to manage. In order to do so we decided to use a class diagram model rather than an entity relational one as we could give a continuous representation of what we already presented in the RASD \cite{RASD}. The class diagram of next page, in fact, has been updated with more detailed considerations that we were now able to consider, being at the design level.\\
 		
 		As we can see in the picture (\blueAutoref{fig:classDiagramModel}) some classes and relations have been updated, in particular for what concerns the maps issues and the safety ones. In particular:
 		
@@ -882,7 +882,7 @@
 		\subsubsection[Relational Database Approach]{\hyperlink{toc}{Relational Database Approach}}
 			\label{sec:relationaldbApproach}
 			
-			We decided to consider a relational approach in particular for the way in which the data has to be managed because of the functionalities of the system. In fact, without focusing on the clients that can be managed in a relational database without any problem, we have seen how several relations are established between the entities that compose our system. In particular the most important are the ones related to the safety calculus: first the relations between the interventions and the streets and also between the accidents and the streets allow to determine the safety; second the relations between the \textbf{safety} and the street allows us to process this data and send it to the clients as it can be highlighted for the \emph{Unsafe Streets} functionality.\\
+			We decided to consider a relational approach in particular for the way in which the data has to be managed because of the functionalities of the system. In fact, without focusing on the clients that can be managed in a relational database without any problem, we have seen how several relations are established between the entities that compose our system. In particular the most important are the ones related to the safety computation: first the relations between the interventions and the streets and also between the accidents and the streets allow to determine the safety; second the relations between the \textbf{safety} and the street allows us to process this data and send it to the clients as it can be highlighted for the \emph{Unsafe Streets} functionality.\\
 			
 			Considering now some more implementation aspects, as we can also see in the decision tree (\blueAutoref{fig:decisionTree}), we decided to choose MySQL as the DBMS to interact with because it is the most popular relational one and provides a complete and clear documentation on how to benefit of its services.
 			
@@ -891,6 +891,6 @@
 			
 			We decided to consider a native approach for the development of the \textbf{mobile application} for the users in order to provide a better experience of interaction with the system but also to obtain the best communication and responsiveness between the client and the server. Nowadays the mobile applications are developed with two different languages depending on the OS of the device: for \textbf{Android} we will use \emph{Android Studio} while for \textbf{IOS} the native language \textbf{Swift}.
 			
-			\paragraph{Android Studio} it is the official IDE for Google's Android operating system, designed specifically for Android development. It is available for every operating system and perfectly documented with a huge community. In addition it is based on \emph{Gradle} that helps a lot in the dependency management and thus makes our result more extensible. In fact, it is important to remark that we are designing an extensible system: as we saw in the \textbf{class-diagram} of the RASD document \cite{RASD} the most expected extension we expect is the possibility to report not just parking violations but also other kinds of the general traffic violations.
+			\paragraph{Android Studio} it is the official IDE for Google's Android operating system, designed specifically for Android development. It is available for every operating system and perfectly documented with a huge community. In addition it is based on \emph{Gradle} that helps a lot in the dependency management and thus makes our result more extensible. In fact, it is important to remark that we are designing an extensible system: as we saw in the \textbf{class-diagram} of the RASD \cite{RASD} the most expected extension we expect is the possibility to report not just parking violations but also other kinds of the general traffic violations.
 			
 			\paragraph{Swift} it is the official programming language developed by Apple in order to replace the old Objective-C paradigm on which all the IOS applications were based on. It is designed to work with the most popular Apple's frameworks and provides several performances and safety trade-offs. We choose it as the native approach to develop a mobile application for IOS as it is still highly documented and its community is getting bigger and bigger.
