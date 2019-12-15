@@ -42,7 +42,7 @@
 		\end{minipage}
 	\end{figure}
 
-	\begin{figure}[h]
+	\begin{figure}[h!]
 		\centering
 		\begin{minipage}{0.45\textwidth}
 			\centering
@@ -56,7 +56,7 @@
 		\end{minipage}
 	\end{figure}
 
-	\begin{figure}[h]
+	\begin{figure}[h!]
 		\centering
 		\begin{minipage}{0.45\textwidth}
 			\centering
@@ -70,7 +70,7 @@
 		\end{minipage}
 	\end{figure}
 
-	\begin{figure}[h]
+	\begin{figure}[h!]
 		\centering
 		\begin{minipage}{0.45\textwidth}
 			\centering
@@ -79,73 +79,73 @@
 		\end{minipage}
 	\end{figure}
 	
-	\begin{figure}[h]
+	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.4]{/mockups/authority/loginWeb.png}
 		\caption{Login Web App}
 	\end{figure}
 
-	\begin{figure}[h]
+	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.4]{/mockups/authority/registrationWeb.png}
 		\caption{Registration Web App}
 	\end{figure}
 
-	\begin{figure}[h]
+	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.4]{/mockups/authority/homeWeb.png}
 		\caption{Home Page Web App}
 	\end{figure}
  
- 	\begin{figure}[h]
+ 	\begin{figure}[h!]
  		\centering
  		\includegraphics[scale=0.4]{/mockups/authority/unreadReportsWeb.png}
  		\caption{Unread Reports Web App}
  	\end{figure}
  
- 	\begin{figure}[h]
+ 	\begin{figure}[h!]
  		\centering
  		\includegraphics[scale=0.4]{/mockups/authority/findReportsWeb.png}
  		\caption{Find Reports Web App}
  	\end{figure}
  
- 	\begin{figure}[h]
+ 	\begin{figure}[h!]
  		\centering
  		\includegraphics[scale=0.4]{/mockups/authority/reportsFoundWeb.png}
  		\caption{Reports Found Web App}
  	\end{figure}
  
- 	\begin{figure}[h]
+ 	\begin{figure}[h!]
  		\centering
  		\includegraphics[scale=0.4]{/mockups/authority/violationsFrequencyWeb.png}
  		\caption{Violations Frequency Web App}
  	\end{figure}
  
- 	\begin{figure}[h]
+ 	\begin{figure}[h!]
  		\centering
  		\includegraphics[scale=0.4]{/mockups/authority/dangerousVehiclesWeb.png}
  		\caption{Dangerous Vehicles Web App}
  	\end{figure}
  
- 	\begin{figure}[h]
+ 	\begin{figure}[h!]
  		\centering
  		\includegraphics[scale=0.4]{/mockups/authority/urgentInterventionsWeb.png}
  		\caption{Urgent Interventions Web App}
  	\end{figure}
  
-	\begin{figure}[h]
+	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.4]{/mockups/authority/interventionsFoundWeb.png}
 		\caption{Interventions Found Web App}
 	\end{figure} 
 
-	\begin{figure}[h]
+	\FloatBarrier
+
+	\begin{figure}[ht!]
 		\centering
 		\includegraphics[scale=0.4]{/mockups/authority/unsafeStreetsWeb.png}
 		\caption{Unsafe Streets Web App}
 	\end{figure}
- 
-	\FloatBarrier
 	
 	\subsubsection[Hardware Interfaces]{\hyperlink{toc}{Hardware Interfaces}}
 		Hardware interfaces have to be considered on the clients' software in order to interact with the camera and the GPS modules. As described in the section \blueRef{sec:notificationFunction} in fact, a user must always take at least one picture and enable the GPS in order to report a violation. 
@@ -155,6 +155,8 @@
 		
 	\subsubsection[Communication Interfaces]{\hyperlink{toc}{Communication Interfaces}}
 		An important communication interface that must be considered while developing the system is the one that makes SafeStreets receive the accidents data provided by the municipality. As we described in the global external interface of the authorities we expect to have a system where all of them can publish their accidents as our system will be able to retrieve them.
+		
+	\newpage
 
 \subsection[Functional Requirements]{\hyperlink{toc}{Functional Requirements}}
 	\label{sec:functionalRequirements}
@@ -317,7 +319,7 @@
 							\item \blueRef{dom:streetCity}\ Every street belongs exactly to one city.
 						\end{description}
 				\end{description}
-			\item \blueRef{goal:safety}\ \textbf{Users should be able to know which streets are safe and which ones are not.} 
+			\item \blueRef{goal:safety}\ \textbf{Users and authorities should be able to know which streets are safe and which ones are not.} 
 				\begin{description}
 					\item \blueRef{req:userReg}\ The system must allow users to register.
 					\item \blueRef{req:authorityReg}\ The system must allow authorities to register.
@@ -372,6 +374,8 @@
 					\item \blueRef{dom:correctAccidents}\ Accidents data provided by municipalities are always correct.	
 				\end{description}		
 		\end{description}
+	
+		\newpage
 
 \subsection[Use Cases Identification]{\hyperlink{toc}{Use Cases Identification}}
 	In the following subsection the usage of the system is going to be described first with a general description using scenarios and then in a more specific way using use case diagrams. These diagrams are going to be described only once for the functionalities that totally coincide between users and authorities. Hence only the ones where critical behaviors are needed to be considered are duplicated highlighting these parts. The subsection ends with the traceability matrix that allows to define the correspondence between \emph{requirements, use cases and scenarios.}
@@ -1019,12 +1023,12 @@
 	\subsection[Performance Requirements]{\hyperlink{toc}{Performance Requirements}}
 		\label{sec:performanceRequirements}
 	
-		SafeStreets is a system that intends to serve all those mobile devices that have the possibility to take pictures and to retrieve the position thanks to the GPS and the terminals of the recognized authorities. All the computation will take place on the servers of the system, thus we expect a light application that can be accessed by both  users and authorities. Interaction with modules of the device has to be considered for what concerns the mobile application, in particular with the camera and the GPS in order to provide all mandatory data while reporting a violation. The notification functionality requires a quick response to each violation in order to store it in the system as soon as possible. Further considerations about responsiveness have to be considered for the basic and advanced functionalities that require mining and crossing processes in order to obtain a result. To accomplish this problem we will give a possible solution in the further section of how to organize the design in order to run algorithms that allow to mine and cross the data. Technical support for installation is not required as the result is a simple device application each user can download from the store and authorities can reach with a browser; moreover it is important to highlight that the registration process for the authority needs to provide a verification code and thus a quick interaction needs to be considered again.
+		SafeStreets is a system that intends to serve its clients with both a mobile application for the users and a we application for the authorities. All the computation will take place on the servers of the system, thus we expect a light application. For the mobile one, interaction with modules of the device has to be considered, in particular with the camera and the GPS in order to provide all mandatory data while reporting a violation. The notification functionality requires a quick response to each violation in order to store it in the system as soon as possible. Further considerations about responsiveness have to be considered for the basic and advanced functionalities that require mining and crossing processes in order to obtain a result. To accomplish this problem we will give a possible solution in the further section on how to organize the design in order to run algorithms that allow to mine and cross the data. Technical support for installation is not required as the result is a simple device application each user can download from the store and authorities can reach with a browser; moreover it is important to highlight that the registration process for the authority needs to provide a verification code and thus a quick interaction needs to be considered again.
 	
 	\subsection[Design Constraints]{\hyperlink{toc}{Design Constraints}}
 		\subsubsection[Standards Compliance]{\hyperlink{toc}{Standards Compliance}}
 			\label{sec:standardCompliance}
-			The most important standard that needs to be highlighted here is the one related to the interaction with the databases. Hence it will be mandatory for the system to interact with a DBMS in order to benefit of the services that allows it to manage the big amount of data we expect to manage. As already said, SafeStreets is a crowd-sourced application that enables also to mine the data provided by the users. This consideration highlights even better the fact that the interaction with the databases is going to be crucial and thus a lot of modules will be needed to deal with this very important aspect.
+			The most important standard that needs to be highlighted here is the one related to the interaction with the databases. Hence it will be mandatory for the system to interact with a DBMS in order to benefit of the services that allows to manage the big amount of data we expect to receive. As already said, SafeStreets is a crowd-sourced application that enables also to mine the data provided by the users. This consideration highlights even better the fact that the interaction with the databases is going to be crucial: we will have to design accurately the modules devoted to the interactions with the APIs provided by the DBMS!
 		\subsubsection[Hardware Limitations]{\hyperlink{toc}{Hardware Limitations}}
 			Hardware limitations would be critical in devices that do not provide a camera or a GPS module. As described in the section \blueRef{sec:notificationFunction} in fact a user must provide at least one picture and enable his GPS in order to report a violation. No further considerations have to be done as we have also specified that the image recognition algorithms will be helped by the information provided by the users; this allow the system not to require high definition pictures of the infractions reported, nor the newest cameras in the devices.
 		\subsubsection[Any other Constraint]{\hyperlink{toc}{Any other Constraint}}
