@@ -355,12 +355,12 @@
 			
 			As we see, no interface is provided by this component, as we have just said in fact it is independent as it needs to run periodically by just retrieving the data over the notifications and accidents and update the safety of the streets.\\
 			
-			It is important now to describe once more how the safety update works as we can also understand how the components that compose the \emph{SafetyManager} interact in order to obtain this functionality. The system dynamically changes day per day the safety of the streets, considering the parking violations data relative of the previous thirty days, thanks to two different kind of thresholds. For each street if at least one threshold is exceeded it means that it is \textbf{unsafe} otherwise it will be considered \textbf{safe}. The thresholds are:
+			It is important now to describe once more how the safety update works as we can also understand how the components that compose the \emph{SafetyManager} interact in order to obtain this functionality. The system dynamically changes day by day the safety of the streets, considering the parking violations data  about the previous thirty days, thanks to two different kinds of threshold. For each street if at least one threshold is exceeded, it means that it is \textbf{unsafe} otherwise it will be considered \textbf{safe}. The thresholds are:
 			
 			\begin{itemize}
-				\item \textbf{Intervention Threshold:} each intervention is defined with a threshold. On every street, every intervention would be possibly chosen as a suggestion. Each type of parking violation or accident, if occurred in a certain street, augment the threshold of the interventions linked with that type (hence the same violation or accident may augment at the same time two different interventions). If an intervention's threshold exceeds it means that the street is no longer \textbf{safe} and that its safety has to be updated. In this way counting each day for every street if a threshold for at least one intervention is exceeded allows to determine both the safety of a street and also the possible interventions to be suggested.
+				\item \textbf{Intervention Threshold:} each type of violation and each accident is linked to one or more possible suggested interventions. Each type of parking violation or accident that occurs in a certain street increases the counter of the linked possible intervention for that street. If an intervention's counter in a particular street exceeds the threshold, that street will be marked as \textbf{unsafe} and that intervention will result as suggested for that particular street. In this way calculating each day for every street if a threshold for at least one intervention is exceeded allows to determine both the safety of a street and also the possible interventions to be suggested.
 				
-				\item \textbf{Sum Threshold:} in order to consider also the case when no accident is linked to any intervention (because of the fact we are just considering the parking violations and the accident may be caused by another reason, e.g.: the speed limit) for each street is also defined another threshold that independently from the type determines a street to be \textbf{safe} or not. This threshold augments whenever an accident or a parking violation occurs in the street and thus it is simply determined as the sum of the accidents and parking violations. In this way, counting each day for every street if the sum threshold is exceeded, it allows to determine the safety independently from the type of the accidents that have occurred.
+				\item \textbf{Sum Threshold:} in order to consider also the case when no accident is linked to any intervention (because of the fact we are just considering the parking violations and the accident may be caused by another reason, e.g.: the speed limit) for each street is also defined another threshold that independently from the type determines a street to be \textbf{safe} or not. There's another counter that is simply increased whenever accidents or parking violations occur in that street and thus it is simply determined as the sum of the accidents and parking violations. In this way, calculating each day for every street if the sum threshold is exceeded allows to determine the safety independently from the type of the accidents that have occurred.
 			\end{itemize}
 		
 			Now that we know better how the safety process works we are able to describe the components that compose the \emph{SafetyManager} in order to provide this functionality:
@@ -390,7 +390,7 @@
 		\subsubsection[Accidents Manager Component]{\hyperlink{toc}{Accidents Manager Component}}
 			\label{sec:accidentsManagerComponent}
 			
-			The \emph{AccidentsManager} (\blueAutoref{fig:accidentsManagerComp}) is the component that deals just with the management of the accidents that have been stored by the authorities onto the common interface. As we see only, two components are needed: one that receives the accidents by using the methods provided by the \textbf{Authority API} and the other which stores the accidents that have been retrieved.\\
+			The \emph{AccidentsManager} (\blueAutoref{fig:accidentsManagerComp}) is the component that deals just with the management of the accidents that have been stored by the authorities onto the common interface. As we see, only two components are needed: one that receives the accidents by using the methods provided by the \textbf{Authority API} and the other which stores the accidents that have been retrieved.\\
 			
 			The components that allow the \emph{AccidentsManager} to handle the process of receiving the accidents provided by the authorities are:
 			
@@ -426,7 +426,7 @@
 				
 				\item \textbf{InterventionsManager:} it is the component that provides all the methods that allow to manage the data relative to the interventions, realizing the \textbf{DataIntF Interface}.
 				
-				\item \textbf{AccidentsManagerInterface:} it is the component that provides all the methods that allow to manage the data relative to the accidents, realizing the \textbf{DataIntF Interface}.
+				\item \textbf{AccidentsManager:} it is the component that provides all the methods that allow to manage the data relative to the accidents, realizing the \textbf{DataIntF Interface}.
 			\end{itemize}
 		
 			\begin{figure}[ht]
@@ -474,7 +474,7 @@
 			The components that allow the \emph{UserApp} to handle the interaction process between the requests coming from the mobile app and the business logic are:
 			
 			\begin{itemize}
-				\item \textbf{Presentation:} it is the component that deals with the graphical interface that is needed to provide the users the access to the system. As we have just said the realization of this component is the interface that allows the user to interact with the system; in order to do so it needs to use the methods provided by the \textbf{Commands Interface} and the \textbf{Request Interface}.
+				\item \textbf{Presentation:} it is the component that deals with the graphical interface that is needed to provide the users the access to the system. As we have just said, the realization of this component is the interface that allows the user to interact with the system; in order to do so it needs to use the methods provided by the \textbf{Commands Interface} and the \textbf{Request Interface}.
 			\end{itemize}
 			
 			\begin{figure}[ht]
@@ -492,9 +492,9 @@
 	\subsection[Database View]{\hyperlink{toc}{Database View}}
 		\label{sec:databaseView}
 		
-		Before giving the description of how the components now presented will be deployed in our system, it is also important to define a model that allows to manage the huge amount of data we expect to deal with. As we will also motivate later, in section \blueRef{sec:selectedArchitecturalStylesAndPatterns}, we decided to use a relational approach to store the information we need to manage. In order to do so we decided to use a class diagram model rather than an entity relational one as we could give a continuous representation of what we already presented in the RASD \cite{RASD}. The class diagram of next page, in fact, has been updated with more detailed considerations that we were now able to consider, being at the design level.\\
+		Before giving the description of how the components now presented will be deployed in our system, it is also important to define a model that allows to manage the huge amount of data we expect to deal with. As we will also motivate later, in section \blueRef{sec:selectedArchitecturalStylesAndPatterns}, we decided to use a relational approach to store the information we need to manage. In order to do so we decided to use a class diagram model rather than an entity-relationship one as we could give a continuous representation of what we already presented in the RASD \cite{RASD}. The class diagram in theS next page, in fact, has been updated with more detailed considerations that we are now able to consider, being at the design level.\\
 		
-		As we can see in the picture (\blueAutoref{fig:classDiagramModel}) some classes and relations have been updated, in particular for what concerns the maps issues and the safety ones. In particular:
+		As we can see in the picture (\blueAutoref{fig:classDiagramModel}), some classes and relations have been updated, in particular for what concerns the maps issues and the safety ones. In particular:
 		
 		\begin{itemize}
 			\item The classes that we are going to use to store the position issues have been updated. We removed the \textbf{Position} class as it is not relevant anymore while we added the \textbf{Cross} class that is important for the transportation of the data relative to a map to be highlighted. The \textbf{Path} class has also been updated to consider a possible way to store the information relative to a path provided by the MI. The \textbf{Street} and \textbf{City} classes are still considered as we have said that we need to store in our system their information in order to deal with the functionalities the system has to provide.
@@ -684,7 +684,7 @@
 		\subsubsection[Authority]{\hyperlink{toc}{Authority}}
 			\label{sec:authorityRuntimeView}
 			
-			The following are the interactions that involve authorities. In the sequence diagrams, all of these interactions start with a call from the WebServer but of course, the component that really start them is the AuthorityWebApp, that ask web pages to the WebServer. The interaction between the AuthorityWebApp and the WebServer is not shown here for the sake of simplicity.
+			The following are the interactions that involve authorities. In the sequence diagrams, all of these interactions start with a call from the WebServer but of course, the component that really starts them is the AuthorityWebApp, that asks web pages to the WebServer. The interaction between the AuthorityWebApp and the WebServer is not shown here for the sake of simplicity.
 			
 			\begin{itemize}
 				\item \textbf{Registration:} It is now described (\blueAutoref{fig:authorityRegistrationRuntime}) the process through which an authority registers to SafeStreets. This is a little bit more complicated process with respect to the user one, because the system requires the authority to be real and recognized. The assumption here is that there's a completely secure PEC address assigning mechanism. The ClientHandler forwards the WebServer request to AccessManager. The request contains of course all the necessary information for the registration. AccessManager will then check whether there is already an authority registered for the city contained in the registration request. If a authority already exists, the request is rejected and an error message is sent back to the client, otherwise AccessManager will check whether the specified PEC address actually corresponds to the authority of the city contained in the request. This is to avoid that an authority registers for a different city. To do that, it needs to ask the Authority Common Interface that is external with respect to SafeStreets. If the addresses do not match, an error message is sent to the client and the procedure is aborted. If the specified address is correct for that city, SafeStreets needs now to verify that the actual person that is making the request through the AuthorityWebApp is able to access the PEC address and actually read the received emails. In order to do that, AccessManager generates a code that will be sent by PEC through EmailAPI. AccessManager now waits for the authority to insert, through the AuthorityWebApp, the received code. Then, it will check that the generated code and the inserted one coincide. If they do not coincide, an error is sent to the AuthorityWebApp and the registration is aborted. If the inserted code is correct, AccessManager will ask DataManager to store the information into the database.
@@ -703,7 +703,7 @@
 					\caption{\label{fig:unreadReportsRuntime} Check Unread Reports Runtime View}
 				\end{figure}
 			
-				\item \textbf{Find Reports:} Here (\blueAutoref{fig:findReportsRuntime}) it is described the interactions through the components when the authority asks for some past reports applying some filters. The request is made by the WebServer and is forwarded to QueryManager by ClientHandler. After having checked if the specified filters are correct and eventually returning an error to the AuthorityWebApp, QueryManager will ask DataManager to interact with the DBMS and execute the query that will return all the reports located in the authority’s city that match the specified filters.
+				\item \textbf{Find Reports:} Here (\blueAutoref{fig:findReportsRuntime}) we describe the interactions between the components when the authority asks for some past reports applying some filters. The request is made by the WebServer and is forwarded to QueryManager by ClientHandler. After having checked if the specified filters are correct and eventually returning an error to the AuthorityWebApp, QueryManager will ask DataManager to interact with the DBMS and execute the query that will return all the reports located in the authority’s city that match the specified filters.
 				
 				\begin{figure}[h!]
 					\centering
@@ -834,7 +834,7 @@
 		\subsubsection[Client-Server]{\hyperlink{toc}{Client-Server}}
 			\label{sec:clientServerDecision}
 			
-			Our system, as described in the context viewpoint of \blueAutoref{fig:contextViewpoint}, needs to interact with several external systems. It is true that in general SafeStreets needs to interact with systems that provide him services in order to realize its functionalities, but it is also true that SafeStreets aims to be a \textbf{crowd-sourced} system that is going to manage interactions with several users (who provide him the data) and several authorities. Thanks to these considerations, after studying different alternatives, we decided to choose a \textbf{client-server} architectural approach in order to manage easily the interaction with the mobile application of the users and to have a centralized server that is able to provide the services of the system to any customer that requires them.
+			Our system, as described in the context viewpoint of \blueAutoref{fig:contextViewpoint}, needs to interact with several external systems. It is true that in general SafeStreets needs to interact with systems that provide him services in order to realize its functionalities, but it is also true that SafeStreets aims to be a \textbf{crowd-sourced} system that is going to manage interactions with several users (who provide him the data) and several authorities. Thanks to these considerations, after studying different alternatives, we decided to choose a \textbf{client-server} architectural approach in order to easily manage the interaction with the mobile application of the users and to have a centralized server that is able to provide the services of the system to any customer that requires them.
 			
 			\vspace{0.3cm}
 			
