@@ -50,15 +50,36 @@
 		\end{frame}
 	
 	\subsection{Architectural Styles and Patterns}
-		%todo qua dire tutte le cose relative al client-server, 4 tier architecture e REST in modo da collefarsi alla prossima sezione
 		\begin{frame}{Client-Server in Four-tier Architecture}
-			Architecture
-			%todo qua client-server legato a 4tier
+			The system is a \textbf{crowed-sourced} application based on the client-server paradigm where the \emph{users} represent the crowd on which the functionalities of SafeStreets are funded.
+			
+			\begin{figure}[h!]
+				\centering
+				\includegraphics[scale=0.32]{dd/clientServer}
+			\end{figure}
+		
+			The layers of the system are deployed to a \emph{four-tier architecture}.
+			
+			\begin{figure}[h]
+				\centering
+				\includegraphics[scale=0.32]{dd/fourTierArchitecture}
+			\end{figure}
 		\end{frame}
 	
 		\begin{frame}{REST and TCP/IP}
-			REST
-			%todo qua come mai rest e tcp
+			SafeStreets provides its services through \textbf{REST} thanks to an interface that is extended twice to define the communication with the \textbf{mobile app} for the users and the \textbf{web app} for the authorities.
+			
+			\begin{figure}
+				\begin{minipage}{0.42\textwidth}
+					\centering
+					\includegraphics[scale=0.25]{dd/restInterface}
+				\end{minipage}
+				\begin{minipage}{0.3\textwidth}\tiny
+					\color{polimiblue}Client-Handler Component Interfaces Particular
+				\end{minipage}
+			\end{figure}
+			
+			Moreover basic communication with the TCP/IP protocol is also used in particular for the external components that allows the system to manage its data: the \emph{DBMS} and the \emph{EMS}.
 		\end{frame}
 		
 	\subsection{Deployment View}
@@ -72,12 +93,15 @@
 	
 	\subsection{Implementation Integration and Test Plan}
 		\begin{frame}{Strategy Overview}
+			\vspace{-2cm}
+			The strategy on which the \emph{Implementation, Integration and Test Plan} is developed, and thus the use relation hierarchy diagram, is based on the following 4 features:
+			
+			\vspace{1cm}
 			\begin{itemize}
-				\item First
-				\item Second
-				\item Third
-				\item Fourth
-				%todo mettere qua le 4 cose su cui si basa tutto
+				\item[1.] <1-> \textbf{Bottom-Up and Top-Down approach}
+				\item[2.] <2-> \textbf{Core Functionality}
+				\item[3.] <3-> \textbf{Decoupling of Components}
+				\item[4.] <4-> \textbf{Reliability of Eternal Systems}
 			\end{itemize}
 		\end{frame}
 	
