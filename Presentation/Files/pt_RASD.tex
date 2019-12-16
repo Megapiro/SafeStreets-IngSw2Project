@@ -1,5 +1,15 @@
 \section{RASD}
 
+	\begin{frame}[plain]
+		\vfill
+		\centering
+		\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+			\textbf{\usebeamerfont{title}\insertsectionhead}\par%
+			\color{polimiblue}\noindent\rule{10cm}{1pt} \\
+		\end{beamercolorbox}
+		\vfill
+	\end{frame}
+
 	\subsection{Goals}
 		\begin{frame}{Goals}
 			\vspace{-17pt}
@@ -11,13 +21,14 @@
 					\item \label{goal:miningB} Users and authorities should be able to know what types of vehicle make the most violations.
 					\item \label{goal:miningC} Authorities should be able to consult every violation report sent by users.
 				\end{enumerate}
-				\item \label{goal:safety} Users should be able to know which streets are safe and which ones are not.
+				\item \label{goal:safety} Users and authorities should be able to know which streets are safe and which ones are not.
 				\item \label{goal:intervention} Users and authorities should be able to know the possible interventions that could be done in a city.
 			\end{enumerate}
 		\end{frame}
 
 	\subsection{Boundaries of the system}
 		\begin{frame}{System Interfaces}
+			\vspace{-10pt}
 			We want now to define the boundaries of our system first with the external interfaces it has to interact with, second with the \emph{World And Machine} that helps to highlight the phenomena.
 			
 			\begin{figure}[h!]
@@ -30,51 +41,92 @@
 			\vspace{-24pt}
 			\begin{figure}[hbtp]
 				\centering
-				\includegraphics[scale=0.44]{rasd/WorldAndMachine}
+				\includegraphics[scale=0.33]{rasd/WorldAndMachine}
 			\end{figure}
 		\end{frame}
 	
 	\subsection{Meaningful Use-Cases}
-		\begin{frame}{User Notification}
-				\begin{minipage}{0.4\textwidth}
-					\begin{flushleft}
-						\begin{figure}[ht]
-							\centering
-							\includegraphics[scale=0.14]{rasd/reportViolation}
-						\end{figure}
-					\end{flushleft}
-				\end{minipage}\hfill
-				~
-				\begin{minipage}{0.43\textwidth}\small
-					Qua ci potrebbe stare una descrizione con elenco:
-					\begin{itemize}
-						\item 
-						\item 
-						\item 
-					\end{itemize}
-				\end{minipage}
+		\begin{frame}{Use Case and Authority Registration}
+			\hspace*{-0.7cm}
+			\begin{minipage}{0.4\textwidth}
+				\centering
+				\includegraphics[scale=0.1]{rasd/useCaseDiagramModel}
+			\end{minipage}\hspace{1.9cm}
+			~
+			\begin{minipage}{0.4\textwidth}
+				\centering
+				\includegraphics[scale=0.104]{rasd/authorityRegistration}
+			\end{minipage}
 		\end{frame}
 	
-		\begin{frame}{Unsafe Streets Functionality}
+		\begin{frame}{Report Violation and Unsafe Streets}
+			\hspace*{-0.4cm}
+			\begin{minipage}{0.4\textwidth}
+				\centering
+				\includegraphics[scale=0.13]{rasd/reportViolation}
+			\end{minipage}\hspace{1.2cm}
+			~
+			\begin{minipage}{0.4\textwidth}
+				\centering
+				\includegraphics[scale=0.123]{rasd/unsafeStreets}
+			\end{minipage}
+		\end{frame}
+	
+	\subsection{Relevant Requirements}
+		\begin{frame}{Relevant Requirements}
+			\begin{itemize}
+				\item <1-> \textbf{R8} The system must allow users to take pictures of the violation they want to report
+				
+				\item <2-> \textbf{R17} The system must be able to show authorities all the violation reports sent by users
+				
+				\item <3-> \textbf{R18} The system must be able to mine the stored violation reports
+				
+				\item <4-> \textbf{R31} The system must be able to determine whether a street is safe or not
+				
+				\item <5-> \textbf{R35} The system must be able to determine the most urgent interventions in a street.
+			\end{itemize}
+		\end{frame}
+	
+	\subsection{Relevant Assumptions}
+		\begin{frame}{Relevant Assumptions}
+			\begin{itemize}
+				\item <1-> \textbf{DA2} Users always insert correct data while reporting violations to SafeStreets
+				
+				\item <2-> \textbf{DA7} The GPS module of the devices on which SafeStreets runs always works correctly and has an accuracy of 2 meters
+				
+				\item <3-> \textbf{DA8} The camera module of the devices on which SafeStreets runs always works correctly
+				
+				\item <4-> \textbf{DA10} The system is assumed to work in Italy
+				
+				\item <5-> \textbf{DA13} No one physically and maliciously replaces license plates
+				
+				\item <6-> \textbf{DA17} Accidents data provided by municipalities are always correct
+			\end{itemize}
+		\end{frame}
+
+	\subsection{Alloy Model}
+		\begin{frame}{First World}
 			\begin{figure}[hbtp]
 				\centering
-				\includegraphics[scale=0.14]{rasd/unsafeStreets}
+				\includegraphics[scale=0.1]{rasd/world1}
 			\end{figure}
 		\end{frame}
 	
-		\begin{frame}{Check and Find Reports}
+		\begin{frame}{Second World}
+			\begin{figure}
+				\centering
+				\includegraphics[scale=0.1]{rasd/world2}
+			\end{figure}
+		\end{frame}
+	
+		\begin{frame}{Third World}
 			\begin{minipage}{0.4\textwidth}
-				\begin{figure}
-					\centering
-					\includegraphics[scale=0.15]{rasd/unreadReports}
-				\end{figure}
-			\end{minipage}\hfill
+				\centering
+				\includegraphics[scale=0.23]{rasd/world3}
+			\end{minipage}\hspace{0.5cm}
 			~
 			\begin{minipage}{0.4\textwidth}
-				\begin{figure}
-					\centering
-					\includegraphics[scale=0.12]{rasd/findReports}
-				\end{figure}
+				\centering
+				\includegraphics[scale=0.3]{rasd/interventionsResultRule}
 			\end{minipage}
-			
 		\end{frame}
