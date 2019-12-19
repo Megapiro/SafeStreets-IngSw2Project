@@ -75,32 +75,32 @@
 	\subsection{Relevant Requirements}
 		\begin{frame}{Relevant Requirements}
 			\begin{itemize}
-				\item <1-> \textbf{R8} The system must allow users to take pictures of the violation they want to report
+				\item \textbf{R8} The system must allow users to take pictures of the violation they want to report
 				
-				\item <2-> \textbf{R17} The system must be able to show authorities all the violation reports sent by users
+				\item \textbf{R17} The system must be able to show authorities all the violation reports sent by users
 				
-				\item <3-> \textbf{R18} The system must be able to mine the stored violation reports
+				\item \textbf{R18} The system must be able to mine the stored violation reports
 				
-				\item <4-> \textbf{R31} The system must be able to determine whether a street is safe or not
+				\item \textbf{R31} The system must be able to determine whether a street is safe or not
 				
-				\item <5-> \textbf{R35} The system must be able to determine the most urgent interventions in a street.
+				\item \textbf{R35} The system must be able to determine the most urgent interventions in a street.
 			\end{itemize}
 		\end{frame}
 	
 	\subsection{Relevant Assumptions}
 		\begin{frame}{Relevant Assumptions}
 			\begin{itemize}
-				\item <1-> \textbf{DA2} Users always insert correct data while reporting violations to SafeStreets
+				\item \textbf{DA2} Users always insert correct data while reporting violations to SafeStreets
 				
-				\item <2-> \textbf{DA7} The GPS module of the devices on which SafeStreets runs always works correctly and has an accuracy of 2 meters
+				\item \textbf{DA7} The GPS module of the devices on which SafeStreets runs always works correctly and has an accuracy of 2 meters
 				
-				\item <3-> \textbf{DA8} The camera module of the devices on which SafeStreets runs always works correctly
+				\item \textbf{DA8} The camera module of the devices on which SafeStreets runs always works correctly
 				
-				\item <4-> \textbf{DA10} The system is assumed to work in Italy
+				\item \textbf{DA10} The system is assumed to work in Italy
 				
-				\item <5-> \textbf{DA13} No one physically and maliciously replaces license plates
+				\item \textbf{DA13} No one physically and maliciously replaces license plates
 				
-				\item <6-> \textbf{DA17} Accidents data provided by municipalities are always correct
+				\item \textbf{DA17} Accidents data provided by municipalities are always correct
 			\end{itemize}
 		\end{frame}
 
@@ -124,34 +124,46 @@
 		\end{frame}
 	
 		\begin{frame}{Facts}
+			\hspace{0.5cm}
 			\begin{minipage}{0.4\textwidth}
 				\centering
-				\includegraphics[scale=0.23]{rasd/interventionSuggestedThreshold}
-			\end{minipage}\hspace{0.5cm}
+				\includegraphics[scale=0.6]{rasd/interventionSuggestedThreshold}
+			\end{minipage}
 		\end{frame}
 
 		\begin{frame}{Facts}
+			\hspace{-0.7cm}
 			\begin{minipage}{0.4\textwidth}
 				\centering
-				\includegraphics[scale=0.45]{rasd/unsafeStreetThreshold}
-			\end{minipage}\hspace{0.5cm}
+				\includegraphics[scale=0.52]{rasd/unsafeStreetThreshold}
+			\end{minipage}
 		\end{frame}
 	
 		\begin{frame}{Third World}
-			\begin{minipage}{0.4\textwidth}
+			\begin{minipage}{0.3\textwidth}
 				\centering
-				\includegraphics[scale=0.23]{rasd/world3}
+				\includegraphics[scale=0.24]{rasd/world3}
 			\end{minipage}\hspace{0.5cm}
 			~
 			\begin{minipage}{0.4\textwidth}
 				\centering
-				\includegraphics[scale=0.3]{rasd/interventionsResultRule}
+				\begin{figure}
+					\vspace{-10pt}
+					\centering
+					\includegraphics[scale=0.34]{rasd/interventionsResultRule}
+				\end{figure}
+
+				\begin{figure}
+					\vspace{-0.8cm}
+					\centering
+					\includegraphics[scale=0.38]{rasd/reportsResultRule}
+				\end{figure}
 			\end{minipage}
 		\end{frame}
 	
-		\begin{frame}{Facts}
-			\begin{minipage}{0.4\textwidth}
-				\centering
-				\includegraphics[scale=0.29]{rasd/reportsResultRule}
-			\end{minipage}\hspace{0.5cm}
-		\end{frame}
+		%\begin{frame}{Facts}
+		%	\begin{minipage}{0.4\textwidth}
+			%	\centering
+			%	\includegraphics[scale=0.29]{rasd/reportsResultRule}
+			%\end{minipage}\hspace{0.5cm}
+		%\end{frame}
